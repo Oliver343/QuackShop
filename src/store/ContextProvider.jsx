@@ -1,11 +1,11 @@
 import { createContext, useState } from "react";
 
 export const StoreContextWrapper = createContext({
-    checkState: "Working"
+    checkState: "State-working"
 })
 
 export default function ContextProvider({children}){
-    const [checkState] = useState("Working");
+    const [checkState] = useState("State working");
 
 
 return (
