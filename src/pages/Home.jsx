@@ -1,6 +1,7 @@
 import { useContext, useState } from "react"
 import { StoreContextWrapper } from "../store/ContextProvider"
 import Header from "../components/Header"
+import './Home.css';
 
 export default function Home() {
     const storeObject = useContext(StoreContextWrapper)
