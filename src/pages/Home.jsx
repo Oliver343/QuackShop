@@ -19,13 +19,15 @@ export default function Home() {
     console.log(storeObject)
 
     return (
-        <>
+        <div className="homeMain">
             <Header />
-            HOME - {storeObject.checkState}
-            <br />
-            width - {width}
-            <br />
-            height - {height}
-        </>
+            <div>
+                HOME - {storeObject.checkState}
+                <br />
+                width - {width}
+                <br />
+                height - {height}
+            </div>
+        </div>
     )
 }

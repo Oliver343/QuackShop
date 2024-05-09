@@ -1,1 +1,13 @@
-/* * { border: red dashed 1px } */
+* { border: red dashed 1px }
+
+.homeMain {
+    min-height: 100vh;
+    background-color: #282c34;
+    color: white;
+}
+
+.headerMain {
+    height: 100px;
+    width: 100%;
+    background-color: black;
+}
