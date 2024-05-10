@@ -13,7 +13,9 @@
 .headerMain {
     height: 50px;
     background-color: black;
-    border: white 2px solid;
+    border-top: white 2px solid;
+    border-right: white 2px solid;
+    border-left: white 2px solid;
 }
 
 .buttonBox {
