@@ -1,4 +1,4 @@
-* { border: red dashed 1px }
+/* * { border: red dashed 1px } */
 
 .homeMain {
     min-height: 100vh;
@@ -6,8 +6,12 @@
     color: white;
 }
 
+.homeBody {
+    border: white 2px solid;
+}
+
 .headerMain {
     height: 100px;
-    width: 100%;
     background-color: black;
+    border: white 2px solid;
 }

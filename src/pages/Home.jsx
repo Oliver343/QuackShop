@@ -21,7 +21,7 @@ export default function Home() {
     return (
         <div className="homeMain">
             <Header />
-            <div>
+            <div className="homeBody" style={{minHeight: (height - 108)}}>
                 HOME - {storeObject.checkState}
                 <br />
                 width - {width}
