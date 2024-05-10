@@ -9,9 +9,9 @@ export default function Home() {
     const [width, setWidth] = useState(window.innerWidth)
     const [height, setHeight] = useState(window.innerHeight)
     const [menuShow, setMenuShow] = useState(false)
-    let menuHight = 108
+    let menuHight = 58
 
-    if(!menuShow) {menuHight = 8}
+    if(!menuShow) {menuHight = 4}
 
     function handleResize() {
         setWidth(window.innerWidth)
