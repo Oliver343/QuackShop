@@ -8,11 +8,20 @@ export default function Home() {
 
     const [width, setWidth] = useState(window.innerWidth)
     const [height, setHeight] = useState(window.innerHeight)
+    const [menuShow, setMenuShow] = useState(false)
+    let menuHight = 108
+
+    if(!menuShow) {menuHight = 8}
 
     function handleResize() {
         setWidth(window.innerWidth)
         setHeight(window.innerHeight)
       }
+
+    function handleMenuToggle() {
+        console.log("TOGGLE MENU CLICK")
+        setMenuShow((pre) =>  !pre) 
+    }
 
     window.addEventListener('resize', handleResize);
 
@@ -20,10 +29,13 @@ export default function Home() {
 
     return (
         <div className="homeMain">
-            <Header />
-            <div className="homeBody" style={{minHeight: (height - 108)}}>
+            {menuShow ? <Header toggleMenu={handleMenuToggle} /> : ""}
+            <div 
+            className="homeBody" 
+            style={{minHeight: (height - menuHight)}}
+            >
                 <div className ="buttonBox">
-                    <button>MENU</button>
+                    {menuShow ? "" : <button onClick={handleMenuToggle}>MENU</button>}
                 </div>
                 HOME - {storeObject.checkState}
                 <br />

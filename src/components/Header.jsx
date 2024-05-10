@@ -1,9 +1,9 @@
-export default function Header() {
+export default function Header(props) {
 
     return(
         <div className="headerMain">
             <div className="buttonBox">
-                <button>CLOSE MENU</button>
+                <button onClick={props.toggleMenu}>CLOSE MENU</button>
             </div>
             HEADER
         </div>
