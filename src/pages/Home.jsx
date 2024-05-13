@@ -36,10 +36,13 @@ export default function Home() {
             className="homeBody" 
             style={{minHeight: (height - menuHight)}}
             >
-                <div className ="buttonBox">
-                    {menuShow ? "." : <button className="menuToggleBtn" onClick={handleMenuToggle}><FontAwesomeIcon icon={faBars} /></button>}
+                <div className="headerMainXXX">
+                    <button className="menuToggleBtn" style={{ visibility: "hidden"}}>.</button>
+                    <div className="buttonBox">
+                        {menuShow ? "" : <button className="menuToggleBtn" onClick={handleMenuToggle}><FontAwesomeIcon icon={faBars} /></button>}
+                    </div>
                 </div>
-                HOMEE - {storeObject.checkState}
+                HOME - {storeObject.checkState}
                 <br />
                 width - {width}
                 <br />
