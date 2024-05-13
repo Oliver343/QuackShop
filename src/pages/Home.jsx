@@ -39,7 +39,7 @@ export default function Home() {
                 <div className ="buttonBox">
                     {menuShow ? "." : <button className="menuToggleBtn" onClick={handleMenuToggle}><FontAwesomeIcon icon={faBars} /></button>}
                 </div>
-                HOME - {storeObject.checkState}
+                HOMEE - {storeObject.checkState}
                 <br />
                 width - {width}
                 <br />
