@@ -11,7 +11,7 @@
 }
 
 .headerMain {
-    height: 50px;
+    height: 75px;
     background-color: black;
     border-top: white 2px solid;
     border-right: white 2px solid;
@@ -22,4 +22,9 @@
     display: flex;
     justify-content: end;
     align-items: center;
+}
+
+.menuToggleBtn {
+    height: 30px;
+    width: 30px;
 }

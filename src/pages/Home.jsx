@@ -1,4 +1,6 @@
 import { useContext, useState } from "react"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { StoreContextWrapper } from "../store/ContextProvider"
 import Header from "../components/Header"
 import './Home.css';
@@ -9,7 +11,7 @@ export default function Home() {
     const [width, setWidth] = useState(window.innerWidth)
     const [height, setHeight] = useState(window.innerHeight)
     const [menuShow, setMenuShow] = useState(true)
-    let menuHight = 56
+    let menuHight = 81
 
     if(!menuShow) {menuHight = 4}
 
@@ -35,7 +37,7 @@ export default function Home() {
             style={{minHeight: (height - menuHight)}}
             >
                 <div className ="buttonBox">
-                    {menuShow ? "" : <button onClick={handleMenuToggle}>MENU</button>}
+                    {menuShow ? "." : <button className="menuToggleBtn" onClick={handleMenuToggle}><FontAwesomeIcon icon={faBars} /></button>}
                 </div>
                 HOME - {storeObject.checkState}
                 <br />
