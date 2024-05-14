@@ -6,8 +6,6 @@ import board from "../img/board.png";
 import boardBoom from "../img/boardboom.png";
 import dropG from "../img/dropG.png"
 
-// testing 
-
 const BoardP1 = (props) => {
   const [currentPot, setCurrentPot] = useState([]);
   const [exploded, setExploded] = useState(false);
@@ -28,6 +26,9 @@ const BoardP1 = (props) => {
   let cherrybombValue = useRef(0);
   console.log("CHIPSPACE");
   console.log(chipSpace);
+
+  console.log("WIDTH")
+  console.log(props.width)
 
   function drawRandomIngredient() {
     const randomNo = Math.floor(Math.random() * props.bagForTurn.length);
@@ -74,7 +75,7 @@ const BoardP1 = (props) => {
             </h2>{" "}
           </div>
         </div>
-        <img className="boardMain" src={boardImage} />
+        <img className="boardMain" src={boardImage} style={{width: 900}}/>
         <img className="drop" width="90px" src={dropG} />
         <img className={"chips chip" + (chipSpace.current + 1)} width="125px" src={scoreSpace} />
         {mappedChips}
