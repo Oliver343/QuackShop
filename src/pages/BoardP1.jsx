@@ -10,7 +10,17 @@ const BoardP1 = (props) => {
   const [currentPot, setCurrentPot] = useState([]);
   const [exploded, setExploded] = useState(false);
   const [stopped, setStopped] = useState(false);
+  const [width, setWidth] = useState(window.innerWidth)
+  const [height, setHeight] = useState(window.innerHeight)
   let boardImage = board
+  let maxValue = ((width < height ? width : height) - 4 )
+
+  function handleResize() {
+    setWidth(window.innerWidth)
+    setHeight(window.innerHeight)
+  } 
+
+  window.addEventListener('resize', handleResize);
 
   if (exploded || stopped) {
     document.getElementById("pullButton").disabled = true;
@@ -75,10 +85,13 @@ const BoardP1 = (props) => {
             </h2>{" "}
           </div>
         </div>
-        <img className="boardMain" src={boardImage} style={{width: 900}}/>
+        <div className="newBoard" style={{backgroundImage: "url(" + boardImage + ")", backgroundSize: 'contain', backgroundRepeat: 'no-repeat', width: 1000, maxWidth: maxValue, height: 1000, maxHeight: maxValue}}>
+          {mappedChips}
+        </div>
+        {/* <img className="boardMain" src={boardImage} style={{width: 900}}/> */}
         <img className="drop" width="90px" src={dropG} />
         <img className={"chips chip" + (chipSpace.current + 1)} width="125px" src={scoreSpace} />
-        {mappedChips}
+
       </div>
     </div>
   );
