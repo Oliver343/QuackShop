@@ -5,8 +5,9 @@ export default function Header(props) {
 
     return(
         <div className="headerMain">
-
-            HEADER
+            <div className='headerSub'>
+                Quacks Shop
+            </div>
             <div className="buttonBox">
                 <button className='menuToggleBtn' onClick={props.toggleMenu}><FontAwesomeIcon icon={faXmark} /></button>
             </div>

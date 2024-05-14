@@ -1,0 +1,48 @@
+/* * { border: red dashed 1px } */
+
+.homeMain {
+    min-height: 100vh;
+    background-color: #282c34;
+    color: white;
+}
+
+.homeBody {
+    border: white 2px solid;
+}
+
+.homeSub {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.headerMain {
+    display: flex;
+    justify-content:space-between;
+    height: 75px;
+    background-color: black;
+    border-top: white 2px solid;
+    border-right: white 2px solid;
+    border-left: white 2px solid;
+}
+
+.headerSub{
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.buttonLine {
+    display: flex;
+    justify-content:end;
+}
+
+.buttonBox {
+    display: flex;
+    justify-content: end;
+    align-items: start;
+}
+
+.menuToggleBtn {
+    height: 30px;
+    width: 30px;
+}
