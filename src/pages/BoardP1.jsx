@@ -37,9 +37,6 @@ const BoardP1 = (props) => {
   console.log("CHIPSPACE");
   console.log(chipSpace);
 
-  console.log("WIDTH")
-  console.log(props.width)
-
   function drawRandomIngredient() {
     const randomNo = Math.floor(Math.random() * props.bagForTurn.length);
     const currentIngredient = props.bagForTurn.splice(randomNo, 1)[0];

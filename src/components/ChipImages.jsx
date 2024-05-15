@@ -6,7 +6,8 @@ const ChipImages = (props) => {
       <img
         className={"chips chip" + props.chipSpace}
         src={props.img}
-        width="125px"
+        width="8%"
+        style={{maxWidth: "80px"}}
       ></img>
     </div>
   );
