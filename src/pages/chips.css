@@ -1,6 +1,6 @@
-/* * {
+* {
     border: 1px red dashed;
-} */
+}
 
 .chip:hover {
   filter: drop-shadow(lightgreen 10px 10px 100px);
@@ -80,6 +80,11 @@
 .chip1 {
   left: 843px;
   top: 949px;
+}
+
+.chip1NEW {
+  left: 49.8%;
+  top: 32.6%;
 }
 
 .chip2 {
