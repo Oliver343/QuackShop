@@ -7,13 +7,13 @@ import chipW2 from "../img/chipW2.png";
 import chipW3 from "../img/chipW3.png";
 
 export const StoreContextWrapper = createContext({
-    checkState: "State-working",
+    checkState: "",
     scoreTrack: [],
     bag: []
 })
 
 export default function ContextProvider({children}){
-    const [checkState] = useState("State workingg");
+    const [checkState] = useState("State working");
     const [scoreTrack] = useState([
       {
         number: 0,
