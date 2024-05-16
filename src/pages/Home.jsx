@@ -11,7 +11,6 @@ export default function Home() {
     const storeObject = useContext(StoreContextWrapper)
 
     const [menuShow, setMenuShow] = useState((storeObject.height < 600) ? false : true)
-    console.log(storeObject.height)
     // Header only shown by default on screen with greater than 600px height
     let menuHight = 81
 

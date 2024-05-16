@@ -34,8 +34,6 @@ const BoardP1 = (props) => {
 
   let chipSpace = useRef(0);
   let cherrybombValue = useRef(0);
-  console.log("CHIPSPACE");
-  console.log(chipSpace);
 
   function drawRandomIngredient() {
     const randomNo = Math.floor(Math.random() * props.bagForTurn.length);
@@ -85,8 +83,7 @@ const BoardP1 = (props) => {
         <div className="newBoard" style={{backgroundImage: "url(" + boardImage + ")", backgroundSize: 'contain', backgroundRepeat: 'no-repeat', width: 1000, maxWidth: maxValue, height: 1000, maxHeight: maxValue}}>
           {mappedChips}
         </div>
-        {/* <img className="boardMain" src={boardImage} style={{width: 900}}/> */}
-        <img className="drop" width="90px" src={dropG} />
+        <img className="drop"  src={dropG} style={{ maxWidth: "80px"}}/>
         <img className={"chips chip" + (chipSpace.current + 1)} width="125px" src={scoreSpace} />
 
       </div>
