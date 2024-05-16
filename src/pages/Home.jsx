@@ -403,76 +403,8 @@ export default function Home() {
         },
       ]
 
-    let bag = [
-        {
-          color: "white",
-          value: 1,
-          img: chipW1,
-          effect: false,
-          volatile: true,
-        },
-        {
-          color: "white",
-          value: 1,
-          img: chipW1,
-          effect: false,
-          volatile: true,
-        },
-        {
-          color: "white",
-          value: 1,
-          img: chipW1,
-          effect: false,
-          volatile: true,
-        },
-        {
-          color: "white",
-          value: 1,
-          img: chipW1,
-          effect: false,
-          volatile: true,
-        },
-        {
-          color: "white",
-          value: 2,
-          img: chipW2,
-          effect: false,
-          volatile: true,
-        },
-        {
-          color: "white",
-          value: 2,
-          img: chipW2,
-          effect: false,
-          volatile: true,
-        },
-        {
-          color: "white",
-          value: 3,
-          img: chipW3,
-          effect: false,
-          volatile: true,
-        },
-        {
-          color: "green",
-          value: 1,
-          img: chipG1,
-          effect: false,
-          volatile: false,
-        },
-        {
-          color: "orange",
-          value: 1,
-          img: chipO1,
-          effect: false,
-          volatile: false,
-        },
-      ]
 
-
-    let bagForTurn = [...bag];
-
-    console.log(storeObject.bag)
+    let bagForTurn = [...storeObject.bag];
 
     if(!menuShow) {menuHight = 4}
 
@@ -505,9 +437,9 @@ export default function Home() {
                 <div className="homeSub">
                     HOME - {storeObject.checkState}
                     <br />
-                    width - {width}
+                    width - {storeObject.width}
                     <br />
-                    height - {height}
+                    height - {storeObject.height}
                 </div>
                 <div className="homeSub">
                     <button>Start Game</button>
