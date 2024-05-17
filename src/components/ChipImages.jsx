@@ -6,6 +6,7 @@ const ChipImages = (props) => {
   let smaller = (storeObject.width < storeObject.height) ? storeObject.width : storeObject.height
   let chipSize = (smaller < 1000) ? smaller / 13 : 68
   let leftSize = (smaller < 1000) ? smaller / 2 : 400
+  let topSize = ((smaller < 1000) ? smaller / 4.7 : 400) + 200
 
   console.log(leftSize)
 
@@ -17,7 +18,7 @@ const ChipImages = (props) => {
         width={chipSize}
         style={{
           maxWidth: "80px",
-          top: "300px",
+          top: topSize,
           left: leftSize,
         }}
       ></img>
