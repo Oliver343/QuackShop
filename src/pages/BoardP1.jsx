@@ -76,8 +76,8 @@ const BoardP1 = (props) => {
         <div className="newBoard" style={{backgroundImage: "url(" + boardImage + ")", backgroundSize: 'contain', backgroundRepeat: 'no-repeat', width: 1000, maxWidth: maxValue, height: 1000, maxHeight: maxValue}}>
           {mappedChips}
         </div>
-        <img className="drop"  src={dropG} style={{ maxWidth: "80px"}}/>
-        <img className={"chips chip" + (chipSpace.current + 1)} width="125px" src={scoreSpace} />
+        {/* <img className="drop"  src={dropG} style={{ maxWidth: "80px"}}/>
+        <img className={"chips chip" + (chipSpace.current + 1)} width="125px" src={scoreSpace} /> */}
 
       </div>
     </div>
