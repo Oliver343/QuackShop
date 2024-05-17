@@ -1,5 +1,6 @@
-import React, { forwardRef, useState, useEffect, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import ChipImages from "../components/ChipImages";
+import { StoreContextWrapper } from "../store/ContextProvider"
 
 import scoreSpace from "../img/scoreSpace.png";
 import board from "../img/board.png";
@@ -10,17 +11,9 @@ const BoardP1 = (props) => {
   const [currentPot, setCurrentPot] = useState([]);
   const [exploded, setExploded] = useState(false);
   const [stopped, setStopped] = useState(false);
-  const [width, setWidth] = useState(window.innerWidth)
-  const [height, setHeight] = useState(window.innerHeight)
+  const storeObject = useContext(StoreContextWrapper)
   let boardImage = board
-  let maxValue = ((width < height ? width : height) - 4 )
-
-  function handleResize() {
-    setWidth(window.innerWidth)
-    setHeight(window.innerHeight)
-  } 
-
-  window.addEventListener('resize', handleResize);
+  let maxValue = ((storeObject.width < storeObject.height ? storeObject.width : storeObject.height) - 4 )
 
   if (exploded || stopped) {
     document.getElementById("pullButton").disabled = true;
