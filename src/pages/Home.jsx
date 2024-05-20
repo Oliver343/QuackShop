@@ -3,50 +3,50 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { StoreContextWrapper } from "../store/ContextProvider"
 import Header from "../components/Header"
-import './Home.css';
+import BoardP1 from './BoardP1';
+import './main.css';
+import './chips.css'
 
 export default function Home() {
     const storeObject = useContext(StoreContextWrapper)
 
-    const [width, setWidth] = useState(window.innerWidth)
-    const [height, setHeight] = useState(window.innerHeight)
-    const [menuShow, setMenuShow] = useState(true)
+    const [menuShow, setMenuShow] = useState((storeObject.height < 600) ? false : true)
+    // Header only shown by default on screen with greater than 600px height
     let menuHight = 81
+
+
+    let bagForTurn = [...storeObject.bag];
 
     if(!menuShow) {menuHight = 4}
 
-    function handleResize() {
-        setWidth(window.innerWidth)
-        setHeight(window.innerHeight)
-      }
-
     function handleMenuToggle() {
-        console.log("TOGGLE MENU CLICK")
         setMenuShow((pre) =>  !pre) 
     }
-
-    window.addEventListener('resize', handleResize);
-
-    console.log(storeObject)
 
     return (
         <div className="homeMain">
             {menuShow ? <Header toggleMenu={handleMenuToggle} /> : ""}
             <div 
             className="homeBody" 
-            style={{minHeight: (height - menuHight)}}
+            style={{minHeight: (storeObject.height - menuHight)}}
             >
-                <div className="headerMainXXX">
+                <div className="buttonLine">
                     <button className="menuToggleBtn" style={{ visibility: "hidden"}}>.</button>
                     <div className="buttonBox">
                         {menuShow ? "" : <button className="menuToggleBtn" onClick={handleMenuToggle}><FontAwesomeIcon icon={faBars} /></button>}
                     </div>
                 </div>
-                HOME - {storeObject.checkState}
-                <br />
-                width - {width}
-                <br />
-                height - {height}
+                <div className="homeSub">
+                    HOME - {storeObject.checkState}
+                    <br />
+                    width - {storeObject.width}
+                    <br />
+                    height - {storeObject.height}
+                </div>
+                <div className="homeSub">
+                    <button disabled={true}>Start Game</button>
+                </div>
+                <BoardP1 bagForTurn={bagForTurn} scoreTrack={storeObject.scoreTrack} chipSpace={0} screenWidth={500} />
             </div>
         </div>
     )
