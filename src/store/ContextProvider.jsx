@@ -462,17 +462,37 @@ export default function ContextProvider({children}){
 
     const [width, setWidth] = useState(window.innerWidth)
     const [height, setHeight] = useState(window.innerHeight)
+    let centerHeight =0
+    let centerWidth = 0
+    const difference = 135 // wider
+
+    function recalcCenter() {
+      if ((window.innerHeight > window.innerWidth) && window.innerHeight < 1000) {
+        centerHeight = window.innerHeight / 2;
+        centerWidth = (window.innerHeight + difference) / 2;
+      } else if ((window.innerWidth > window.innerHeight) && window.innerWidth < 1000) {
+        centerHeight = (window.innerWidth - difference) / 2;
+        centerWidth = window.innerWidth / 2;
+      } else {
+        centerHeight = 500;
+        centerWidth = 500 + (difference / 2);
+      }
+    }
+    
+    recalcCenter()
+
 
     function handleResize() {
       setWidth(window.innerWidth)
       setHeight(window.innerHeight)
+
     }
 
     window.addEventListener('resize', handleResize);
 
 
 return (
-    <StoreContextWrapper.Provider value={{checkState, scoreTrack, bag, width, height}}>
+    <StoreContextWrapper.Provider value={{checkState, scoreTrack, bag, width, height, centerHeight, centerWidth}}>
         {children}
     </StoreContextWrapper.Provider>
 )

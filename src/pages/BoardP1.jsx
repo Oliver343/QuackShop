@@ -15,6 +15,7 @@ const BoardP1 = (props) => {
   let boardImage = board
   let maxValue = ((storeObject.width < storeObject.height ? storeObject.width : storeObject.height) - 4 )
 
+
   if (exploded || stopped) {
     document.getElementById("pullButton").disabled = true;
     document.getElementById("stopButton").disabled = true;
@@ -73,7 +74,15 @@ const BoardP1 = (props) => {
             </h2>{" "}
           </div>
         </div>
-        <div className="newBoard" style={{backgroundImage: "url(" + boardImage + ")", backgroundSize: 'contain', backgroundRepeat: 'no-repeat', width: 1000, maxWidth: maxValue, height: 1000, maxHeight: maxValue}}>
+        <div 
+        className="newBoard" 
+        style={{backgroundImage: 
+        "url(" + boardImage + ")", 
+        backgroundSize: 'contain', 
+        backgroundRepeat: 'no-repeat', 
+        width: 1000, maxWidth: maxValue, 
+        height: 1000, maxHeight: maxValue}}
+        >
           {mappedChips}
         </div>
         {/* <img className="drop"  src={dropG} style={{ maxWidth: "80px"}}/>
