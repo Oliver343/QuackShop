@@ -81,7 +81,7 @@ const BoardP1 = (props) => {
         backgroundSize: 'contain', 
         backgroundRepeat: 'no-repeat', 
         width: 1000, maxWidth: maxValue, 
-        height: 1000, maxHeight: maxValue}}
+        height: 914, maxHeight: maxValue}}
         >
           {mappedChips}
         </div>

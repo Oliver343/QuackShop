@@ -478,14 +478,27 @@ export default function ContextProvider({children}){
         centerWidth = 500 + (difference / 2);
       }
     }
+
+    function recalcCenter2() {
+      if((window.innerHeight > 910) && (window.innerWidth > 996)) {
+        centerHeight = 455;
+        centerWidth = 498;
+      } else if (window.innerHeight < window.innerWidth) {
+        centerHeight = window.innerHeight / 2;
+        centerWidth = (window.innerHeight + difference) / 2;
+      } else {
+        centerHeight = (window.innerWidth - difference) / 2;
+        centerWidth = window.innerHeight / 2;
+      }
+    }
     
-    recalcCenter()
+    recalcCenter2()
 
 
     function handleResize() {
       setWidth(window.innerWidth)
       setHeight(window.innerHeight)
-
+      recalcCenter2()
     }
 
     window.addEventListener('resize', handleResize);
