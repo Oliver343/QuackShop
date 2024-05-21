@@ -14,7 +14,9 @@ const ChipImages = (props) => {
   let leftSizeB = (maxW > storeObject.width) ?  storeObject.width / 2 : maxW / 2
   let topSizeB = (maxH > storeObject.heigt) ?  storeObject.height / 2 : maxH / 2
 
+  console.log("HEIGHT")
   console.log(storeObject.centerHeight)
+  console.log("WIDTH")
   console.log(storeObject.centerWidth)
 
   return (

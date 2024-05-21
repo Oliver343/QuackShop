@@ -485,10 +485,10 @@ export default function ContextProvider({children}){
         centerWidth = 498;
       } else if (window.innerHeight < window.innerWidth) {
         centerHeight = window.innerHeight / 2;
-        centerWidth = (window.innerHeight + difference) / 2;
+        centerWidth = (window.innerHeight ) / 2;
       } else {
-        centerHeight = (window.innerWidth - difference) / 2;
-        centerWidth = window.innerHeight / 2;
+        centerHeight = (window.innerWidth ) / 2;
+        centerWidth = window.innerWidth / 2;
       }
     }
     

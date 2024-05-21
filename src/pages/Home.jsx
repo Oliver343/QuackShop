@@ -30,6 +30,7 @@ export default function Home() {
             className="homeBody" 
             style={{minHeight: (storeObject.height - menuHight)}}
             >
+                <BoardP1 bagForTurn={bagForTurn} scoreTrack={storeObject.scoreTrack} chipSpace={0} screenWidth={500} />
                 <div className="buttonLine">
                     <button className="menuToggleBtn" style={{ visibility: "hidden"}}>.</button>
                     <div className="buttonBox">
@@ -46,7 +47,7 @@ export default function Home() {
                 <div className="homeSub">
                     <button disabled={true}>Start Game</button>
                 </div>
-                <BoardP1 bagForTurn={bagForTurn} scoreTrack={storeObject.scoreTrack} chipSpace={0} screenWidth={500} />
+                
             </div>
         </div>
     )

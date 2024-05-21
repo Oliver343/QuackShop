@@ -57,7 +57,23 @@ const BoardP1 = (props) => {
     <div>
 
       <div className="boardBox">
-        <div className="row">
+
+        <div 
+        className="newBoard" 
+        style={{backgroundImage: 
+        "url(" + boardImage + ")", 
+        backgroundSize: 'contain', 
+        backgroundRepeat: 'no-repeat', 
+        width: 1000, maxWidth: maxValue, 
+        height: 914, maxHeight: maxValue}}
+        >
+          {mappedChips}
+        </div>
+        {/* <img className="drop"  src={dropG} style={{ maxWidth: "80px"}}/>
+        <img className={"chips chip" + (chipSpace.current + 1)} width="125px" src={scoreSpace} /> */}
+
+      </div>
+      <div className="row">
           <div className="col-6">
             {" "}
             <h1 id="explodedText" hidden={true} style={{ color: "red" }}>
@@ -74,21 +90,6 @@ const BoardP1 = (props) => {
             </h2>{" "}
           </div>
         </div>
-        <div 
-        className="newBoard" 
-        style={{backgroundImage: 
-        "url(" + boardImage + ")", 
-        backgroundSize: 'contain', 
-        backgroundRepeat: 'no-repeat', 
-        width: 1000, maxWidth: maxValue, 
-        height: 914, maxHeight: maxValue}}
-        >
-          {mappedChips}
-        </div>
-        {/* <img className="drop"  src={dropG} style={{ maxWidth: "80px"}}/>
-        <img className={"chips chip" + (chipSpace.current + 1)} width="125px" src={scoreSpace} /> */}
-
-      </div>
     </div>
   );
 };
