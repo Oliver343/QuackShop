@@ -37,6 +37,10 @@
   left: 2px; 
 }
 
+.boardBar {
+  height: 50px;
+}
+
 .newBoard {
   color:blue;
   height:10;
@@ -47,7 +51,7 @@
 }
 
 .drop {
-  height: 4%;
+  height: 60px;
   position: absolute;
   left: 200px;
   top: 100px;

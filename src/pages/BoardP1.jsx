@@ -55,25 +55,28 @@ const BoardP1 = (props) => {
 
   return (
     <div>
-
-      <div className="boardBox">
+      <div className="boardBar">
         <div className="row">
           <div className="col-6">
             {" "}
-            <h1 id="explodedText" hidden={true} style={{ color: "red" }}>
+            <div id="explodedText" hidden={true} style={{ color: "red" }}>
               BOOM!
-            </h1>
+            </div>
             <button id="pullButton" onClick={() => drawRandomIngredient()}>
               PULL!
             </button>{" "}
             <button id="stopButton" onClick={() => setStopped(true)}>
               STOP!
             </button>{" "}
-            <h2 id="scoreBox" hidden={true}>
+            <div id="scoreBox" hidden={true}>
               VP = {props.scoreTrack[chipSpace.current +1].victoryPoints} BP = {props.scoreTrack[chipSpace.current +1].buyingPower}
-            </h2>{" "}
+            </div>{" "}
           </div>
         </div>
+      </div>
+        
+      <div className="boardBox">
+
         <div 
         className="newBoard" 
         style={{backgroundImage: 
@@ -81,12 +84,11 @@ const BoardP1 = (props) => {
         backgroundSize: 'contain', 
         backgroundRepeat: 'no-repeat', 
         width: 1000, maxWidth: maxValue, 
-        height: 1000, maxHeight: maxValue}}
+        height: 914, maxHeight: maxValue}}
         >
           {mappedChips}
         </div>
-        {/* <img className="drop"  src={dropG} style={{ maxWidth: "80px"}}/>
-        <img className={"chips chip" + (chipSpace.current + 1)} width="125px" src={scoreSpace} /> */}
+        <img className="drop"  src={dropG} />
 
       </div>
     </div>

@@ -14,8 +14,6 @@ const ChipImages = (props) => {
   let leftSizeB = (maxW > storeObject.width) ?  storeObject.width / 2 : maxW / 2
   let topSizeB = (maxH > storeObject.heigt) ?  storeObject.height / 2 : maxH / 2
 
-  console.log(storeObject.centerHeight)
-  console.log(storeObject.centerWidth)
 
   return (
     <div>
@@ -25,8 +23,8 @@ const ChipImages = (props) => {
         width={chipSize}
         style={{
           maxWidth: "80px",
-          top: storeObject.centerHeight,
-          left: storeObject.centerWidth,
+          top: (storeObject.centerHeight /1.475) + (storeObject.menuShow ? 154 : 78) , // change the second number here to change position on board 
+          left: storeObject.centerWidth /1.085,
         }}
       ></img>
     </div>

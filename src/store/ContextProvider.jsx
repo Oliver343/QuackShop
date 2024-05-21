@@ -10,6 +10,7 @@ export const StoreContextWrapper = createContext({
     checkState: "",
     scoreTrack: [],
     bag: []
+    // These are only used to help with auto complete
 })
 
 export default function ContextProvider({children}){
@@ -462,20 +463,21 @@ export default function ContextProvider({children}){
 
     const [width, setWidth] = useState(window.innerWidth)
     const [height, setHeight] = useState(window.innerHeight)
+    const [menuShow, setMenuShow] = useState((height < 600) ? false : true)
+    // Header only shown by default on screen with greater than 600px height
     let centerHeight =0
     let centerWidth = 0
-    const difference = 135 // wider
 
     function recalcCenter() {
-      if ((window.innerHeight > window.innerWidth) && window.innerHeight < 1000) {
-        centerHeight = window.innerHeight / 2;
-        centerWidth = (window.innerHeight + difference) / 2;
-      } else if ((window.innerWidth > window.innerHeight) && window.innerWidth < 1000) {
-        centerHeight = (window.innerWidth - difference) / 2;
-        centerWidth = window.innerWidth / 2;
-      } else {
+      if((window.innerHeight > 910) && (window.innerWidth > 996)) {
         centerHeight = 500;
-        centerWidth = 500 + (difference / 2);
+        centerWidth = 498;
+      } else if (window.innerHeight < window.innerWidth) {
+        centerHeight = window.innerHeight / 2;
+        centerWidth = window.innerHeight / 2;
+      } else {
+        centerHeight = window.innerWidth / 2;
+        centerWidth = window.innerWidth / 2;
       }
     }
     
@@ -485,14 +487,24 @@ export default function ContextProvider({children}){
     function handleResize() {
       setWidth(window.innerWidth)
       setHeight(window.innerHeight)
-
+      recalcCenter()
     }
 
     window.addEventListener('resize', handleResize);
 
 
 return (
-    <StoreContextWrapper.Provider value={{checkState, scoreTrack, bag, width, height, centerHeight, centerWidth}}>
+    <StoreContextWrapper.Provider value={{
+      checkState,
+      scoreTrack,
+      bag,
+      width,
+      height,
+      centerHeight,
+      centerWidth,
+      menuShow,
+      setMenuShow
+    }}>
         {children}
     </StoreContextWrapper.Provider>
 )

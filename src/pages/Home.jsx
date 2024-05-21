@@ -9,33 +9,32 @@ import './chips.css'
 
 export default function Home() {
     const storeObject = useContext(StoreContextWrapper)
-
-    const [menuShow, setMenuShow] = useState((storeObject.height < 600) ? false : true)
-    // Header only shown by default on screen with greater than 600px height
     let menuHight = 81
 
 
     let bagForTurn = [...storeObject.bag];
 
-    if(!menuShow) {menuHight = 4}
+    if(!storeObject.menuShow) {menuHight = 4}
 
     function handleMenuToggle() {
-        setMenuShow((pre) =>  !pre) 
+        storeObject.setMenuShow((pre) =>  !pre) 
     }
 
     return (
         <div className="homeMain">
-            {menuShow ? <Header toggleMenu={handleMenuToggle} /> : ""}
+            {storeObject.menuShow ? <Header toggleMenu={handleMenuToggle} /> : ""}
             <div 
             className="homeBody" 
             style={{minHeight: (storeObject.height - menuHight)}}
             >
+                
                 <div className="buttonLine">
                     <button className="menuToggleBtn" style={{ visibility: "hidden"}}>.</button>
                     <div className="buttonBox">
-                        {menuShow ? "" : <button className="menuToggleBtn" onClick={handleMenuToggle}><FontAwesomeIcon icon={faBars} /></button>}
+                        {storeObject.menuShow ? "" : <button className="menuToggleBtn" onClick={handleMenuToggle}><FontAwesomeIcon icon={faBars} /></button>}
                     </div>
                 </div>
+                <BoardP1 bagForTurn={bagForTurn} scoreTrack={storeObject.scoreTrack} chipSpace={0} screenWidth={500} />
                 <div className="homeSub">
                     HOME - {storeObject.checkState}
                     <br />
@@ -46,7 +45,7 @@ export default function Home() {
                 <div className="homeSub">
                     <button disabled={true}>Start Game</button>
                 </div>
-                <BoardP1 bagForTurn={bagForTurn} scoreTrack={storeObject.scoreTrack} chipSpace={0} screenWidth={500} />
+                
             </div>
         </div>
     )
