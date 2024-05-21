@@ -481,13 +481,13 @@ export default function ContextProvider({children}){
 
     function recalcCenter2() {
       if((window.innerHeight > 910) && (window.innerWidth > 996)) {
-        centerHeight = 455;
+        centerHeight = 500;
         centerWidth = 498;
       } else if (window.innerHeight < window.innerWidth) {
         centerHeight = window.innerHeight / 2;
-        centerWidth = (window.innerHeight ) / 2;
+        centerWidth = window.innerHeight / 2;
       } else {
-        centerHeight = (window.innerWidth ) / 2;
+        centerHeight = window.innerWidth / 2;
         centerWidth = window.innerWidth / 2;
       }
     }

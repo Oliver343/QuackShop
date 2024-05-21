@@ -27,8 +27,8 @@ const ChipImages = (props) => {
         width={chipSize}
         style={{
           maxWidth: "80px",
-          top: storeObject.centerHeight,
-          left: storeObject.centerWidth,
+          top: storeObject.centerHeight /1.475,
+          left: storeObject.centerWidth /1.085,
         }}
       ></img>
     </div>
