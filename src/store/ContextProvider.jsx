@@ -467,6 +467,10 @@ export default function ContextProvider({children}){
       1.59,
       2,
       2.1,
+      1.91,
+      1.55,
+      1.255,
+      1.12
     ]
 
     const chipLeftArr = [
@@ -475,6 +479,10 @@ export default function ContextProvider({children}){
       0.843,
       0.908,
       1.068,
+      1.282,
+      1.46,
+      1.38,
+      1.17,
     ]
 
     const [width, setWidth] = useState(window.innerWidth)
