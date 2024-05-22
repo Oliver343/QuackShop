@@ -1,6 +1,8 @@
 import React, { useState, useRef, useContext } from "react";
 import ChipImages from "../components/ChipImages";
 import { StoreContextWrapper } from "../store/ContextProvider"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
 
 import scoreSpace from "../img/scoreSpace.png";
 import board from "../img/board.png";
@@ -55,6 +57,12 @@ const BoardP1 = (props) => {
 
   return (
     <div>
+      <div className="buttonLine">
+        <button className="menuToggleBtn" style={{ visibility: "hidden"}}>.</button>
+        <div className="buttonBox">
+          {storeObject.menuShow ? "" : <button className="menuToggleBtn" onClick={props.handleMenuToggle}><FontAwesomeIcon icon={faBars} /></button>}
+        </div>
+      </div>
       <div className="boardBar">
         <div className="row">
           <div className="col-6">

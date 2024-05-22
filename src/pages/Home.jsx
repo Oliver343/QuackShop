@@ -34,7 +34,7 @@ export default function Home() {
                         {storeObject.menuShow ? "" : <button className="menuToggleBtn" onClick={handleMenuToggle}><FontAwesomeIcon icon={faBars} /></button>}
                     </div>
                 </div>
-                <BoardP1 bagForTurn={bagForTurn} scoreTrack={storeObject.scoreTrack} chipSpace={0} screenWidth={500} />
+                <BoardP1 bagForTurn={bagForTurn} scoreTrack={storeObject.scoreTrack} chipSpace={0} screenWidth={500} handleMenuToggle={handleMenuToggle}/>
                 <div className="homeSub">
                     HOME - {storeObject.checkState}
                     <br />
