@@ -461,6 +461,22 @@ export default function ContextProvider({children}){
       },
     ])
 
+    const chipTopArr = [
+      1.475,
+      1.37,
+      1.59,
+      2,
+      2.1,
+    ]
+
+    const chipLeftArr = [
+      1.085,
+      0.93,
+      0.843,
+      0.908,
+      1.068,
+    ]
+
     const [width, setWidth] = useState(window.innerWidth)
     const [height, setHeight] = useState(window.innerHeight)
     const [menuShow, setMenuShow] = useState((height < 600) ? false : true)
@@ -503,7 +519,9 @@ return (
       centerHeight,
       centerWidth,
       menuShow,
-      setMenuShow
+      setMenuShow,
+      chipLeftArr,
+      chipTopArr
     }}>
         {children}
     </StoreContextWrapper.Provider>

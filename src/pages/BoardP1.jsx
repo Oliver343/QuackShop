@@ -1,6 +1,8 @@
 import React, { useState, useRef, useContext } from "react";
 import ChipImages from "../components/ChipImages";
 import { StoreContextWrapper } from "../store/ContextProvider"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
 
 import scoreSpace from "../img/scoreSpace.png";
 import board from "../img/board.png";
@@ -56,22 +58,25 @@ const BoardP1 = (props) => {
   return (
     <div>
       <div className="boardBar">
-        <div className="row">
-          <div className="col-6">
-            {" "}
-            <div id="explodedText" hidden={true} style={{ color: "red" }}>
-              BOOM!
+        <div className="buttonBox">
+            <div>
+              {" "}
+              <div id="explodedText" hidden={true} style={{ color: "red" }}>
+                BOOM!
+              </div>
+              <button id="pullButton" onClick={() => drawRandomIngredient()}>
+                PULL!
+              </button>{" "}
+              <button id="stopButton" onClick={() => setStopped(true)}>
+                STOP!
+              </button>{" "}
+              <div id="scoreBox" hidden={true}>
+                VP = {props.scoreTrack[chipSpace.current +1].victoryPoints} BP = {props.scoreTrack[chipSpace.current +1].buyingPower}
+              </div>{" "}
             </div>
-            <button id="pullButton" onClick={() => drawRandomIngredient()}>
-              PULL!
-            </button>{" "}
-            <button id="stopButton" onClick={() => setStopped(true)}>
-              STOP!
-            </button>{" "}
-            <div id="scoreBox" hidden={true}>
-              VP = {props.scoreTrack[chipSpace.current +1].victoryPoints} BP = {props.scoreTrack[chipSpace.current +1].buyingPower}
-            </div>{" "}
-          </div>
+            <div>
+              {storeObject.menuShow ? "" : <button className="menuToggleBtn" onClick={props.handleMenuToggle}><FontAwesomeIcon icon={faBars} /></button>}
+            </div>
         </div>
       </div>
         
@@ -88,7 +93,12 @@ const BoardP1 = (props) => {
         >
           {mappedChips}
         </div>
-        <img className="drop"  src={dropG} />
+        <img className="drop"  src={dropG} 
+        
+        style={{
+          top: (storeObject.centerHeight /1.470) + (storeObject.menuShow ? 130 : 54),
+          left: storeObject.centerWidth /1.071, 
+        }}/>
 
       </div>
     </div>
