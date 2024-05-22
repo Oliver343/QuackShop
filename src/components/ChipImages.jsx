@@ -5,14 +5,6 @@ const ChipImages = (props) => {
   const storeObject = useContext(StoreContextWrapper)
   let smaller = (storeObject.width < storeObject.height) ? storeObject.width : storeObject.height
   let chipSize = (smaller < 1000) ? smaller / 13 : 78
-  let leftSize = (smaller < 1000) ? smaller / 2.18 : 460
-  let topSize = ((smaller < 1000) ? (smaller -60) / 2.80 : 330) + 230
-
-  const maxW = 1000
-  const maxH = 1000
-
-  let leftSizeB = (maxW > storeObject.width) ?  storeObject.width / 2 : maxW / 2
-  let topSizeB = (maxH > storeObject.heigt) ?  storeObject.height / 2 : maxH / 2
 
 
   return (
@@ -23,8 +15,8 @@ const ChipImages = (props) => {
         width={chipSize}
         style={{
           maxWidth: "80px",
-          top: (storeObject.centerHeight /1.475) + (storeObject.menuShow ? 130 : 54) , // change the second number here to change position on board 
-          left: storeObject.centerWidth /1.085,
+          top: (storeObject.centerHeight / storeObject.chipTopArr[props.chipSpace]) + (storeObject.menuShow ? 130 : 53),
+          left: storeObject.centerWidth / storeObject.chipLeftArr[props.chipSpace], // storeObject.chipLeftArr[props.chipSpace]  &&&& storeObject.chipTopArr[props.chipSpace]
         }}
       ></img>
     </div>

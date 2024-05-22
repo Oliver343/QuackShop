@@ -57,12 +57,6 @@ const BoardP1 = (props) => {
 
   return (
     <div>
-      {/* <div className="buttonLine">
-        <button className="menuToggleBtn" style={{ visibility: "hidden"}}>.</button>
-        <div className="buttonBox">
-          {storeObject.menuShow ? "" : <button className="menuToggleBtn" onClick={props.handleMenuToggle}><FontAwesomeIcon icon={faBars} /></button>}
-        </div>
-      </div> */}
       <div className="boardBar">
         <div className="buttonBox">
             <div>
@@ -99,7 +93,12 @@ const BoardP1 = (props) => {
         >
           {mappedChips}
         </div>
-        <img className="drop"  src={dropG} />
+        <img className="drop"  src={dropG} 
+        
+        style={{
+          top: (storeObject.centerHeight /1.470) + (storeObject.menuShow ? 130 : 54),
+          left: storeObject.centerWidth /1.071, 
+        }}/>
 
       </div>
     </div>
