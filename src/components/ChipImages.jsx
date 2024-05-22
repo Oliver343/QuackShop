@@ -23,7 +23,7 @@ const ChipImages = (props) => {
         width={chipSize}
         style={{
           maxWidth: "80px",
-          top: (storeObject.centerHeight /1.475) + (storeObject.menuShow ? 154 : 78) , // change the second number here to change position on board 
+          top: (storeObject.centerHeight /1.475) + (storeObject.menuShow ? 130 : 54) , // change the second number here to change position on board 
           left: storeObject.centerWidth /1.085,
         }}
       ></img>

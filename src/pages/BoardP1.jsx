@@ -57,29 +57,32 @@ const BoardP1 = (props) => {
 
   return (
     <div>
-      <div className="buttonLine">
+      {/* <div className="buttonLine">
         <button className="menuToggleBtn" style={{ visibility: "hidden"}}>.</button>
         <div className="buttonBox">
           {storeObject.menuShow ? "" : <button className="menuToggleBtn" onClick={props.handleMenuToggle}><FontAwesomeIcon icon={faBars} /></button>}
         </div>
-      </div>
+      </div> */}
       <div className="boardBar">
-        <div className="row">
-          <div className="col-6">
-            {" "}
-            <div id="explodedText" hidden={true} style={{ color: "red" }}>
-              BOOM!
+        <div className="buttonBox">
+            <div>
+              {" "}
+              <div id="explodedText" hidden={true} style={{ color: "red" }}>
+                BOOM!
+              </div>
+              <button id="pullButton" onClick={() => drawRandomIngredient()}>
+                PULL!
+              </button>{" "}
+              <button id="stopButton" onClick={() => setStopped(true)}>
+                STOP!
+              </button>{" "}
+              <div id="scoreBox" hidden={true}>
+                VP = {props.scoreTrack[chipSpace.current +1].victoryPoints} BP = {props.scoreTrack[chipSpace.current +1].buyingPower}
+              </div>{" "}
             </div>
-            <button id="pullButton" onClick={() => drawRandomIngredient()}>
-              PULL!
-            </button>{" "}
-            <button id="stopButton" onClick={() => setStopped(true)}>
-              STOP!
-            </button>{" "}
-            <div id="scoreBox" hidden={true}>
-              VP = {props.scoreTrack[chipSpace.current +1].victoryPoints} BP = {props.scoreTrack[chipSpace.current +1].buyingPower}
-            </div>{" "}
-          </div>
+            <div>
+              {storeObject.menuShow ? "" : <button className="menuToggleBtn" onClick={props.handleMenuToggle}><FontAwesomeIcon icon={faBars} /></button>}
+            </div>
         </div>
       </div>
         
