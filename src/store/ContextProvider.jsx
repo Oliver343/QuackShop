@@ -493,9 +493,9 @@ export default function ContextProvider({children}){
     let centerWidth = 0
 
     function recalcCenter() {
-      if((window.innerHeight > 910) && (window.innerWidth > 996)) {
+      if((window.innerHeight > 1000) && (window.innerWidth > 1000)) {
         centerHeight = 500;
-        centerWidth = 498;
+        centerWidth = 500;
       } else if (window.innerHeight < window.innerWidth) {
         centerHeight = window.innerHeight / 2;
         centerWidth = window.innerHeight / 2;
