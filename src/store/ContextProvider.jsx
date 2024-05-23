@@ -470,7 +470,12 @@ export default function ContextProvider({children}){
       1.91,
       1.55,
       1.255,
-      1.12
+      1.12,
+      1.095,
+      1.145,
+      1.28,
+      1.57,
+      2.07,
     ]
 
     const chipLeftArr = [
@@ -483,11 +488,17 @@ export default function ContextProvider({children}){
       1.46,
       1.38,
       1.17,
+      0.97,
+      0.836,
+      0.749,
+      0.716,
+      0.736,
     ]
 
     const [width, setWidth] = useState(window.innerWidth)
     const [height, setHeight] = useState(window.innerHeight)
     const [menuShow, setMenuShow] = useState((height < 600) ? false : true)
+    const [pageTarget, setPageTarget] = useState(1)
     // Header only shown by default on screen with greater than 600px height
     let centerHeight =0
     let centerWidth = 0
@@ -529,7 +540,9 @@ return (
       menuShow,
       setMenuShow,
       chipLeftArr,
-      chipTopArr
+      chipTopArr,
+      pageTarget,
+      setPageTarget,
     }}>
         {children}
     </StoreContextWrapper.Provider>

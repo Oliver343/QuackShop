@@ -15,7 +15,7 @@ const ChipImages = (props) => {
         width={chipSize}
         style={{
           maxWidth: "80px",
-          top: (storeObject.centerHeight /  storeObject.chipTopArr[props.chipSpace]) + (storeObject.menuShow ? 130 : 53),
+          top: (storeObject.centerHeight / storeObject.chipTopArr[props.chipSpace]) + (storeObject.menuShow ? 130 : 53),
           left: storeObject.centerWidth / storeObject.chipLeftArr[props.chipSpace], // storeObject.chipLeftArr[props.chipSpace]  &&&& storeObject.chipTopArr[props.chipSpace]
         }}
       ></img>
