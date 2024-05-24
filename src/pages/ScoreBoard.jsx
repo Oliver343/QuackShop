@@ -5,6 +5,14 @@ import scoreBoard from "../img/scoreboard.png"
 
 export default function ScoreBoard() {
     const storeObject = useContext(StoreContextWrapper)
+    const dice = [
+        {name: "Pumpkin"},
+        {name: "1VP"},
+        {name: "1VP"},
+        {name: "2VP"},
+        {name: "Ruby"},
+        {name: "Droplet"},
+    ]
     let maxValue = ((storeObject.width < storeObject.height ? storeObject.width : storeObject.height) - 4 )
     return(
         <div>

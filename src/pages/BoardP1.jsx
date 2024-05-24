@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import ChipImages from "../components/ChipImages";
 import { StoreContextWrapper } from "../store/ContextProvider"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -10,48 +10,55 @@ import boardBoom from "../img/boardboom.png";
 import dropG from "../img/dropG.png"
 
 const BoardP1 = (props) => {
-  const [currentPot, setCurrentPot] = useState([]);
-  const [exploded, setExploded] = useState(false);
-  const [stopped, setStopped] = useState(false);
+  const exploaded = useRef(false);
   const storeObject = useContext(StoreContextWrapper)
   let boardImage = board
   let maxValue = ((storeObject.width < storeObject.height ? storeObject.width : storeObject.height) - 4 )
+  console.log(storeObject.p1BagCurrentRound)
 
-
-  if (exploded || stopped) {
-    document.getElementById("pullButton").disabled = true;
-    document.getElementById("stopButton").disabled = true;
-    document.getElementById("scoreBox").hidden = false;
-    if (exploded) {
-      document.getElementById("explodedText").hidden = false;
-      boardImage = boardBoom
+  useEffect(() => {
+    if (storeObject.p1Stopped) {
+      document.getElementById("pullButton").disabled = true;
+      document.getElementById("stopButton").disabled = true;
+      document.getElementById("scoreBox").hidden = false;
     }
-  }
+
+    if (storeObject.p1Exploded) {
+    document.getElementById("explodedText").hidden = false;
+    boardImage = boardBoom;
+    document.getElementById("newBoard").style.backgroundImage = "url(" + boardImage + ")" ;
+    }
+  },[storeObject.p1Stopped, storeObject.p1Exploded]);
+
 
   let chipSpace = useRef(0);
   let cherrybombValue = useRef(0);
 
   function drawRandomIngredient() {
-    const randomNo = Math.floor(Math.random() * props.bagForTurn.length);
-    const currentIngredient = props.bagForTurn.splice(randomNo, 1)[0];
-    console.log(currentIngredient);
+    const randomNo = Math.floor(Math.random() * storeObject.p1BagCurrentRound.length);
+    let currentIngredient = storeObject.p1BagCurrentRound[randomNo]
+
+    storeObject.setP1BagCurrentRound(prev => prev.filter(item => item !== currentIngredient ))
+
     chipSpace.current = chipSpace.current + currentIngredient.value;
     currentIngredient["chipSpace"] = chipSpace.current;
-    let tempArr = [...currentPot];
-    tempArr.push(currentIngredient);
-    console.log(tempArr);
-    setCurrentPot(tempArr);
-    console.log(props.bagForTurn);
+
+    storeObject.setP1PotCurrentRound(prev => {
+      return (prev ? [...prev, currentIngredient] : currentIngredient)
+    })
+
     if (currentIngredient.volatile) {
       cherrybombValue.current =
         cherrybombValue.current + currentIngredient.value;
     }
     if (cherrybombValue.current >= 8) {
-      setExploded(true);
+      storeObject.setP1Exploded(true);
+      exploaded.current = true;
+      storeObject.setP1Stopped(true);
     }
   }
 
-  let mappedChips = currentPot.map((ingredient) => {
+  let mappedChips = storeObject.p1PotCurrentRound.map((ingredient) => {
     return <ChipImages chipSpace={ingredient.chipSpace} img={ingredient.img} />;
   });
 
@@ -67,7 +74,7 @@ const BoardP1 = (props) => {
               <button id="pullButton" onClick={() => drawRandomIngredient()}>
                 PULL!
               </button>{" "}
-              <button id="stopButton" onClick={() => setStopped(true)}>
+              <button id="stopButton" onClick={() => storeObject.setP1Stopped(true)}>
                 STOP!
               </button>{" "}
               <div id="scoreBox" hidden={true}>
@@ -84,6 +91,7 @@ const BoardP1 = (props) => {
 
         <div 
         className="newBoard" 
+        id="newBoard"
         style={{backgroundImage: 
         "url(" + boardImage + ")", 
         backgroundSize: 'contain', 
@@ -93,11 +101,16 @@ const BoardP1 = (props) => {
         >
           {mappedChips}
         </div>
-        <img className="drop"  src={dropG} 
-        
+        <img 
+        className="drop"  
+        src={dropG} 
+        width={storeObject.chipSize - (storeObject.chipSize / 3)}
+        height={storeObject.chipSize - (storeObject.chipSize / 3)}
         style={{
-          top: (storeObject.centerHeight /1.470) + (storeObject.menuShow ? 130 : 54),
-          left: storeObject.centerWidth /1.071, 
+          maxWidth: "54px",
+          maxHeight: "54px",
+          top: (storeObject.centerHeight / storeObject.chipTopArr[storeObject.player1Stats.p1Droplet]) + (storeObject.menuShow ? 130 : 54),
+          left: storeObject.centerWidth / storeObject.chipLeftArr[storeObject.player1Stats.p1Droplet], 
         }}/>
 
       </div>
