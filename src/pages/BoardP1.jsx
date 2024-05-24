@@ -40,18 +40,17 @@ const BoardP1 = (props) => {
 
     storeObject.setP1BagCurrentRound(prev => prev.filter(item => item !== currentIngredient ))
 
-    chipSpace.current = chipSpace.current + currentIngredient.value;
-    currentIngredient["chipSpace"] = chipSpace.current;
+    storeObject.setP1ChipSpace(prev => prev + currentIngredient.value)
+    currentIngredient["chipSpace"] = storeObject.p1ChipSpace;
 
     storeObject.setP1PotCurrentRound(prev => {
       return (prev ? [...prev, currentIngredient] : currentIngredient)
     })
 
     if (currentIngredient.volatile) {
-      cherrybombValue.current =
-        cherrybombValue.current + currentIngredient.value;
+      storeObject.setP1CherrybombValue(prev => prev + currentIngredient.value)
     }
-    if (cherrybombValue.current >= 8) {
+    if (storeObject.p1CherrybombValue >= 8) {
       storeObject.setP1Exploded(true);
       exploaded.current = true;
       storeObject.setP1Stopped(true);
@@ -78,7 +77,7 @@ const BoardP1 = (props) => {
                 STOP!
               </button>{" "}
               <div id="scoreBox" hidden={true}>
-                VP = {props.scoreTrack[chipSpace.current +1].victoryPoints} BP = {props.scoreTrack[chipSpace.current +1].buyingPower}
+                VP = {props.scoreTrack[storeObject.p1ChipSpace +1].victoryPoints} BP = {props.scoreTrack[storeObject.p1ChipSpace +1].buyingPower}
               </div>{" "}
             </div>
             <div>
