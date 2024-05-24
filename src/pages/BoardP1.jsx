@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import ChipImages from "../components/ChipImages";
 import { StoreContextWrapper } from "../store/ContextProvider"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -10,23 +10,29 @@ import boardBoom from "../img/boardboom.png";
 import dropG from "../img/dropG.png"
 
 const BoardP1 = (props) => {
-  const [exploded, setExploded] = useState(false);
+  const exploaded = useRef(false);
   const [stopped, setStopped] = useState(false);
   const storeObject = useContext(StoreContextWrapper)
   let boardImage = board
   let maxValue = ((storeObject.width < storeObject.height ? storeObject.width : storeObject.height) - 4 )
   console.log(storeObject.p1BagCurrentRound)
 
-
-  if (exploded || stopped) {
-    document.getElementById("pullButton").disabled = true;
-    document.getElementById("stopButton").disabled = true;
-    document.getElementById("scoreBox").hidden = false;
-    if (exploded) {
-      document.getElementById("explodedText").hidden = false;
-      boardImage = boardBoom
-    }
+  useEffect(() => {
+    if (storeObject.p1Stopped) {
+      document.getElementById("pullButton").disabled = true;
+      document.getElementById("stopButton").disabled = true;
+      document.getElementById("scoreBox").hidden = false;
   }
+  if (storeObject.p1Exploded) {
+    document.getElementById("explodedText").hidden = false;
+    boardImage = boardBoom;
+    document.getElementById("newBoard").style.backgroundImage = "url(" + boardImage + ")" ;
+  }
+  },[storeObject.p1Stopped, storeObject.p1Exploded]);
+
+  console.log(storeObject.p1Exploded)
+
+
 
   let chipSpace = useRef(0);
   let cherrybombValue = useRef(0);
@@ -49,7 +55,9 @@ const BoardP1 = (props) => {
         cherrybombValue.current + currentIngredient.value;
     }
     if (cherrybombValue.current >= 8) {
-      setExploded(true);
+      storeObject.setP1Exploded(true);
+      exploaded.current = true;
+      storeObject.setP1Stopped(true);
     }
   }
 
@@ -69,7 +77,7 @@ const BoardP1 = (props) => {
               <button id="pullButton" onClick={() => drawRandomIngredient()}>
                 PULL!
               </button>{" "}
-              <button id="stopButton" onClick={() => setStopped(true)}>
+              <button id="stopButton" onClick={() => storeObject.setP1Stopped(true)}>
                 STOP!
               </button>{" "}
               <div id="scoreBox" hidden={true}>
@@ -86,6 +94,7 @@ const BoardP1 = (props) => {
 
         <div 
         className="newBoard" 
+        id="newBoard"
         style={{backgroundImage: 
         "url(" + boardImage + ")", 
         backgroundSize: 'contain', 

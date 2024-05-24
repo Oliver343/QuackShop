@@ -468,6 +468,8 @@ export default function ContextProvider({children}){
 
     const [p1BagCurrentRound, setP1BagCurrentRound] = useState([...p1BagAll])
     const [p1PotCurrentRound, setP1PotCurrentRound] = useState([])
+    const [p1Exploded, setP1Exploded] = useState(false);
+    const [p1Stopped, setP1Stopped] = useState(false);
 
     const chipTopArr = [
       1.475,
@@ -556,6 +558,11 @@ return (
       setP1BagCurrentRound,
       p1PotCurrentRound,
       setP1PotCurrentRound,
+      p1Exploded,
+      setP1Exploded,
+      p1Stopped,
+      setP1Stopped,
+
     }}>
         {children}
     </StoreContextWrapper.Provider>
