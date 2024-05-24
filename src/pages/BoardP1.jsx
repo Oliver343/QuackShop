@@ -40,8 +40,10 @@ const BoardP1 = (props) => {
 
     storeObject.setP1BagCurrentRound(prev => prev.filter(item => item !== currentIngredient ))
 
-    storeObject.setP1ChipSpace(prev => prev + currentIngredient.value)
-    currentIngredient["chipSpace"] = storeObject.p1ChipSpace;
+    storeObject.setP1ChipSpace(prev => {
+      currentIngredient["chipSpace"] = prev + currentIngredient.value;
+      return prev + currentIngredient.value
+    })
 
     storeObject.setP1PotCurrentRound(prev => {
       return (prev ? [...prev, currentIngredient] : currentIngredient)
