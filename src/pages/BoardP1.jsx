@@ -11,7 +11,6 @@ import dropG from "../img/dropG.png"
 
 const BoardP1 = (props) => {
   const exploaded = useRef(false);
-  const [stopped, setStopped] = useState(false);
   const storeObject = useContext(StoreContextWrapper)
   let boardImage = board
   let maxValue = ((storeObject.width < storeObject.height ? storeObject.width : storeObject.height) - 4 )
@@ -22,16 +21,14 @@ const BoardP1 = (props) => {
       document.getElementById("pullButton").disabled = true;
       document.getElementById("stopButton").disabled = true;
       document.getElementById("scoreBox").hidden = false;
-  }
-  if (storeObject.p1Exploded) {
+    }
+
+    if (storeObject.p1Exploded) {
     document.getElementById("explodedText").hidden = false;
     boardImage = boardBoom;
     document.getElementById("newBoard").style.backgroundImage = "url(" + boardImage + ")" ;
-  }
+    }
   },[storeObject.p1Stopped, storeObject.p1Exploded]);
-
-  console.log(storeObject.p1Exploded)
-
 
 
   let chipSpace = useRef(0);
@@ -46,8 +43,8 @@ const BoardP1 = (props) => {
     chipSpace.current = chipSpace.current + currentIngredient.value;
     currentIngredient["chipSpace"] = chipSpace.current;
 
-    storeObject.setP1PotCurrentRound(pre => {
-      return (pre ? [...pre, currentIngredient] : currentIngredient)
+    storeObject.setP1PotCurrentRound(prev => {
+      return (prev ? [...prev, currentIngredient] : currentIngredient)
     })
 
     if (currentIngredient.volatile) {
@@ -104,11 +101,16 @@ const BoardP1 = (props) => {
         >
           {mappedChips}
         </div>
-        <img className="drop"  src={dropG} 
-        
+        <img 
+        className="drop"  
+        src={dropG} 
+        width={storeObject.chipSize - (storeObject.chipSize / 3)}
+        height={storeObject.chipSize - (storeObject.chipSize / 3)}
         style={{
-          top: (storeObject.centerHeight /1.470) + (storeObject.menuShow ? 130 : 54),
-          left: storeObject.centerWidth /1.071, 
+          maxWidth: "54px",
+          maxHeight: "54px",
+          top: (storeObject.centerHeight / storeObject.chipTopArr[storeObject.player1Stats.p1Droplet]) + (storeObject.menuShow ? 130 : 54),
+          left: storeObject.centerWidth / storeObject.chipLeftArr[storeObject.player1Stats.p1Droplet], 
         }}/>
 
       </div>
