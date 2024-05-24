@@ -10,12 +10,12 @@ import boardBoom from "../img/boardboom.png";
 import dropG from "../img/dropG.png"
 
 const BoardP1 = (props) => {
-  const [currentPot, setCurrentPot] = useState([]);
   const [exploded, setExploded] = useState(false);
   const [stopped, setStopped] = useState(false);
   const storeObject = useContext(StoreContextWrapper)
   let boardImage = board
   let maxValue = ((storeObject.width < storeObject.height ? storeObject.width : storeObject.height) - 4 )
+  console.log(storeObject.p1BagCurrentRound)
 
 
   if (exploded || stopped) {
@@ -32,16 +32,18 @@ const BoardP1 = (props) => {
   let cherrybombValue = useRef(0);
 
   function drawRandomIngredient() {
-    const randomNo = Math.floor(Math.random() * props.bagForTurn.length);
-    const currentIngredient = props.bagForTurn.splice(randomNo, 1)[0];
-    console.log(currentIngredient);
+    const randomNo = Math.floor(Math.random() * storeObject.p1BagCurrentRound.length);
+    let currentIngredient = storeObject.p1BagCurrentRound[randomNo]
+
+    storeObject.setP1BagCurrentRound(prev => prev.filter(item => item !== currentIngredient ))
+
     chipSpace.current = chipSpace.current + currentIngredient.value;
     currentIngredient["chipSpace"] = chipSpace.current;
-    let tempArr = [...currentPot];
-    tempArr.push(currentIngredient);
-    console.log(tempArr);
-    setCurrentPot(tempArr);
-    console.log(props.bagForTurn);
+
+    storeObject.setP1PotCurrentRound(pre => {
+      return (pre ? [...pre, currentIngredient] : currentIngredient)
+    })
+
     if (currentIngredient.volatile) {
       cherrybombValue.current =
         cherrybombValue.current + currentIngredient.value;
@@ -51,7 +53,7 @@ const BoardP1 = (props) => {
     }
   }
 
-  let mappedChips = currentPot.map((ingredient) => {
+  let mappedChips = storeObject.p1PotCurrentRound.map((ingredient) => {
     return <ChipImages chipSpace={ingredient.chipSpace} img={ingredient.img} />;
   });
 

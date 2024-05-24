@@ -395,7 +395,8 @@ export default function ContextProvider({children}){
         end: true
       },
     ])
-    const [bag] = useState([
+
+    const [starterBag] = useState([
       {
         color: "white",
         value: 1,
@@ -460,6 +461,13 @@ export default function ContextProvider({children}){
         volatile: false,
       },
     ])
+
+    let p1BagAll = [
+      ...starterBag
+    ]
+
+    const [p1BagCurrentRound, setP1BagCurrentRound] = useState([...p1BagAll])
+    const [p1PotCurrentRound, setP1PotCurrentRound] = useState([])
 
     const chipTopArr = [
       1.475,
@@ -532,7 +540,6 @@ return (
     <StoreContextWrapper.Provider value={{
       checkState,
       scoreTrack,
-      bag,
       width,
       height,
       centerHeight,
@@ -543,6 +550,12 @@ return (
       chipTopArr,
       pageTarget,
       setPageTarget,
+      starterBag,
+      p1BagAll,
+      p1BagCurrentRound,
+      setP1BagCurrentRound,
+      p1PotCurrentRound,
+      setP1PotCurrentRound,
     }}>
         {children}
     </StoreContextWrapper.Provider>

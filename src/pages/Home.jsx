@@ -12,9 +12,6 @@ export default function Home() {
     const storeObject = useContext(StoreContextWrapper)
     let menuHight = 81
 
-
-    let bagForTurn = [...storeObject.bag];
-
     if(!storeObject.menuShow) {menuHight = 4}
 
     function handleMenuToggle() {
@@ -48,7 +45,7 @@ export default function Home() {
                                 </div>
                             </> :
                             storeObject.pageTarget === 2 ?
-                            <BoardP1 bagForTurn={bagForTurn} scoreTrack={storeObject.scoreTrack} chipSpace={0} screenWidth={500} handleMenuToggle={handleMenuToggle}/> :
+                            <BoardP1 scoreTrack={storeObject.scoreTrack} chipSpace={0} handleMenuToggle={handleMenuToggle}/> :
                             <>
                                 <div className="buttonLine">
                                     <button className="menuToggleBtn" style={{ visibility: "hidden"}}>.</button>
