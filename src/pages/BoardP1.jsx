@@ -25,14 +25,15 @@ const BoardP1 = (props) => {
 
     if (storeObject.p1Exploded) {
     document.getElementById("explodedText").hidden = false;
-    boardImage = boardBoom;
-    document.getElementById("newBoard").style.backgroundImage = "url(" + boardImage + ")" ;
+    document.getElementById("newBoard").style.backgroundImage = "url(" + boardBoom + ")" ;
     }
   },[storeObject.p1Stopped, storeObject.p1Exploded]);
 
 
   let chipSpace = useRef(0);
   let cherrybombValue = useRef(0);
+
+  console.log(storeObject.p1CherrybombValue)
 
   function drawRandomIngredient() {
     const randomNo = Math.floor(Math.random() * storeObject.p1BagCurrentRound.length);
@@ -50,13 +51,15 @@ const BoardP1 = (props) => {
     })
 
     if (currentIngredient.volatile) {
-      storeObject.setP1CherrybombValue(prev => prev + currentIngredient.value)
+      cherrybombValue.current =
+      cherrybombValue.current + currentIngredient.value;
     }
-    if (storeObject.p1CherrybombValue >= 8) {
+    if (cherrybombValue.current >= 8) {
       storeObject.setP1Exploded(true);
       exploaded.current = true;
       storeObject.setP1Stopped(true);
     }
+  
   }
 
   let mappedChips = storeObject.p1PotCurrentRound.map((ingredient) => {
