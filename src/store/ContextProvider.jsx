@@ -395,7 +395,8 @@ export default function ContextProvider({children}){
         end: true
       },
     ])
-    const [bag] = useState([
+
+    const [starterBag] = useState([
       {
         color: "white",
         value: 1,
@@ -461,6 +462,22 @@ export default function ContextProvider({children}){
       },
     ])
 
+    let player1Stats = {
+      p1GameBag: [
+      ...starterBag
+    ],
+    p1Droplet: 0,
+    p1Rattails: 0,
+    p1Rubys: 0,
+    }
+
+    const [p1BagCurrentRound, setP1BagCurrentRound] = useState([...player1Stats.p1GameBag])
+    const [p1PotCurrentRound, setP1PotCurrentRound] = useState([])
+    const [p1Exploded, setP1Exploded] = useState(false);
+    const [p1Stopped, setP1Stopped] = useState(false);
+    const [p1ChipSpace, setP1ChipSpace] = useState(0);
+    const [p1CherrybombValue, setP1CherrybombValue] = useState(0);
+
     const chipTopArr = [
       1.475,
       1.37,
@@ -495,13 +512,17 @@ export default function ContextProvider({children}){
       0.736,
     ]
 
+
     const [width, setWidth] = useState(window.innerWidth)
     const [height, setHeight] = useState(window.innerHeight)
+    let smaller = (width < height) ? width : height
+    let chipSize = (smaller < 1000) ? smaller / 13 : 78
     const [menuShow, setMenuShow] = useState((height < 600) ? false : true)
-    const [pageTarget, setPageTarget] = useState(1)
     // Header only shown by default on screen with greater than 600px height
     let centerHeight =0
     let centerWidth = 0
+    const [pageTarget, setPageTarget] = useState(1)
+    const [pageActive, setPageActive] = useState(0)
 
     function recalcCenter() {
       if((window.innerHeight > 1000) && (window.innerWidth > 1000)) {
@@ -532,9 +553,9 @@ return (
     <StoreContextWrapper.Provider value={{
       checkState,
       scoreTrack,
-      bag,
       width,
       height,
+      chipSize,
       centerHeight,
       centerWidth,
       menuShow,
@@ -543,6 +564,22 @@ return (
       chipTopArr,
       pageTarget,
       setPageTarget,
+      pageActive,
+      setPageActive,
+      starterBag,
+      player1Stats,
+      p1BagCurrentRound,
+      setP1BagCurrentRound,
+      p1PotCurrentRound,
+      setP1PotCurrentRound,
+      p1Exploded,
+      setP1Exploded,
+      p1Stopped,
+      setP1Stopped,
+      p1ChipSpace,
+      setP1ChipSpace,
+      p1CherrybombValue,
+      setP1CherrybombValue,
     }}>
         {children}
     </StoreContextWrapper.Provider>

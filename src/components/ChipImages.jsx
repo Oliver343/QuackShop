@@ -3,8 +3,6 @@ import { StoreContextWrapper } from "../store/ContextProvider"
 
 const ChipImages = (props) => {
   const storeObject = useContext(StoreContextWrapper)
-  let smaller = (storeObject.width < storeObject.height) ? storeObject.width : storeObject.height
-  let chipSize = (smaller < 1000) ? smaller / 13 : 78
 
 
   return (
@@ -12,7 +10,7 @@ const ChipImages = (props) => {
       <img
         className={"chips chip" + props.chipSpace}
         src={props.img}
-        width={chipSize}
+        width={storeObject.chipSize }
         style={{
           maxWidth: "80px",
           top: (storeObject.centerHeight / storeObject.chipTopArr[props.chipSpace]) + (storeObject.menuShow ? 130 : 53),
