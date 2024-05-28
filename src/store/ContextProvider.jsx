@@ -521,7 +521,7 @@ export default function ContextProvider({children}){
     let centerHeight =0
     let centerWidth = 0
     const [pageTarget, setPageTarget] = useState(1)
-    const [pageActive, setPageActive] = useState(0)
+    const [pageActive, setPageActive] = useState(1)
 
     function recalcCenter() {
       if((window.innerHeight > 1000) && (window.innerWidth > 1000)) {

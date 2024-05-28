@@ -58,6 +58,7 @@ const BoardP1 = (props) => {
       storeObject.setP1Exploded(true);
       exploaded.current = true;
       storeObject.setP1Stopped(true);
+      storeObject.setPageActive(2)
     }
   
   }
@@ -78,7 +79,7 @@ const BoardP1 = (props) => {
               <button id="pullButton" onClick={() => drawRandomIngredient()}>
                 PULL!
               </button>{" "}
-              <button id="stopButton" onClick={() => storeObject.setP1Stopped(true)}>
+              <button id="stopButton" onClick={() => {storeObject.setP1Stopped(true); storeObject.setPageActive(2)}}>
                 STOP!
               </button>{" "}
               <div id="scoreBox" hidden={true}>
