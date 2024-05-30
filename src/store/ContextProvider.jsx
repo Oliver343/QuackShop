@@ -521,7 +521,8 @@ export default function ContextProvider({children}){
     let centerHeight =0
     let centerWidth = 0
     const [pageTarget, setPageTarget] = useState(1)
-    const [pageActive, setPageActive] = useState(0)
+    const [pageActive, setPageActive] = useState(1)
+    const [scoreboardStep, setScoreboardStep] = useState(0)
 
     function recalcCenter() {
       if((window.innerHeight > 1000) && (window.innerWidth > 1000)) {
@@ -577,6 +578,8 @@ return (
       setP1Stopped,
       p1ChipSpace,
       setP1ChipSpace,
+      scoreboardStep,
+      setScoreboardStep,
     }}>
         {children}
     </StoreContextWrapper.Provider>
