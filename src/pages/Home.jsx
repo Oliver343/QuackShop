@@ -46,15 +46,9 @@ export default function Home() {
                             </> :
                             storeObject.pageTarget === 2 ?
                             <BoardP1 scoreTrack={storeObject.scoreTrack} chipSpace={0} handleMenuToggle={handleMenuToggle}/> :
-                            <>
-                                <div className="buttonLine">
-                                    <button className="menuToggleBtn" style={{ visibility: "hidden"}}>.</button>
-                                    <div className="buttonBox">
-                                        {storeObject.menuShow ? "" : <button className="menuToggleBtn" onClick={handleMenuToggle}><FontAwesomeIcon icon={faBars} /></button>}
-                                    </div>
-                                </div> 
-                                <ScoreBoard />
-                            </>
+
+                            <ScoreBoard handleMenuToggle={handleMenuToggle} />
+
                             
 
                 }
