@@ -20,6 +20,7 @@ export default function ScoreBoard(props) {
     function rollDie() {
         const randomNo = Math.floor(Math.random() * dice.length);
         console.log(dice[randomNo])
+        storeObject.setScoreboardStep(prev => prev + 1)
     }
 
     return(
@@ -28,7 +29,7 @@ export default function ScoreBoard(props) {
                 <div className="buttonBox">
                     <div>
                         {" "}
-                        {(storeObject.pageActive === 2) ? <button onClick={rollDie}>Roll the dice</button> : ""}
+                        {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 0)) ? <button onClick={rollDie}>Roll the dice</button> : ""}
                     </div>
             <div>
               {storeObject.menuShow ? "" : <button className="menuToggleBtn" onClick={props.handleMenuToggle}><FontAwesomeIcon icon={faBars} /></button>}
