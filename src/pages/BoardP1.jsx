@@ -83,7 +83,7 @@ const BoardP1 = (props) => {
                 STOP!
               </button>{" "}
               <div id="scoreBox" hidden={true}>
-                VP = {props.scoreTrack[storeObject.p1ChipSpace +1].victoryPoints} BP = {props.scoreTrack[storeObject.p1ChipSpace +1].buyingPower}
+                VP = {storeObject.scoreTrack[storeObject.p1ChipSpace +1].victoryPoints} BP = {storeObject.scoreTrack[storeObject.p1ChipSpace +1].buyingPower}
               </div>{" "}
             </div>
             <div>
