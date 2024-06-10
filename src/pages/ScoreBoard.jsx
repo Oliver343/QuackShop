@@ -44,6 +44,14 @@ export default function ScoreBoard(props) {
     function checkRuby() {
         if (storeObject.scoreTrack[storeObject.p1ChipSpace +1].rubySpace) {
             console.log("PLAYER GETS RUBY")
+            storeObject.setPlayer1Stats((prev) => {
+                console.log(prev)
+                return {
+                    ...prev,
+                    p1Rubies: prev.p1Rubies ++,
+                  };
+            })
+
         } else {
             console.log("NO RUBY")
         }
