@@ -468,7 +468,8 @@ export default function ContextProvider({children}){
     ],
     p1Droplet: 0,
     p1Rattails: 0,
-    p1Rubys: 0,
+    p1Rubies: 0,
+    p1Score: 0,
     }
 
     const [p1BagCurrentRound, setP1BagCurrentRound] = useState([...player1Stats.p1GameBag])

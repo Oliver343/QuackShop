@@ -74,6 +74,8 @@ export default function ScoreBoard(props) {
                 width: 1000, maxWidth: maxValue, 
                 height: 914, maxHeight: maxValue}}
             ></div>
+            <div>Player One Score: {storeObject.player1Stats.p1Score}</div>
+            <div>Player One Rubies: {storeObject.player1Stats.p1Rubies}</div>
         </div>
         
     )
