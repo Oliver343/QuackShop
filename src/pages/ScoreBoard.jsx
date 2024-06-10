@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { StoreContextWrapper } from "../store/ContextProvider"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faMehRollingEyes } from '@fortawesome/free-solid-svg-icons'
 
 import scoreBoard from "../img/scoreboard.png"
 
@@ -17,13 +17,19 @@ export default function ScoreBoard(props) {
     ]
     let maxValue = ((storeObject.width < storeObject.height ? storeObject.width : storeObject.height) - 4 )
 
+    function rollDie() {
+        const randomNo = Math.floor(Math.random() * dice.length);
+        console.log(dice[randomNo])
+        storeObject.setScoreboardStep(prev => prev + 1)
+    }
+
     return(
         <div>
             <div className="boardBar">
                 <div className="buttonBox">
                     <div>
                         {" "}
-                        {(storeObject.pageActive === 2) ? <button>Roll the dice</button> : ""}
+                        {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 0)) ? <button onClick={rollDie}>Roll the dice</button> : ""}
                     </div>
             <div>
               {storeObject.menuShow ? "" : <button className="menuToggleBtn" onClick={props.handleMenuToggle}><FontAwesomeIcon icon={faBars} /></button>}

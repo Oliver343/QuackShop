@@ -45,7 +45,7 @@ export default function Home() {
                                 </div>
                             </> :
                             storeObject.pageTarget === 2 ?
-                            <BoardP1 scoreTrack={storeObject.scoreTrack} chipSpace={0} handleMenuToggle={handleMenuToggle}/> :
+                            <BoardP1 chipSpace={0} handleMenuToggle={handleMenuToggle}/> :
 
                             <ScoreBoard handleMenuToggle={handleMenuToggle} />
 
