@@ -23,6 +23,24 @@ export default function ScoreBoard(props) {
         storeObject.setScoreboardStep(prev => prev + 1)
     }
 
+    function checkSpider() {
+        if (storeObject.p1PotCurrentRound.length > 0) {
+            if (storeObject.p1PotCurrentRound[storeObject.p1PotCurrentRound.length - 1].color === "green") {
+                spiderEffect()
+            }
+        }
+        if (storeObject.p1PotCurrentRound.length > 1) {
+            if (storeObject.p1PotCurrentRound[storeObject.p1PotCurrentRound.length - 2].color === "green") {
+                spiderEffect()
+            }
+        }
+        storeObject.setScoreboardStep(prev => prev + 1)
+    }
+
+    function spiderEffect() {
+        console.log("SPIDER EFFECT")
+    }
+
     return(
         <div>
             <div className="boardBar">
@@ -30,6 +48,7 @@ export default function ScoreBoard(props) {
                     <div>
                         {" "}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 0)) ? <button onClick={rollDie}>Roll the dice</button> : ""}
+                        {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 1)) ? <button onClick={checkSpider}>Check for Moth / Spider / Ghost</button> : ""}
                     </div>
             <div>
               {storeObject.menuShow ? "" : <button className="menuToggleBtn" onClick={props.handleMenuToggle}><FontAwesomeIcon icon={faBars} /></button>}
