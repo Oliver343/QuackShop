@@ -41,6 +41,23 @@ export default function ScoreBoard(props) {
         console.log("SPIDER EFFECT")
     }
 
+    function checkRuby() {
+        if (storeObject.scoreTrack[storeObject.p1ChipSpace +1].rubySpace) {
+            console.log("PLAYER GETS RUBY")
+            storeObject.setPlayer1Stats((prev) => {
+                console.log(prev)
+                return {
+                    ...prev,
+                    p1Rubies: prev.p1Rubies ++,
+                  };
+            })
+
+        } else {
+            console.log("NO RUBY")
+        }
+        storeObject.setScoreboardStep(prev => prev + 1)
+    }
+
     return(
         <div>
             <div className="boardBar">
@@ -49,6 +66,7 @@ export default function ScoreBoard(props) {
                         {" "}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 0)) ? <button onClick={rollDie}>Roll the dice</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 1)) ? <button onClick={checkSpider}>Check for Moth / Spider / Ghost</button> : ""}
+                        {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 2)) ? <button onClick={checkRuby}>Check for Ruby</button> : ""}
                     </div>
             <div>
               {storeObject.menuShow ? "" : <button className="menuToggleBtn" onClick={props.handleMenuToggle}><FontAwesomeIcon icon={faBars} /></button>}
@@ -64,6 +82,8 @@ export default function ScoreBoard(props) {
                 width: 1000, maxWidth: maxValue, 
                 height: 914, maxHeight: maxValue}}
             ></div>
+            <div>Player One Score: {storeObject.player1Stats.p1Score}</div>
+            <div>Player One Rubies: {storeObject.player1Stats.p1Rubies}</div>
         </div>
         
     )

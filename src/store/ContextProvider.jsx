@@ -462,14 +462,15 @@ export default function ContextProvider({children}){
       },
     ])
 
-    let player1Stats = {
+    const [player1Stats, setPlayer1Stats]  = useState({
       p1GameBag: [
       ...starterBag
     ],
     p1Droplet: 0,
     p1Rattails: 0,
-    p1Rubys: 0,
-    }
+    p1Rubies: 0,
+    p1Score: 0,
+    })
 
     const [p1BagCurrentRound, setP1BagCurrentRound] = useState([...player1Stats.p1GameBag])
     const [p1PotCurrentRound, setP1PotCurrentRound] = useState([])
@@ -568,6 +569,7 @@ return (
       setPageActive,
       starterBag,
       player1Stats,
+      setPlayer1Stats,
       p1BagCurrentRound,
       setP1BagCurrentRound,
       p1PotCurrentRound,
