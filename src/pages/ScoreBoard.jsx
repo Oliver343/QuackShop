@@ -41,6 +41,15 @@ export default function ScoreBoard(props) {
         console.log("SPIDER EFFECT")
     }
 
+    function checkRuby() {
+        if (storeObject.scoreTrack[storeObject.p1ChipSpace +1].rubySpace) {
+            console.log("PLAYER GETS RUBY")
+        } else {
+            console.log("NO RUBY")
+        }
+        storeObject.setScoreboardStep(prev => prev + 1)
+    }
+
     return(
         <div>
             <div className="boardBar">
@@ -49,6 +58,7 @@ export default function ScoreBoard(props) {
                         {" "}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 0)) ? <button onClick={rollDie}>Roll the dice</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 1)) ? <button onClick={checkSpider}>Check for Moth / Spider / Ghost</button> : ""}
+                        {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 2)) ? <button onClick={checkRuby}>Check for Ruby</button> : ""}
                     </div>
             <div>
               {storeObject.menuShow ? "" : <button className="menuToggleBtn" onClick={props.handleMenuToggle}><FontAwesomeIcon icon={faBars} /></button>}
