@@ -20,6 +20,9 @@ export default function ScoreBoard(props) {
     function rollDie() {
         const randomNo = Math.floor(Math.random() * dice.length);
         console.log(dice[randomNo])
+        if (randomNo === 4) {
+            addRuby(1)
+        }
         storeObject.setScoreboardStep(prev => prev + 1)
     }
 
@@ -39,25 +42,29 @@ export default function ScoreBoard(props) {
 
     function spiderEffect() {
         console.log("SPIDER EFFECT")
+        addRuby(1)
     }
 
     function checkRuby() {
         if (storeObject.scoreTrack[storeObject.p1ChipSpace +1].rubySpace) {
             console.log("PLAYER GETS RUBY")
+            addRuby(1)
+        } else {
+            console.log("NO RUBY")
+        }
+        storeObject.setScoreboardStep(prev => prev + 1)
+    }
+
+    function addRuby(playerNo) {
+        if (playerNo === 1){
             storeObject.setPlayer1Stats((prev) => {
-                console.log(prev)
                 const newRubyCount = prev.p1Rubies + 1
-                console.log(newRubyCount)
                 return {
                     ...prev,
                     p1Rubies: newRubyCount,
                   };
             })
-
-        } else {
-            console.log("NO RUBY")
         }
-        storeObject.setScoreboardStep(prev => prev + 1)
     }
 
     return(
