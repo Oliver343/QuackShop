@@ -20,8 +20,27 @@ export default function ScoreBoard(props) {
     function rollDie() {
         const randomNo = Math.floor(Math.random() * dice.length);
         console.log(dice[randomNo])
-        if (randomNo === 4) {
-            addRuby(1)
+
+        switch(randomNo) {
+            case 0:
+                console.log("ADD A PUMPKIN HERE")
+                break;
+            case 1:
+                addVP(1)
+                break;
+            case 2:
+                addVP(1)
+                break;
+            case 3:
+                addVP(1)
+                addVP(1)
+                break;
+            case 4:
+                addRuby(1)
+                break;
+            case 4:
+                console.log("ADD A DROP HERE")
+                break;
         }
         storeObject.setScoreboardStep(prev => prev + 1)
     }
@@ -62,6 +81,18 @@ export default function ScoreBoard(props) {
                 return {
                     ...prev,
                     p1Rubies: newRubyCount,
+                  };
+            })
+        }
+    }
+
+    function addVP(playerNo) {
+        if (playerNo === 1){
+            storeObject.setPlayer1Stats((prev) => {
+                const newVPCount = prev.p1Score + 1
+                return {
+                    ...prev,
+                    p1Score: newVPCount,
                   };
             })
         }
