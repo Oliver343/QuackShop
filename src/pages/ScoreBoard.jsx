@@ -20,6 +20,28 @@ export default function ScoreBoard(props) {
     function rollDie() {
         const randomNo = Math.floor(Math.random() * dice.length);
         console.log(dice[randomNo])
+
+        switch(randomNo) {
+            case 0:
+                console.log("ADD A PUMPKIN HERE")
+                break;
+            case 1:
+                addVP(1)
+                break;
+            case 2:
+                addVP(1)
+                break;
+            case 3:
+                addVP(1)
+                addVP(1)
+                break;
+            case 4:
+                addRuby(1)
+                break;
+            case 4:
+                console.log("ADD A DROP HERE")
+                break;
+        }
         storeObject.setScoreboardStep(prev => prev + 1)
     }
 
@@ -39,23 +61,41 @@ export default function ScoreBoard(props) {
 
     function spiderEffect() {
         console.log("SPIDER EFFECT")
+        addRuby(1)
     }
 
     function checkRuby() {
         if (storeObject.scoreTrack[storeObject.p1ChipSpace +1].rubySpace) {
             console.log("PLAYER GETS RUBY")
-            storeObject.setPlayer1Stats((prev) => {
-                console.log(prev)
-                return {
-                    ...prev,
-                    p1Rubies: prev.p1Rubies ++,
-                  };
-            })
-
+            addRuby(1)
         } else {
             console.log("NO RUBY")
         }
         storeObject.setScoreboardStep(prev => prev + 1)
+    }
+
+    function addRuby(playerNo) {
+        if (playerNo === 1){
+            storeObject.setPlayer1Stats((prev) => {
+                const newRubyCount = prev.p1Rubies + 1
+                return {
+                    ...prev,
+                    p1Rubies: newRubyCount,
+                  };
+            })
+        }
+    }
+
+    function addVP(playerNo) {
+        if (playerNo === 1){
+            storeObject.setPlayer1Stats((prev) => {
+                const newVPCount = prev.p1Score + 1
+                return {
+                    ...prev,
+                    p1Score: newVPCount,
+                  };
+            })
+        }
     }
 
     return(

@@ -14,6 +14,7 @@ export default function Header(props) {
                 <button onClick={() => storeObject.setPageTarget(1)}>Home</button>
                 <button className={(storeObject.pageActive === 1) ?"buttonHighlight" : ""} onClick={() => storeObject.setPageTarget(2)}>Player</button>
                 <button className={(storeObject.pageActive === 2) ?"buttonHighlight" : ""} onClick={() => storeObject.setPageTarget(3)}>Score</button>
+                <button className={(storeObject.pageActive === 3) ?"buttonHighlight" : ""} onClick={() => storeObject.setPageTarget(4)}>Shop</button>
             </div>
             <div className="buttonBox">
                 <button className='menuToggleBtn' onClick={props.toggleMenu}><FontAwesomeIcon icon={faXmark} /></button>

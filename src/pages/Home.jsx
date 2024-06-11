@@ -7,6 +7,7 @@ import BoardP1 from './BoardP1';
 import './main.css';
 import './chips.css'
 import ScoreBoard from "./ScoreBoard"
+import Shop from "./Shop"
 
 export default function Home() {
     const storeObject = useContext(StoreContextWrapper)
@@ -44,12 +45,18 @@ export default function Home() {
                                     <button disabled={true}>Start Game</button>
                                 </div>
                             </> :
-                            storeObject.pageTarget === 2 ?
+                            <div> 
+                            {storeObject.pageTarget === 2 ?
                             <BoardP1 chipSpace={0} handleMenuToggle={handleMenuToggle}/> :
+                            ""}
+                            {storeObject.pageTarget === 3 ?
+                            <ScoreBoard handleMenuToggle={handleMenuToggle} /> : 
+                            ""}
+                            {storeObject.pageTarget === 4 ?
+                            <Shop /> : ""}
+                            </div>
 
-                            <ScoreBoard handleMenuToggle={handleMenuToggle} />
 
-                            
 
                 }
             </div>
