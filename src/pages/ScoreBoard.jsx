@@ -46,9 +46,11 @@ export default function ScoreBoard(props) {
             console.log("PLAYER GETS RUBY")
             storeObject.setPlayer1Stats((prev) => {
                 console.log(prev)
+                const newRubyCount = prev.p1Rubies + 1
+                console.log(newRubyCount)
                 return {
                     ...prev,
-                    p1Rubies: prev.p1Rubies ++,
+                    p1Rubies: newRubyCount,
                   };
             })
 

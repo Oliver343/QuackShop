@@ -468,7 +468,7 @@ export default function ContextProvider({children}){
     ],
     p1Droplet: 0,
     p1Rattails: 0,
-    p1Rubies: 0,
+    p1Rubies: 5,
     p1Score: 0,
     })
 
