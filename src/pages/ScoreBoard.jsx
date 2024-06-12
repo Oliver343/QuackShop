@@ -76,15 +76,14 @@ export default function ScoreBoard(props) {
 
     function scoreVP() {
         console.log(storeObject.scoreTrack[storeObject.p1ChipSpace +1].victoryPoints)
+        for(let i = 0; i < storeObject.scoreTrack[storeObject.p1ChipSpace +1].victoryPoints; i ++) {
+            addVP(1)
+        }
+        storeObject.setScoreboardStep(prev => prev + 1)
+    }
 
-        // storeObject.setPlayer1Stats((prev) => {
-        //     const newVPCount = prev.p1Score + 1
-        //     return {
-        //         ...prev,
-        //         p1Score: newVPCount,
-        //       };
-        // })
-        
+    function skip() {
+        storeObject.setScoreboardStep(prev => prev + 1)
     }
 
     function addRuby(playerNo) {
@@ -117,10 +116,14 @@ export default function ScoreBoard(props) {
                 <div className="buttonBox">
                     <div>
                         {" "}
-                        {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 0)) ? <button onClick={rollDie}>Roll the dice</button> : ""}
+                        {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 0)) ? <button onClick={rollDie} disabled={
+                            storeObject.p1ChipSpace < storeObject.p2ChipSpace || storeObject.p1Exploded 
+                        }>Roll the dice</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 1)) ? <button onClick={checkSpider}>Check for Moth / Spider / Ghost</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 2)) ? <button onClick={checkRuby}>Check for Ruby</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 3)) ? <button onClick={scoreVP}>Score VP</button> : ""}
+
+                        {(storeObject.pageActive === 2) ? <button onClick={skip}>Skip / Next</button> : ""}
                     </div>
             <div>
               {storeObject.menuShow ? "" : <button className="menuToggleBtn" onClick={props.handleMenuToggle}><FontAwesomeIcon icon={faBars} /></button>}
