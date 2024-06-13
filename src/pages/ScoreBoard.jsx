@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 
 import scoreBoard from "../img/scoreboard.png"
+import chipO1 from "../img/chipO1.png";
 
 export default function ScoreBoard(props) {
     const storeObject = useContext(StoreContextWrapper)
@@ -57,6 +58,7 @@ export default function ScoreBoard(props) {
                 console.log("ADD A DROP HERE")
                 break;
         }
+        console.log(storeObject.player1Stats)
         storeObject.setScoreboardStep(prev => prev + 1)
     }
 
