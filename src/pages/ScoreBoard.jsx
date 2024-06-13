@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { StoreContextWrapper } from "../store/ContextProvider"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faMehRollingEyes } from '@fortawesome/free-solid-svg-icons'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
 
 import scoreBoard from "../img/scoreboard.png"
 
@@ -24,6 +24,21 @@ export default function ScoreBoard(props) {
         switch(randomNo) {
             case 0:
                 console.log("ADD A PUMPKIN HERE")
+                storeObject.setPlayer1Stats((prev) => {
+                    const newBag = prev.p1GameBag.push(
+                        {
+                            color: "orange",
+                            value: 1,
+                            img: chipO1,
+                            effect: false,
+                            volatile: false,
+                        }
+                    )
+                    return {
+                        ...prev,
+                        p1GameBag: newBag,
+                      };
+                })
                 break;
             case 1:
                 addVP(1)
