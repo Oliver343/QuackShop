@@ -26,15 +26,16 @@ export default function ScoreBoard(props) {
             case 0:
                 console.log("ADD A PUMPKIN HERE")
                 storeObject.setPlayer1Stats((prev) => {
-                    const newBag = prev.p1GameBag.push(
+                    const newBag = prev.p1GameBag
+                    newBag.push(
                         {
                             color: "orange",
                             value: 1,
                             img: chipO1,
                             effect: false,
                             volatile: false,
-                        }
-                    )
+                        })
+
                     return {
                         ...prev,
                         p1GameBag: newBag,
