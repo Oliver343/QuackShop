@@ -18,6 +18,15 @@ export default function ScoreBoard(props) {
     ]
     let maxValue = ((storeObject.width < storeObject.height ? storeObject.width : storeObject.height) - 4 )
 
+    console.log("storeObject.width")
+    console.log(storeObject.width)
+
+    console.log("window.innerWidth")
+    console.log(window.innerWidth)
+
+    console.log("maxValue")
+    console.log(maxValue)
+
     function rollDie() {
         const randomNo = Math.floor(Math.random() * dice.length);
         console.log(dice[randomNo])

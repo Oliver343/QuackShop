@@ -484,10 +484,14 @@ export default function ContextProvider({children}){
 
     const [p1BagCurrentRound, setP1BagCurrentRound] = useState([...player1Stats.p1GameBag])
     const [p1PotCurrentRound, setP1PotCurrentRound] = useState([])
+    const [p2BagCurrentRound, setP2BagCurrentRound] = useState([...player2Stats.p2GameBag])
+    const [p2PotCurrentRound, setP2PotCurrentRound] = useState([])
     const [p1Exploded, setP1Exploded] = useState(false);
     const [p1Stopped, setP1Stopped] = useState(false);
+    const [p2Exploded, setP2Exploded] = useState(false);
+    const [p2Stopped, setP2Stopped] = useState(false);
     const [p1ChipSpace, setP1ChipSpace] = useState(0);
-    const [p2ChipSpace, setP2ChipSpace] = useState(3);
+    const [p2ChipSpace, setP2ChipSpace] = useState(0);
 
     const chipTopArr = [
       1.475,
@@ -593,6 +597,16 @@ return (
       setP1Stopped,
       p1ChipSpace,
       setP1ChipSpace,
+      p2BagCurrentRound,
+      setP2BagCurrentRound,
+      p2PotCurrentRound,
+      setP2PotCurrentRound,
+      p2Exploded,
+      setP2Exploded,
+      p2Stopped,
+      setP2Stopped,
+      p2ChipSpace,
+      setP2ChipSpace,
       p2ChipSpace,
       setP2ChipSpace,
       scoreboardStep,
