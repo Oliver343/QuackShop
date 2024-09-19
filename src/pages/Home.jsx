@@ -8,6 +8,7 @@ import './main.css';
 import './chips.css'
 import ScoreBoard from "./ScoreBoard"
 import Shop from "./Shop"
+import BoardP2 from "./BoardP2"
 
 export default function Home() {
     const storeObject = useContext(StoreContextWrapper)
@@ -54,6 +55,9 @@ export default function Home() {
                             ""}
                             {storeObject.pageTarget === 4 ?
                             <Shop /> : ""}
+                            {storeObject.pageTarget === 5 ?
+                            <BoardP2 chipSpace={0} handleMenuToggle={handleMenuToggle}/> :
+                            ""}
                             </div>
 
 

@@ -9,7 +9,7 @@ import board from "../img/board.png";
 import boardBoom from "../img/boardboom.png";
 import dropG from "../img/dropG.png"
 
-const BoardP1 = (props) => {
+const BoardP2 = (props) => {
   const exploaded = useRef(false);
   const storeObject = useContext(StoreContextWrapper)
   let boardImage = board
@@ -17,55 +17,23 @@ const BoardP1 = (props) => {
   console.log(storeObject.p1BagCurrentRound)
 
   useEffect(() => {
-    if (storeObject.p1Stopped) {
+    if (storeObject.p2Stopped) {
       document.getElementById("pullButton").disabled = true;
       document.getElementById("stopButton").disabled = true;
       document.getElementById("scoreBox").hidden = false;
     }
 
-    if (storeObject.p1Exploded) {
+    if (storeObject.p2Exploded) {
     document.getElementById("explodedText").hidden = false;
     document.getElementById("newBoard").style.backgroundImage = "url(" + boardBoom + ")" ;
     }
-  },[storeObject.p1Stopped, storeObject.p1Exploded]);
+  },[storeObject.p2Stopped, storeObject.p2Exploded]);
 
 
   let chipSpace = useRef(0);
   let cherrybombValue = useRef(0);
-  let cherrybombValue2 = useRef(0);
-
-  console.log(storeObject.p1CherrybombValue)
 
   function drawRandomIngredient() {
-    forcePlayer2() // This makes player2 mirror actions as a placeholder
-    const randomNo = Math.floor(Math.random() * storeObject.p1BagCurrentRound.length);
-    let currentIngredient = storeObject.p1BagCurrentRound[randomNo]
-
-    storeObject.setP1BagCurrentRound(prev => prev.filter(item => item !== currentIngredient ))
-
-    storeObject.setP1ChipSpace(prev => {
-      currentIngredient["chipSpace"] = prev + currentIngredient.value;
-      return prev + currentIngredient.value
-    })
-
-    storeObject.setP1PotCurrentRound(prev => {
-      return (prev ? [...prev, currentIngredient] : currentIngredient)
-    })
-
-    if (currentIngredient.volatile) {
-      cherrybombValue.current =
-      cherrybombValue.current + currentIngredient.value;
-    }
-    if (cherrybombValue.current >= 8) {
-      storeObject.setP1Exploded(true);
-      exploaded.current = true;
-      storeObject.setP1Stopped(true);
-      storeObject.setPageActive(2)
-    }
-  
-  }
-
-  function forcePlayer2() {
     const randomNo = Math.floor(Math.random() * storeObject.p2BagCurrentRound.length);
     let currentIngredient = storeObject.p2BagCurrentRound[randomNo]
 
@@ -81,17 +49,19 @@ const BoardP1 = (props) => {
     })
 
     if (currentIngredient.volatile) {
-      cherrybombValue2.current =
-      cherrybombValue2.current + currentIngredient.value;
+      cherrybombValue.current =
+      cherrybombValue.current + currentIngredient.value;
     }
-    if (cherrybombValue2.current >= 8) {
+    if (cherrybombValue.current >= 8) {
       storeObject.setP2Exploded(true);
-      // exploaded.current = true;
+      exploaded.current = true;
       storeObject.setP2Stopped(true);
-    } 
+      // storeObject.setPageActive(2)
+    }
+  
   }
 
-  let mappedChips = storeObject.p1PotCurrentRound.map((ingredient) => {
+  let mappedChips = storeObject.p2PotCurrentRound.map((ingredient) => {
     return <ChipImages chipSpace={ingredient.chipSpace} img={ingredient.img} />;
   });
 
@@ -99,19 +69,20 @@ const BoardP1 = (props) => {
     <div>
       <div className="boardBar">
         <div className="buttonBox">
+          <div>Player 2...</div>
             <div>
               {" "}
               <div id="explodedText" hidden={true} style={{ color: "red" }}>
                 BOOM!
               </div>
-              <button id="pullButton" onClick={() => drawRandomIngredient()}>
+              <button id="pullButton" onClick={() => drawRandomIngredient()} disabled>
                 PULL!
               </button>{" "}
-              <button id="stopButton" onClick={() => {storeObject.setP1Stopped(true); storeObject.setP2Stopped(true); storeObject.setPageActive(2)}}>
+              <button id="stopButton" onClick={() => {storeObject.setP2Stopped(true); storeObject.setPageActive(2)}} disabled>
                 STOP!
               </button>{" "}
               <div id="scoreBox" hidden={true}>
-                VP = {storeObject.scoreTrack[storeObject.p1ChipSpace +1].victoryPoints} BP = {storeObject.scoreTrack[storeObject.p1ChipSpace +1].buyingPower}
+                VP = {storeObject.scoreTrack[storeObject.p2ChipSpace +1].victoryPoints} BP = {storeObject.scoreTrack[storeObject.p2ChipSpace +1].buyingPower}
               </div>{" "}
             </div>
             <div>
@@ -151,4 +122,4 @@ const BoardP1 = (props) => {
   );
 };
 
-export default BoardP1;
+export default BoardP2;
