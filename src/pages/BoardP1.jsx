@@ -14,7 +14,6 @@ const BoardP1 = (props) => {
   const storeObject = useContext(StoreContextWrapper)
   let boardImage = board
   let maxValue = ((storeObject.width < storeObject.height ? storeObject.width : storeObject.height) - 4 )
-  console.log(storeObject.p1BagCurrentRound)
 
   useEffect(() => {
     if (storeObject.p1Stopped) {
@@ -30,11 +29,10 @@ const BoardP1 = (props) => {
   },[storeObject.p1Stopped, storeObject.p1Exploded]);
 
 
-  let chipSpace = useRef(0);
+  // let chipSpace = useRef(0);
+  // let chipSpace2 = useRef(0);
   let cherrybombValue = useRef(0);
   let cherrybombValue2 = useRef(0);
-
-  console.log(storeObject.p1CherrybombValue)
 
   function drawRandomIngredient() {
     forcePlayer2() // This makes player2 mirror actions as a placeholder
@@ -52,9 +50,12 @@ const BoardP1 = (props) => {
       return (prev ? [...prev, currentIngredient] : currentIngredient)
     })
 
+
     if (currentIngredient.volatile) {
       cherrybombValue.current =
       cherrybombValue.current + currentIngredient.value;
+      console.log("CHERRY BOMB VALUE...")
+      console.log(cherrybombValue)
     }
     if (cherrybombValue.current >= 8) {
       storeObject.setP1Exploded(true);
@@ -66,23 +67,22 @@ const BoardP1 = (props) => {
   }
 
   function forcePlayer2() {
-    const randomNo = Math.floor(Math.random() * storeObject.p2BagCurrentRound.length);
-    let currentIngredient = storeObject.p2BagCurrentRound[randomNo]
+    const randomNo2 = Math.floor(Math.random() * storeObject.p2BagCurrentRound.length);
+    let currentIngredient2 = storeObject.p2BagCurrentRound[randomNo2]
 
-    storeObject.setP2BagCurrentRound(prev => prev.filter(item => item !== currentIngredient ))
+    storeObject.setP2BagCurrentRound(prev => prev.filter(item => item !== currentIngredient2 ))
 
     storeObject.setP2ChipSpace(prev => {
-      currentIngredient["chipSpace"] = prev + currentIngredient.value;
-      return prev + currentIngredient.value
+      return prev + 1;
     })
 
     storeObject.setP2PotCurrentRound(prev => {
-      return (prev ? [...prev, currentIngredient] : currentIngredient)
+      return (prev ? [...prev, currentIngredient2] : currentIngredient2)
     })
 
-    if (currentIngredient.volatile) {
+    if (currentIngredient2.volatile) {
       cherrybombValue2.current =
-      cherrybombValue2.current + currentIngredient.value;
+      cherrybombValue2.current + currentIngredient2.value;
     }
     if (cherrybombValue2.current >= 8) {
       storeObject.setP2Exploded(true);
@@ -91,9 +91,13 @@ const BoardP1 = (props) => {
     } 
   }
 
-  let mappedChips = storeObject.p1PotCurrentRound.map((ingredient) => {
-    return <ChipImages chipSpace={ingredient.chipSpace} img={ingredient.img} />;
+  let mappedChips = storeObject.p1PotCurrentRound.map((ingredient, i) => {
+    return <ChipImages key={i} chipSpace={ingredient.chipSpace} img={ingredient.img} />;
   });
+
+  console.log("MAPPED CHIPS:")
+  console.log(mappedChips)
+  console.log(storeObject.p1PotCurrentRound)
 
   return (
     <div>

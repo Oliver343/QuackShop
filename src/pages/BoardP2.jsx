@@ -14,7 +14,6 @@ const BoardP2 = (props) => {
   const storeObject = useContext(StoreContextWrapper)
   let boardImage = board
   let maxValue = ((storeObject.width < storeObject.height ? storeObject.width : storeObject.height) - 4 )
-  console.log(storeObject.p1BagCurrentRound)
 
   useEffect(() => {
     if (storeObject.p2Stopped) {
@@ -61,8 +60,8 @@ const BoardP2 = (props) => {
   
   }
 
-  let mappedChips = storeObject.p2PotCurrentRound.map((ingredient) => {
-    return <ChipImages chipSpace={ingredient.chipSpace} img={ingredient.img} />;
+  let mappedChips2 = storeObject.p2PotCurrentRound.map((ingredient, i) => {
+    return <ChipImages key={i} chipSpace={ingredient.chipSpace} img={ingredient.img} />;
   });
 
   return (
@@ -103,7 +102,7 @@ const BoardP2 = (props) => {
         width: 1000, maxWidth: maxValue, 
         height: 914, maxHeight: maxValue}}
         >
-          {mappedChips}
+          {mappedChips2}
         </div>
         <img 
         className="drop"  
