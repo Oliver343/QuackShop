@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useRef } from "react";
 
 import chipG1 from "../img/chipG1.png";
 import chipO1 from "../img/chipO1.png";
@@ -492,6 +492,8 @@ export default function ContextProvider({children}){
     const [p2Stopped, setP2Stopped] = useState(false);
     const [p1ChipSpace, setP1ChipSpace] = useState(0);
     const [p2ChipSpace, setP2ChipSpace] = useState(0);
+    const [p1CherrybombValue, setP1CherrybombValue] = useState(0);
+    
 
     const chipTopArr = [
       1.475,
@@ -539,6 +541,40 @@ export default function ContextProvider({children}){
     const [pageTarget, setPageTarget] = useState(1)
     const [pageActive, setPageActive] = useState(1)
     const [scoreboardStep, setScoreboardStep] = useState(0)
+
+    let cherrybombValueP2 = useRef(0);
+
+    function p2DrawDecide() {
+      console.log(p2PotCurrentRound)
+      if (cherrybombValueP2.current < 7) {
+
+        const randomNo = Math.floor(Math.random() * p2BagCurrentRound.length);
+        let currentIngredient = p2BagCurrentRound[randomNo]
+
+        setP2BagCurrentRound(prev => prev.filter(item => item !== currentIngredient ))
+
+        setP2ChipSpace(prev => {
+          currentIngredient["chipSpace"] = prev + currentIngredient.value;
+          return prev + currentIngredient.value
+        })
+
+        setP2PotCurrentRound(prev => {
+          return (prev ? [...prev, currentIngredient] : currentIngredient)
+        })
+
+
+        if (currentIngredient.volatile) {
+          cherrybombValueP2.current =
+          cherrybombValueP2.current + currentIngredient.value;
+          console.log("CHERRY BOMB VALUE P2...")
+          console.log(cherrybombValueP2)
+        }
+        if (cherrybombValueP2.current >= 8) {
+          setP2Exploded(true);
+          setP2Stopped(true);
+        }
+      }
+    }
 
     function recalcCenter() {
       if((window.innerHeight > 1000) && (window.innerWidth > 1000)) {
@@ -611,6 +647,9 @@ return (
       setP2ChipSpace,
       scoreboardStep,
       setScoreboardStep,
+      p2DrawDecide,
+      p1CherrybombValue,
+      setP1CherrybombValue,
     }}>
         {children}
     </StoreContextWrapper.Provider>

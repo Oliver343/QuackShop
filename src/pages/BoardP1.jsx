@@ -31,11 +31,12 @@ const BoardP1 = (props) => {
 
   // let chipSpace = useRef(0);
   // let chipSpace2 = useRef(0);
-  let cherrybombValue = useRef(0);
+  let cherrybombValue = useRef(0); // this need to be set in context provider as changing tab will reset it!
   let cherrybombValue2 = useRef(0);
 
   function drawRandomIngredient() {
-    forcePlayer2() // This makes player2 mirror actions as a placeholder
+    // forcePlayer2() // This makes player2 mirror actions as a placeholder
+    storeObject.p2DrawDecide()
     const randomNo = Math.floor(Math.random() * storeObject.p1BagCurrentRound.length);
     let currentIngredient = storeObject.p1BagCurrentRound[randomNo]
 
@@ -52,17 +53,16 @@ const BoardP1 = (props) => {
 
 
     if (currentIngredient.volatile) {
-      cherrybombValue.current =
-      cherrybombValue.current + currentIngredient.value;
-      console.log("CHERRY BOMB VALUE...")
-      console.log(cherrybombValue)
+      storeObject.setP1CherrybombValue((prev) => {
+        if ((prev + currentIngredient.value) >= 8) {
+          storeObject.setP1Exploded(true);
+          exploaded.current = true;
+          storeObject.setP1Stopped(true);
+        }
+        return prev + currentIngredient.value
+      })
     }
-    if (cherrybombValue.current >= 8) {
-      storeObject.setP1Exploded(true);
-      exploaded.current = true;
-      storeObject.setP1Stopped(true);
-      storeObject.setPageActive(2)
-    }
+
   
   }
 
@@ -91,13 +91,12 @@ const BoardP1 = (props) => {
     } 
   }
 
+  console.log("P1 pot...")
+  console.log(storeObject.p1PotCurrentRound)
+
   let mappedChips = storeObject.p1PotCurrentRound.map((ingredient, i) => {
     return <ChipImages key={i} chipSpace={ingredient.chipSpace} img={ingredient.img} />;
   });
-
-  console.log("MAPPED CHIPS:")
-  console.log(mappedChips)
-  console.log(storeObject.p1PotCurrentRound)
 
   return (
     <div>

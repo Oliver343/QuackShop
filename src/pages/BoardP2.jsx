@@ -60,6 +60,9 @@ const BoardP2 = (props) => {
   
   }
 
+  console.log("P2 pot...")
+  console.log(storeObject.p2PotCurrentRound)
+
   let mappedChips2 = storeObject.p2PotCurrentRound.map((ingredient, i) => {
     return <ChipImages key={i} chipSpace={ingredient.chipSpace} img={ingredient.img} />;
   });
