@@ -9,92 +9,61 @@ import board from "../img/board.png";
 import boardBoom from "../img/boardboom.png";
 import dropG from "../img/dropG.png"
 
-const BoardP1 = (props) => {
+const BoardP2 = (props) => {
   const exploaded = useRef(false);
   const storeObject = useContext(StoreContextWrapper)
   let boardImage = board
   let maxValue = ((storeObject.width < storeObject.height ? storeObject.width : storeObject.height) - 4 )
 
   useEffect(() => {
-    if (storeObject.p1Stopped) {
+    if (storeObject.p2Stopped) {
       document.getElementById("pullButton").disabled = true;
       document.getElementById("stopButton").disabled = true;
       document.getElementById("scoreBox").hidden = false;
     }
 
-    if (storeObject.p1Exploded) {
+    if (storeObject.p2Exploded) {
     document.getElementById("explodedText").hidden = false;
     document.getElementById("newBoard").style.backgroundImage = "url(" + boardBoom + ")" ;
     }
-  },[storeObject.p1Stopped, storeObject.p1Exploded]);
+  },[storeObject.p2Stopped, storeObject.p2Exploded]);
 
 
-  // let chipSpace = useRef(0);
-  // let chipSpace2 = useRef(0);
-  let cherrybombValue = useRef(0); // this need to be set in context provider as changing tab will reset it!
-  let cherrybombValue2 = useRef(0);
+  let chipSpace = useRef(0);
+  let cherrybombValue = useRef(0);
 
   function drawRandomIngredient() {
-    // forcePlayer2() // This makes player2 mirror actions as a placeholder
-    storeObject.p2DrawDecide()
-    const randomNo = Math.floor(Math.random() * storeObject.p1BagCurrentRound.length);
-    let currentIngredient = storeObject.p1BagCurrentRound[randomNo]
+    const randomNo = Math.floor(Math.random() * storeObject.p2BagCurrentRound.length);
+    let currentIngredient = storeObject.p2BagCurrentRound[randomNo]
 
-    storeObject.setP1BagCurrentRound(prev => prev.filter(item => item !== currentIngredient ))
+    storeObject.setP2BagCurrentRound(prev => prev.filter(item => item !== currentIngredient ))
 
-    storeObject.setP1ChipSpace(prev => {
+    storeObject.setP2ChipSpace(prev => {
       currentIngredient["chipSpace"] = prev + currentIngredient.value;
       return prev + currentIngredient.value
     })
 
-    storeObject.setP1PotCurrentRound(prev => {
+    storeObject.setP2PotCurrentRound(prev => {
       return (prev ? [...prev, currentIngredient] : currentIngredient)
     })
 
-
     if (currentIngredient.volatile) {
-      storeObject.setP1CherrybombValue((prev) => {
-        if ((prev + currentIngredient.value) >= 8) {
-          storeObject.setP1Exploded(true);
-          exploaded.current = true;
-          storeObject.setP1Stopped(true);
-        }
-        return prev + currentIngredient.value
-      })
+      cherrybombValue.current =
+      cherrybombValue.current + currentIngredient.value;
     }
-
+    if (cherrybombValue.current >= 8) {
+      storeObject.setP2Exploded(true);
+      exploaded.current = true;
+      storeObject.setP2Stopped(true);
+      // storeObject.setPageActive(2)
+    }
   
   }
 
-  function forcePlayer2() {
-    const randomNo2 = Math.floor(Math.random() * storeObject.p2BagCurrentRound.length);
-    let currentIngredient2 = storeObject.p2BagCurrentRound[randomNo2]
+  console.log("P2 pot...")
+  console.log(storeObject.p2PotCurrentRound)
 
-    storeObject.setP2BagCurrentRound(prev => prev.filter(item => item !== currentIngredient2 ))
-
-    storeObject.setP2ChipSpace(prev => {
-      return prev + 1;
-    })
-
-    storeObject.setP2PotCurrentRound(prev => {
-      return (prev ? [...prev, currentIngredient2] : currentIngredient2)
-    })
-
-    if (currentIngredient2.volatile) {
-      cherrybombValue2.current =
-      cherrybombValue2.current + currentIngredient2.value;
-    }
-    if (cherrybombValue2.current >= 8) {
-      storeObject.setP2Exploded(true);
-      // exploaded.current = true;
-      storeObject.setP2Stopped(true);
-    } 
-  }
-
-  console.log("P1 pot...")
-  console.log(storeObject.p1PotCurrentRound)
-
-  let mappedChips = storeObject.p1PotCurrentRound.map((ingredient, i) => {
+  let mappedChips2 = storeObject.p2PotCurrentRound.map((ingredient, i) => {
     return <ChipImages key={i} chipSpace={ingredient.chipSpace} img={ingredient.img} />;
   });
 
@@ -102,19 +71,20 @@ const BoardP1 = (props) => {
     <div>
       <div className="boardBar">
         <div className="buttonBox">
+          <div>Player 2...</div>
             <div>
               {" "}
               <div id="explodedText" hidden={true} style={{ color: "red" }}>
                 BOOM!
               </div>
-              <button id="pullButton" onClick={() => drawRandomIngredient()}>
+              <button id="pullButton" onClick={() => drawRandomIngredient()} disabled>
                 PULL!
               </button>{" "}
-              <button id="stopButton" onClick={() => {storeObject.setP1Stopped(true); storeObject.setP2Stopped(true); storeObject.setPageActive(2)}}>
+              <button id="stopButton" onClick={() => {storeObject.setP2Stopped(true); storeObject.setPageActive(2)}} disabled>
                 STOP!
               </button>{" "}
               <div id="scoreBox" hidden={true}>
-                VP = {storeObject.scoreTrack[storeObject.p1ChipSpace +1].victoryPoints} BP = {storeObject.scoreTrack[storeObject.p1ChipSpace +1].buyingPower}
+                VP = {storeObject.scoreTrack[storeObject.p2ChipSpace +1].victoryPoints} BP = {storeObject.scoreTrack[storeObject.p2ChipSpace +1].buyingPower}
               </div>{" "}
             </div>
             <div>
@@ -135,7 +105,7 @@ const BoardP1 = (props) => {
         width: 1000, maxWidth: maxValue, 
         height: 914, maxHeight: maxValue}}
         >
-          {mappedChips}
+          {mappedChips2}
         </div>
         <img 
         className="drop"  
@@ -154,4 +124,4 @@ const BoardP1 = (props) => {
   );
 };
 
-export default BoardP1;
+export default BoardP2;

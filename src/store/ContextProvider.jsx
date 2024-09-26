@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useRef } from "react";
 
 import chipG1 from "../img/chipG1.png";
 import chipO1 from "../img/chipO1.png";
@@ -10,6 +10,7 @@ export const StoreContextWrapper = createContext({
     checkState: "",
     scoreTrack: [],
     bag: []
+    // These are only used to help with auto complete
 })
 
 export default function ContextProvider({children}){
@@ -394,7 +395,8 @@ export default function ContextProvider({children}){
         end: true
       },
     ])
-    const [bag] = useState([
+
+    const [starterBag] = useState([
       {
         color: "white",
         value: 1,
@@ -460,19 +462,195 @@ export default function ContextProvider({children}){
       },
     ])
 
+    const [player1Stats, setPlayer1Stats]  = useState({
+      p1GameBag: [
+      ...starterBag
+    ],
+    p1Droplet: 0,
+    p1Rattails: 0,
+    p1Rubies: 0,
+    p1Score: 0,
+    })
+
+    const [player2Stats, setPlayer2Stats]  = useState({
+      p2GameBag: [
+      ...starterBag
+    ],
+    p2Droplet: 0,
+    p2Rattails: 0,
+    p2Rubies: 0,
+    p2Score: 0,
+    })
+
+    const [p1BagCurrentRound, setP1BagCurrentRound] = useState([...player1Stats.p1GameBag])
+    const [p1PotCurrentRound, setP1PotCurrentRound] = useState([])
+    const [p2BagCurrentRound, setP2BagCurrentRound] = useState([...player2Stats.p2GameBag])
+    const [p2PotCurrentRound, setP2PotCurrentRound] = useState([])
+    const [p1Exploded, setP1Exploded] = useState(false);
+    const [p1Stopped, setP1Stopped] = useState(false);
+    const [p2Exploded, setP2Exploded] = useState(false);
+    const [p2Stopped, setP2Stopped] = useState(false);
+    const [p1ChipSpace, setP1ChipSpace] = useState(0);
+    const [p2ChipSpace, setP2ChipSpace] = useState(0);
+    const [p1CherrybombValue, setP1CherrybombValue] = useState(0);
+    
+
+    const chipTopArr = [
+      1.475,
+      1.37,
+      1.59,
+      2,
+      2.1,
+      1.91,
+      1.55,
+      1.255,
+      1.12,
+      1.095,
+      1.145,
+      1.28,
+      1.57,
+      2.07,
+    ]
+
+    const chipLeftArr = [
+      1.085,
+      0.93,
+      0.843,
+      0.908,
+      1.068,
+      1.282,
+      1.46,
+      1.38,
+      1.17,
+      0.97,
+      0.836,
+      0.749,
+      0.716,
+      0.736,
+    ]
+
+
     const [width, setWidth] = useState(window.innerWidth)
     const [height, setHeight] = useState(window.innerHeight)
+    let smaller = (width < height) ? width : height
+    let chipSize = (smaller < 1000) ? smaller / 13 : 78
+    const [menuShow, setMenuShow] = useState((height < 600) ? false : true)
+    // Header only shown by default on screen with greater than 600px height
+    let centerHeight =0
+    let centerWidth = 0
+    const [pageTarget, setPageTarget] = useState(1)
+    const [pageActive, setPageActive] = useState(1)
+    const [scoreboardStep, setScoreboardStep] = useState(0)
+
+    let cherrybombValueP2 = useRef(0);
+
+    function p2DrawDecide() {
+      console.log(p2PotCurrentRound)
+      if (cherrybombValueP2.current < 7) {
+
+        const randomNo = Math.floor(Math.random() * p2BagCurrentRound.length);
+        let currentIngredient = p2BagCurrentRound[randomNo]
+
+        setP2BagCurrentRound(prev => prev.filter(item => item !== currentIngredient ))
+
+        setP2ChipSpace(prev => {
+          currentIngredient["chipSpace"] = prev + currentIngredient.value;
+          return prev + currentIngredient.value
+        })
+
+        setP2PotCurrentRound(prev => {
+          return (prev ? [...prev, currentIngredient] : currentIngredient)
+        })
+
+
+        if (currentIngredient.volatile) {
+          cherrybombValueP2.current =
+          cherrybombValueP2.current + currentIngredient.value;
+          console.log("CHERRY BOMB VALUE P2...")
+          console.log(cherrybombValueP2)
+        }
+        if (cherrybombValueP2.current >= 8) {
+          setP2Exploded(true);
+          setP2Stopped(true);
+        }
+      }
+    }
+
+    function recalcCenter() {
+      if((window.innerHeight > 1000) && (window.innerWidth > 1000)) {
+        centerHeight = 500;
+        centerWidth = 500;
+      } else if (window.innerHeight < window.innerWidth) {
+        centerHeight = window.innerHeight / 2;
+        centerWidth = window.innerHeight / 2;
+      } else {
+        centerHeight = window.innerWidth / 2;
+        centerWidth = window.innerWidth / 2;
+      }
+    }
+    
+    recalcCenter()
+
 
     function handleResize() {
       setWidth(window.innerWidth)
       setHeight(window.innerHeight)
+      recalcCenter()
     }
 
     window.addEventListener('resize', handleResize);
 
 
 return (
-    <StoreContextWrapper.Provider value={{checkState, scoreTrack, bag, width, height}}>
+    <StoreContextWrapper.Provider value={{
+      checkState,
+      scoreTrack,
+      width,
+      height,
+      chipSize,
+      centerHeight,
+      centerWidth,
+      menuShow,
+      setMenuShow,
+      chipLeftArr,
+      chipTopArr,
+      pageTarget,
+      setPageTarget,
+      pageActive,
+      setPageActive,
+      starterBag,
+      player1Stats,
+      setPlayer1Stats,
+      player2Stats,
+      setPlayer2Stats,
+      p1BagCurrentRound,
+      setP1BagCurrentRound,
+      p1PotCurrentRound,
+      setP1PotCurrentRound,
+      p1Exploded,
+      setP1Exploded,
+      p1Stopped,
+      setP1Stopped,
+      p1ChipSpace,
+      setP1ChipSpace,
+      p2BagCurrentRound,
+      setP2BagCurrentRound,
+      p2PotCurrentRound,
+      setP2PotCurrentRound,
+      p2Exploded,
+      setP2Exploded,
+      p2Stopped,
+      setP2Stopped,
+      p2ChipSpace,
+      setP2ChipSpace,
+      p2ChipSpace,
+      setP2ChipSpace,
+      scoreboardStep,
+      setScoreboardStep,
+      p2DrawDecide,
+      p1CherrybombValue,
+      setP1CherrybombValue,
+    }}>
         {children}
     </StoreContextWrapper.Provider>
 )

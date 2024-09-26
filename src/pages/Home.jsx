@@ -6,47 +6,63 @@ import Header from "../components/Header"
 import BoardP1 from './BoardP1';
 import './main.css';
 import './chips.css'
+import ScoreBoard from "./ScoreBoard"
+import Shop from "./Shop"
+import BoardP2 from "./BoardP2"
 
 export default function Home() {
     const storeObject = useContext(StoreContextWrapper)
-
-    const [menuShow, setMenuShow] = useState((storeObject.height < 600) ? false : true)
-    // Header only shown by default on screen with greater than 600px height
     let menuHight = 81
 
-
-    let bagForTurn = [...storeObject.bag];
-
-    if(!menuShow) {menuHight = 4}
+    if(!storeObject.menuShow) {menuHight = 4}
 
     function handleMenuToggle() {
-        setMenuShow((pre) =>  !pre) 
+        storeObject.setMenuShow((pre) =>  !pre) 
     }
 
     return (
         <div className="homeMain">
-            {menuShow ? <Header toggleMenu={handleMenuToggle} /> : ""}
+            {storeObject.menuShow ? <Header toggleMenu={handleMenuToggle} /> : ""}
             <div 
             className="homeBody" 
             style={{minHeight: (storeObject.height - menuHight)}}
             >
-                <div className="buttonLine">
-                    <button className="menuToggleBtn" style={{ visibility: "hidden"}}>.</button>
-                    <div className="buttonBox">
-                        {menuShow ? "" : <button className="menuToggleBtn" onClick={handleMenuToggle}><FontAwesomeIcon icon={faBars} /></button>}
-                    </div>
-                </div>
-                <div className="homeSub">
-                    HOME - {storeObject.checkState}
-                    <br />
-                    width - {storeObject.width}
-                    <br />
-                    height - {storeObject.height}
-                </div>
-                <div className="homeSub">
-                    <button disabled={true}>Start Game</button>
-                </div>
-                <BoardP1 bagForTurn={bagForTurn} scoreTrack={storeObject.scoreTrack} chipSpace={0} screenWidth={500} />
+                {storeObject.pageTarget === 1 ? 
+                                <>
+                                <div className="buttonLine">
+                                    <button className="menuToggleBtn" style={{ visibility: "hidden"}}>.</button>
+                                    <div className="buttonBox">
+                                        {storeObject.menuShow ? "" : <button className="menuToggleBtn" onClick={handleMenuToggle}><FontAwesomeIcon icon={faBars} /></button>}
+                                    </div>
+                                </div> 
+                                <div className="homeSub">
+                                    HOME - {storeObject.checkState}
+                                    <br />
+                                    width - {storeObject.width}
+                                    <br />
+                                    height - {storeObject.height}
+                                </div>
+                                <div className="homeSub">
+                                    <button disabled={true}>Start Game</button>
+                                </div>
+                            </> :
+                            <div> 
+                            {storeObject.pageTarget === 2 ?
+                            <BoardP1 chipSpace={0} handleMenuToggle={handleMenuToggle}/> :
+                            ""}
+                            {storeObject.pageTarget === 3 ?
+                            <ScoreBoard handleMenuToggle={handleMenuToggle} /> : 
+                            ""}
+                            {storeObject.pageTarget === 4 ?
+                            <Shop /> : ""}
+                            {storeObject.pageTarget === 5 ?
+                            <BoardP2 chipSpace={0} handleMenuToggle={handleMenuToggle}/> :
+                            ""}
+                            </div>
+
+
+
+                }
             </div>
         </div>
     )

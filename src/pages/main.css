@@ -38,8 +38,12 @@
 
 .buttonBox {
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
     align-items: start;
+}
+
+.buttonHighlight {
+    background-color: gold;
 }
 
 .menuToggleBtn {
