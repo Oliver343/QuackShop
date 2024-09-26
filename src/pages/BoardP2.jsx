@@ -115,8 +115,8 @@ const BoardP2 = (props) => {
         style={{
           maxWidth: "54px",
           maxHeight: "54px",
-          top: (storeObject.centerHeight / storeObject.chipTopArr[storeObject.player1Stats.p1Droplet]) + (storeObject.menuShow ? 130 : 54),
-          left: storeObject.centerWidth / storeObject.chipLeftArr[storeObject.player1Stats.p1Droplet], 
+          top: (storeObject.centerHeight / storeObject.chipTopArr[storeObject.player2Stats.droplet]) + (storeObject.menuShow ? 130 : 54),
+          left: storeObject.centerWidth / storeObject.chipLeftArr[storeObject.player2Stats.droplet], 
         }}/>
 
       </div>

@@ -56,6 +56,7 @@ const BoardP1 = (props) => {
           storeObject.setP1Exploded(true);
           exploaded.current = true;
           storeObject.setP1Stopped(true);
+          storeObject.setPageActive(2)
         }
         return prev + currentIngredient.value
       })
@@ -118,8 +119,8 @@ const BoardP1 = (props) => {
         style={{
           maxWidth: "54px",
           maxHeight: "54px",
-          top: (storeObject.centerHeight / storeObject.chipTopArr[storeObject.player1Stats.p1Droplet]) + (storeObject.menuShow ? 130 : 54),
-          left: storeObject.centerWidth / storeObject.chipLeftArr[storeObject.player1Stats.p1Droplet], 
+          top: (storeObject.centerHeight / storeObject.chipTopArr[storeObject.player1Stats.droplet]) + (storeObject.menuShow ? 130 : 54),
+          left: storeObject.centerWidth / storeObject.chipLeftArr[storeObject.player1Stats.droplet], 
         }}/>
 
       </div>

@@ -466,20 +466,20 @@ export default function ContextProvider({children}){
       p1GameBag: [
       ...starterBag
     ],
-    p1Droplet: 0,
-    p1Rattails: 0,
-    p1Rubies: 0,
-    p1Score: 0,
+    droplet: 0,
+    rattails: 0,
+    rubies: 0,
+    score: 0,
     })
 
     const [player2Stats, setPlayer2Stats]  = useState({
       p2GameBag: [
       ...starterBag
     ],
-    p2Droplet: 0,
-    p2Rattails: 0,
-    p2Rubies: 0,
-    p2Score: 0,
+    droplet: 0,
+    rattails: 0,
+    rubies: 0,
+    score: 0,
     })
 
     const [p1BagCurrentRound, setP1BagCurrentRound] = useState([...player1Stats.p1GameBag])
@@ -573,6 +573,8 @@ export default function ContextProvider({children}){
           setP2Exploded(true);
           setP2Stopped(true);
         }
+      } else {
+        setP2Stopped(true);
       }
     }
 

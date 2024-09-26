@@ -18,14 +18,16 @@ export default function ScoreBoard(props) {
     ]
     let maxValue = ((storeObject.width < storeObject.height ? storeObject.width : storeObject.height) - 4 )
 
-    function rollDie() {
+    function rollDie(player1) {
         const randomNo = Math.floor(Math.random() * dice.length);
         console.log(dice[randomNo])
+
+        const setStats = player1 ? storeObject.setPlayer1Stats : storeObject.setPlayer2Stats
 
         switch(randomNo) {
             case 0:
                 console.log("ADD A PUMPKIN HERE")
-                storeObject.setPlayer1Stats((prev) => {
+                setStats((prev) => {
                     const newBag = prev.p1GameBag
                     newBag.push(
                         {
@@ -43,17 +45,17 @@ export default function ScoreBoard(props) {
                 })
                 break;
             case 1:
-                addVP(1)
+                addVP(player1)
                 break;
             case 2:
-                addVP(1)
+                addVP(player1)
                 break;
             case 3:
-                addVP(1)
-                addVP(1)
+                addVP(player1)
+                addVP(player1)
                 break;
             case 4:
-                addRuby(1)
+                addRuby(player1)
                 break;
             case 4:
                 console.log("ADD A DROP HERE")
@@ -104,28 +106,26 @@ export default function ScoreBoard(props) {
         storeObject.setScoreboardStep(prev => prev + 1)
     }
 
-    function addRuby(playerNo) {
-        if (playerNo === 1){
-            storeObject.setPlayer1Stats((prev) => {
-                const newRubyCount = prev.p1Rubies + 1
-                return {
-                    ...prev,
-                    p1Rubies: newRubyCount,
-                  };
-            })
-        }
+    function addRuby(player1) {
+        const setStats = player1 ? storeObject.setPlayer1Stats : storeObject.setPlayer2Stats
+        setStats((prev) => {
+            const newRubyCount = prev.rubies + 1
+            return {
+                ...prev,
+                score: newRubyCount,
+                };
+        })
     }
 
-    function addVP(playerNo) {
-        if (playerNo === 1){
-            storeObject.setPlayer1Stats((prev) => {
-                const newVPCount = prev.p1Score + 1
-                return {
-                    ...prev,
-                    p1Score: newVPCount,
-                  };
-            })
-        }
+    function addVP(player1) {
+        const setStats = player1 ? storeObject.setPlayer1Stats : storeObject.setPlayer2Stats
+        setStats((prev) => {
+            const newVPCount = prev.score + 1
+            return {
+                ...prev,
+                score: newVPCount,
+                };
+        })
     }
 
     return(
@@ -134,9 +134,12 @@ export default function ScoreBoard(props) {
                 <div className="buttonBox">
                     <div>
                         {" "}
-                        {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 0)) ? <button onClick={rollDie} disabled={
+                        {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 0)) ? <button onClick={() => {rollDie(1)}} disabled={
                             storeObject.p1ChipSpace < storeObject.p2ChipSpace || storeObject.p1Exploded 
-                        }>Roll the dice</button> : ""}
+                        }>Player 1 Roll the dice</button> : ""}
+                        {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 0)) ? <button onClick={() => {rollDie(1)}} disabled={
+                            storeObject.p1ChipSpace > storeObject.p2ChipSpace || storeObject.p2Exploded 
+                        }>Player 2 Roll the dice</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 1)) ? <button onClick={checkSpider}>Check for Moth / Spider / Ghost</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 2)) ? <button onClick={checkRuby}>Check for Ruby</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 3)) ? <button onClick={scoreVP}>Score VP</button> : ""}
@@ -157,8 +160,8 @@ export default function ScoreBoard(props) {
                 width: 1000, maxWidth: maxValue, 
                 height: 914, maxHeight: maxValue}}
             ></div>
-            <div>Player One Score: {storeObject.player1Stats.p1Score}</div>
-            <div>Player One Rubies: {storeObject.player1Stats.p1Rubies}</div>
+            <div>Player One Score: {storeObject.player1Stats.score}</div>
+            <div>Player One Rubies: {storeObject.player1Stats.rubies}</div>
         </div>
         
     )
