@@ -554,7 +554,7 @@ export default function ContextProvider({children}){
         setP2BagCurrentRound(prev => prev.filter(item => item !== currentIngredient ))
 
         setP2ChipSpace(prev => {
-          currentIngredient["chipSpace"] = prev + currentIngredient.value;
+          currentIngredient["chipSpaceP2"] = prev + currentIngredient.value;
           return prev + currentIngredient.value
         })
 

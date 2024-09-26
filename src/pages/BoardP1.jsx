@@ -29,13 +29,7 @@ const BoardP1 = (props) => {
   },[storeObject.p1Stopped, storeObject.p1Exploded]);
 
 
-  // let chipSpace = useRef(0);
-  // let chipSpace2 = useRef(0);
-  let cherrybombValue = useRef(0); // this need to be set in context provider as changing tab will reset it!
-  let cherrybombValue2 = useRef(0);
-
   function drawRandomIngredient() {
-    // forcePlayer2() // This makes player2 mirror actions as a placeholder
     storeObject.p2DrawDecide()
     const randomNo = Math.floor(Math.random() * storeObject.p1BagCurrentRound.length);
     let currentIngredient = storeObject.p1BagCurrentRound[randomNo]
@@ -43,11 +37,15 @@ const BoardP1 = (props) => {
     storeObject.setP1BagCurrentRound(prev => prev.filter(item => item !== currentIngredient ))
 
     storeObject.setP1ChipSpace(prev => {
+      console.log("THE NEW CHIPSPACE")
+      console.log(prev + currentIngredient.value)
       currentIngredient["chipSpace"] = prev + currentIngredient.value;
       return prev + currentIngredient.value
     })
 
     storeObject.setP1PotCurrentRound(prev => {
+      console.log("PREVIOUS CURRENT POT...")
+      console.log(prev)
       return (prev ? [...prev, currentIngredient] : currentIngredient)
     })
 
@@ -64,31 +62,6 @@ const BoardP1 = (props) => {
     }
 
   
-  }
-
-  function forcePlayer2() {
-    const randomNo2 = Math.floor(Math.random() * storeObject.p2BagCurrentRound.length);
-    let currentIngredient2 = storeObject.p2BagCurrentRound[randomNo2]
-
-    storeObject.setP2BagCurrentRound(prev => prev.filter(item => item !== currentIngredient2 ))
-
-    storeObject.setP2ChipSpace(prev => {
-      return prev + 1;
-    })
-
-    storeObject.setP2PotCurrentRound(prev => {
-      return (prev ? [...prev, currentIngredient2] : currentIngredient2)
-    })
-
-    if (currentIngredient2.volatile) {
-      cherrybombValue2.current =
-      cherrybombValue2.current + currentIngredient2.value;
-    }
-    if (cherrybombValue2.current >= 8) {
-      storeObject.setP2Exploded(true);
-      // exploaded.current = true;
-      storeObject.setP2Stopped(true);
-    } 
   }
 
   console.log("P1 pot...")
