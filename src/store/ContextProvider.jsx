@@ -542,7 +542,7 @@ export default function ContextProvider({children}){
     const [pageActive, setPageActive] = useState(1)
     const [scoreboardStep, setScoreboardStep] = useState(0)
 
-    let [buyPowerP1, setBuyPowerP2] = useState(scoreTrack[storeObject.p1ChipSpace +1].buyingPower)
+    const [buyPowerP1, setBuyPowerP1] = useState(scoreTrack[p1ChipSpace +1].buyingPower)
 
     let cherrybombValueP2 = useRef(0);
 
