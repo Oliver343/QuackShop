@@ -28,7 +28,7 @@ export default function ScoreBoard(props) {
             case 0:
                 console.log("ADD A PUMPKIN HERE")
                 setStats((prev) => {
-                    const newBag = prev.p1GameBag
+                    const newBag = prev.gameBag
                     newBag.push(
                         {
                             color: "orange",
@@ -40,7 +40,7 @@ export default function ScoreBoard(props) {
 
                     return {
                         ...prev,
-                        p1GameBag: newBag,
+                        gameBag: newBag,
                       };
                 })
                 break;
@@ -66,40 +66,67 @@ export default function ScoreBoard(props) {
     }
 
     function checkSpider() {
+        // for player 1 
         if (storeObject.p1PotCurrentRound.length > 0) {
             if (storeObject.p1PotCurrentRound[storeObject.p1PotCurrentRound.length - 1].color === "green") {
-                spiderEffect()
+                spiderEffect(1)
             }
         }
         if (storeObject.p1PotCurrentRound.length > 1) {
             if (storeObject.p1PotCurrentRound[storeObject.p1PotCurrentRound.length - 2].color === "green") {
-                spiderEffect()
+                spiderEffect(1)
+            }
+        }
+        // for player 2
+        if (storeObject.p2PotCurrentRound.length > 0) {
+            if (storeObject.p2PotCurrentRound[storeObject.p2PotCurrentRound.length - 1].color === "green") {
+                spiderEffect(0)
+            }
+        }
+        if (storeObject.p2PotCurrentRound.length > 1) {
+            if (storeObject.p2PotCurrentRound[storeObject.p2PotCurrentRound.length - 2].color === "green") {
+                spiderEffect(0)
             }
         }
         storeObject.setScoreboardStep(prev => prev + 1)
     }
 
-    function spiderEffect() {
+    function spiderEffect(player1) {
         console.log("SPIDER EFFECT")
-        addRuby(1)
+        addRuby(player1)
     }
 
     function checkRuby() {
+        // for player 1 
         if (storeObject.scoreTrack[storeObject.p1ChipSpace +1].rubySpace) {
-            console.log("PLAYER GETS RUBY")
+            console.log("PLAYER 1 GETS RUBY")
             addRuby(1)
         } else {
-            console.log("NO RUBY")
+            console.log("NO RUBY 1")
+        }
+        //for player 2
+        if (storeObject.scoreTrack[storeObject.p2ChipSpace +1].rubySpace) {
+            console.log("PLAYER 2 GETS RUBY")
+            addRuby(0)
+        } else {
+            console.log("NO RUBY 2")
         }
         storeObject.setScoreboardStep(prev => prev + 1)
     }
 
     function scoreVP() {
+        // for player 1 
         console.log(storeObject.scoreTrack[storeObject.p1ChipSpace +1].victoryPoints)
         for(let i = 0; i < storeObject.scoreTrack[storeObject.p1ChipSpace +1].victoryPoints; i ++) {
             addVP(1)
         }
+        // for player 2
+        console.log(storeObject.scoreTrack[storeObject.p2ChipSpace +1].victoryPoints)
+        for(let i = 0; i < storeObject.scoreTrack[storeObject.p2ChipSpace +1].victoryPoints; i ++) {
+            addVP(0)
+        }
         storeObject.setScoreboardStep(prev => prev + 1)
+        storeObject.setPageActive(3)
     }
 
     function skip() {
@@ -112,7 +139,7 @@ export default function ScoreBoard(props) {
             const newRubyCount = prev.rubies + 1
             return {
                 ...prev,
-                score: newRubyCount,
+                rubies: newRubyCount,
                 };
         })
     }
@@ -135,16 +162,16 @@ export default function ScoreBoard(props) {
                     <div>
                         {" "}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 0)) ? <button onClick={() => {rollDie(1)}} disabled={
-                            storeObject.p1ChipSpace < storeObject.p2ChipSpace || storeObject.p1Exploded 
+                            (!storeObject.p2Exploded && storeObject.p1ChipSpace < storeObject.p2ChipSpace) || storeObject.p1Exploded 
                         }>Player 1 Roll the dice</button> : ""}
-                        {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 0)) ? <button onClick={() => {rollDie(1)}} disabled={
-                            storeObject.p1ChipSpace > storeObject.p2ChipSpace || storeObject.p2Exploded 
+                        {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 0)) ? <button onClick={() => {rollDie(0)}} disabled={
+                            (!storeObject.p1Exploded && storeObject.p1ChipSpace > storeObject.p2ChipSpace) || storeObject.p2Exploded 
                         }>Player 2 Roll the dice</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 1)) ? <button onClick={checkSpider}>Check for Moth / Spider / Ghost</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 2)) ? <button onClick={checkRuby}>Check for Ruby</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 3)) ? <button onClick={scoreVP}>Score VP</button> : ""}
 
-                        {(storeObject.pageActive === 2) ? <button onClick={skip}>Skip / Next</button> : ""}
+                        {(storeObject.pageActive === 2) ? <button disabled={storeObject.scoreboardStep > 3} onClick={skip}>Skip / Next</button> : ""}
                     </div>
             <div>
               {storeObject.menuShow ? "" : <button className="menuToggleBtn" onClick={props.handleMenuToggle}><FontAwesomeIcon icon={faBars} /></button>}
@@ -162,6 +189,8 @@ export default function ScoreBoard(props) {
             ></div>
             <div>Player One Score: {storeObject.player1Stats.score}</div>
             <div>Player One Rubies: {storeObject.player1Stats.rubies}</div>
+            <div>Player Two Score: {storeObject.player2Stats.score}</div>
+            <div>Player Two Rubies: {storeObject.player2Stats.rubies}</div>
         </div>
         
     )

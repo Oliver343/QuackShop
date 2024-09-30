@@ -463,7 +463,7 @@ export default function ContextProvider({children}){
     ])
 
     const [player1Stats, setPlayer1Stats]  = useState({
-      p1GameBag: [
+      gameBag: [
       ...starterBag
     ],
     droplet: 0,
@@ -473,7 +473,7 @@ export default function ContextProvider({children}){
     })
 
     const [player2Stats, setPlayer2Stats]  = useState({
-      p2GameBag: [
+      gameBag: [
       ...starterBag
     ],
     droplet: 0,
@@ -482,9 +482,9 @@ export default function ContextProvider({children}){
     score: 0,
     })
 
-    const [p1BagCurrentRound, setP1BagCurrentRound] = useState([...player1Stats.p1GameBag])
+    const [p1BagCurrentRound, setP1BagCurrentRound] = useState([...player1Stats.gameBag])
     const [p1PotCurrentRound, setP1PotCurrentRound] = useState([])
-    const [p2BagCurrentRound, setP2BagCurrentRound] = useState([...player2Stats.p2GameBag])
+    const [p2BagCurrentRound, setP2BagCurrentRound] = useState([...player2Stats.gameBag])
     const [p2PotCurrentRound, setP2PotCurrentRound] = useState([])
     const [p1Exploded, setP1Exploded] = useState(false);
     const [p1Stopped, setP1Stopped] = useState(false);
@@ -541,6 +541,8 @@ export default function ContextProvider({children}){
     const [pageTarget, setPageTarget] = useState(1)
     const [pageActive, setPageActive] = useState(1)
     const [scoreboardStep, setScoreboardStep] = useState(0)
+
+    let [buyPowerP1, setBuyPowerP2] = useState(scoreTrack[storeObject.p1ChipSpace +1].buyingPower)
 
     let cherrybombValueP2 = useRef(0);
 
@@ -652,6 +654,8 @@ return (
       p2DrawDecide,
       p1CherrybombValue,
       setP1CherrybombValue,
+      buyPowerP1,
+      setBuyPowerP1,
     }}>
         {children}
     </StoreContextWrapper.Provider>
