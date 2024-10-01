@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { StoreContextWrapper } from "../store/ContextProvider"
 import Header from "../components/Header"
-import BoardP1 from './BoardP1';
-import './main.css';
+import BoardP1 from './BoardP1'
+import './main.css'
 import './chips.css'
 import ScoreBoard from "./ScoreBoard"
 import Shop from "./Shop"

@@ -5,6 +5,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons'
 
 import scoreBoard from "../img/scoreboard.png"
 import chipO1 from "../img/chipO1.png";
+import Modal from "../components/Modal";
 
 export default function ScoreBoard(props) {
     const storeObject = useContext(StoreContextWrapper)
@@ -26,8 +27,8 @@ export default function ScoreBoard(props) {
         switch(randomNo) {
             case 0:
                 setStats((prev) => {
-                    const newBag = prev.gameBag
-                    newBag.push(
+                    const newItems = []
+                    newItems.push(
                         {
                             color: "orange",
                             value: 1,
@@ -35,10 +36,10 @@ export default function ScoreBoard(props) {
                             effect: false,
                             volatile: false,
                         })
-
+                    const updatedBag = prev.gameBag.concat(newItems)
                     return {
                         ...prev,
-                        gameBag: newBag,
+                        gameBag: updatedBag,
                       };
                 })
                 break;
@@ -145,6 +146,7 @@ export default function ScoreBoard(props) {
 
     return(
         <div>
+            {(storeObject.pageActive === 2 ? "" : <Modal />)}
             <div className="boardBar">
                 <div className="buttonBox">
                     <div>
@@ -160,6 +162,12 @@ export default function ScoreBoard(props) {
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 3)) ? <button onClick={scoreVP}>Score VP</button> : ""}
 
                         {(storeObject.pageActive === 2) ? <button disabled={storeObject.scoreboardStep > 3} onClick={skip}>Skip / Next</button> : ""}
+                       
+                        <div>Player One Score: {storeObject.player1Stats.score}</div>
+                        <div>Player One Rubies: {storeObject.player1Stats.rubies}</div>
+                        <div>Player Two Score: {storeObject.player2Stats.score}</div>
+                        <div>Player Two Rubies: {storeObject.player2Stats.rubies}</div>
+                    
                     </div>
             <div>
               {storeObject.menuShow ? "" : <button className="menuToggleBtn" onClick={props.handleMenuToggle}><FontAwesomeIcon icon={faBars} /></button>}
@@ -175,10 +183,7 @@ export default function ScoreBoard(props) {
                 width: 1000, maxWidth: maxValue, 
                 height: 914, maxHeight: maxValue}}
             ></div>
-            <div>Player One Score: {storeObject.player1Stats.score}</div>
-            <div>Player One Rubies: {storeObject.player1Stats.rubies}</div>
-            <div>Player Two Score: {storeObject.player2Stats.score}</div>
-            <div>Player Two Rubies: {storeObject.player2Stats.rubies}</div>
+
         </div>
         
     )

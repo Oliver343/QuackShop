@@ -38,7 +38,7 @@ export default function Shop() {
 
         const setStats = player1 ? storeObject.setPlayer1Stats : storeObject.setPlayer2Stats
         setStats((prev) => {
-            const newBag = prev.gameBag
+            const newItems = []
             let image = chipO1
             let color = "orange"
             let effect = false
@@ -102,7 +102,7 @@ export default function Shop() {
                     break;
             }
 
-            newBag.push(
+            newItems.push(
                 {
                     color: color,
                     value: value,
@@ -111,12 +111,11 @@ export default function Shop() {
                     volatile: false,
                 })
 
-            console.log("newBag")
-            console.log(newBag)
-
+            const updatedBag = prev.gameBag.concat(newItems)
+            
             return {
                 ...prev,
-                gameBag: newBag,
+                gameBag: updatedBag,
               };
         })
     }
