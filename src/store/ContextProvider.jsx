@@ -547,7 +547,6 @@ export default function ContextProvider({children}){
     let cherrybombValueP2 = useRef(0);
 
     function p2DrawDecide() {
-      console.log(p2PotCurrentRound)
       if (cherrybombValueP2.current < 7) {
 
         const randomNo = Math.floor(Math.random() * p2BagCurrentRound.length);
@@ -568,8 +567,6 @@ export default function ContextProvider({children}){
         if (currentIngredient.volatile) {
           cherrybombValueP2.current =
           cherrybombValueP2.current + currentIngredient.value;
-          console.log("CHERRY BOMB VALUE P2...")
-          console.log(cherrybombValueP2)
         }
         if (cherrybombValueP2.current >= 8) {
           setP2Exploded(true);

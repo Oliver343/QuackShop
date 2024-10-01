@@ -20,13 +20,11 @@ export default function ScoreBoard(props) {
 
     function rollDie(player1) {
         const randomNo = Math.floor(Math.random() * dice.length);
-        console.log(dice[randomNo])
 
         const setStats = player1 ? storeObject.setPlayer1Stats : storeObject.setPlayer2Stats
 
         switch(randomNo) {
             case 0:
-                console.log("ADD A PUMPKIN HERE")
                 setStats((prev) => {
                     const newBag = prev.gameBag
                     newBag.push(
@@ -61,7 +59,6 @@ export default function ScoreBoard(props) {
                 console.log("ADD A DROP HERE")
                 break;
         }
-        console.log(storeObject.player1Stats)
         storeObject.setScoreboardStep(prev => prev + 1)
     }
 
@@ -92,36 +89,27 @@ export default function ScoreBoard(props) {
     }
 
     function spiderEffect(player1) {
-        console.log("SPIDER EFFECT")
         addRuby(player1)
     }
 
     function checkRuby() {
         // for player 1 
         if (storeObject.scoreTrack[storeObject.p1ChipSpace +1].rubySpace) {
-            console.log("PLAYER 1 GETS RUBY")
             addRuby(1)
-        } else {
-            console.log("NO RUBY 1")
         }
         //for player 2
         if (storeObject.scoreTrack[storeObject.p2ChipSpace +1].rubySpace) {
-            console.log("PLAYER 2 GETS RUBY")
             addRuby(0)
-        } else {
-            console.log("NO RUBY 2")
         }
         storeObject.setScoreboardStep(prev => prev + 1)
     }
 
     function scoreVP() {
         // for player 1 
-        console.log(storeObject.scoreTrack[storeObject.p1ChipSpace +1].victoryPoints)
         for(let i = 0; i < storeObject.scoreTrack[storeObject.p1ChipSpace +1].victoryPoints; i ++) {
             addVP(1)
         }
         // for player 2
-        console.log(storeObject.scoreTrack[storeObject.p2ChipSpace +1].victoryPoints)
         for(let i = 0; i < storeObject.scoreTrack[storeObject.p2ChipSpace +1].victoryPoints; i ++) {
             addVP(0)
         }
