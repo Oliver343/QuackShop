@@ -27,6 +27,11 @@ export default function Shop() {
     console.log("PLAYER 1 GAME BAG!")
     console.log(storeObject.player1Stats.gameBag)
 
+    function finishShopping() {
+        console.log("FINISH")
+        storeObject.setPageActive(2)
+    } 
+
     function buyIngredient(type, value, cost, player1) {
 
         // Reduce buy power by cost
@@ -124,6 +129,7 @@ export default function Shop() {
     return (
         <div>
             <div>
+                {(storeObject.pageActive === 3) ? <button onClick={finishShopping}>Finish Shopping</button> : ""}
                 {(storeObject.pageActive === 3) ? <p>Player 1 buying value: {storeObject.buyPowerP1}</p> : ""}
             </div>
             <img src={Book1} 

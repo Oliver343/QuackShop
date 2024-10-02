@@ -599,6 +599,25 @@ export default function ContextProvider({children}){
       recalcCenter()
     }
 
+    function startNewRound() {
+      console.log("RESET ALL ROUND BITS AND GO BACK")
+      setP1Exploded(false)
+      setP2Exploded(false)
+      setP1Stopped(false)
+      setP2Stopped(false)
+      setPageTarget(1)
+      setScoreboardStep(0)
+      setP1BagCurrentRound(player1Stats.gameBag)
+      setP2BagCurrentRound(player2Stats.gameBag)
+      setP1PotCurrentRound([])
+      setP2PotCurrentRound([])
+      setBuyPowerP1(0)
+      setP1CherrybombValue(0)
+      cherrybombValueP2.current = 0
+      setP1ChipSpace(player1Stats.droplet)
+      setP2ChipSpace(player2Stats.droplet) 
+    }
+
     window.addEventListener('resize', handleResize);
 
 
@@ -653,6 +672,7 @@ return (
       setP1CherrybombValue,
       buyPowerP1,
       setBuyPowerP1,
+      startNewRound,
     }}>
         {children}
     </StoreContextWrapper.Provider>

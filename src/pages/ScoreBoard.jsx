@@ -144,6 +144,34 @@ export default function ScoreBoard(props) {
         })
     }
 
+    function buyDroplet() {
+        addDrop(true)
+        storeObject.setPlayer1Stats((prev) => {
+            const newRubyCount = prev.rubies - 2
+            return {
+                ...prev,
+                rubies: newRubyCount,
+                };
+        })
+    }
+
+    function addDrop(player1) {
+        const setStats = player1 ? storeObject.setPlayer1Stats : storeObject.setPlayer2Stats
+        setStats((prev) => {
+            const newDropCount = prev.droplet + 1
+            return {
+                ...prev,
+                droplet: newDropCount,
+                };
+        })
+    }
+    
+
+    if(storeObject.scoreboardStep === 4) {
+        storeObject.setPageActive(3)
+        storeObject.setScoreboardStep(5)
+    }
+
     return(
         <div>
             {(storeObject.pageActive === 2 ? "" : <Modal />)}
@@ -160,8 +188,14 @@ export default function ScoreBoard(props) {
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 1)) ? <button onClick={checkSpider}>Check for Moth / Spider / Ghost</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 2)) ? <button onClick={checkRuby}>Check for Ruby</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 3)) ? <button onClick={scoreVP}>Score VP</button> : ""}
+                        {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 5)) ? <button onClick={buyDroplet} disabled={storeObject.player1Stats.rubies < 2} >Buy Droplet</button> : ""}
+                        {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 5)) ? <button onClick={skip} disabled >Refill Flask (Not working yet)</button> : ""}
 
-                        {(storeObject.pageActive === 2) ? <button disabled={storeObject.scoreboardStep > 3} onClick={skip}>Skip / Next</button> : ""}
+                        {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 6)) ? <button onClick={storeObject.startNewRound} >START NEW ROUND!</button> : ""}
+
+                        {(storeObject.pageActive === 2) ? <button disabled={storeObject.scoreboardStep > 5} onClick={skip}>Skip / Next</button> : ""}
+
+                        {(storeObject.pageActive === 2) ? <p>Current step: {storeObject.scoreboardStep}</p> : ""}
                        
                         <div>Player One Score: {storeObject.player1Stats.score}</div>
                         <div>Player One Rubies: {storeObject.player1Stats.rubies}</div>
