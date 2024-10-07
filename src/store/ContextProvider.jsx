@@ -543,6 +543,7 @@ export default function ContextProvider({children}){
     const [scoreboardStep, setScoreboardStep] = useState(0)
     const [player1AlreadyRolled, setPlayer1AlreadyRolled] = useState(false)
     const [player2AlreadyRolled, setPlayer2AlreadyRolled] = useState(false)
+    const [currentRound, setCurrentRound] = useState(1)
 
     const [buyPowerP1, setBuyPowerP1] = useState(scoreTrack[p1ChipSpace +1].buyingPower)
 
@@ -621,6 +622,7 @@ export default function ContextProvider({children}){
       setP2ChipSpace(player2Stats.droplet) 
       setPlayer1AlreadyRolled(false)
       setPlayer2AlreadyRolled(false)
+      setCurrentRound(prev => prev +1)
     }
 
     window.addEventListener('resize', handleResize);
@@ -682,6 +684,8 @@ return (
       setPlayer1AlreadyRolled,
       player2AlreadyRolled,
       setPlayer2AlreadyRolled,
+      currentRound, 
+      setCurrentRound,
     }}>
         {children}
     </StoreContextWrapper.Provider>

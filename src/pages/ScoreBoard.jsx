@@ -127,6 +127,29 @@ export default function ScoreBoard(props) {
         storeObject.setPageActive(3)
     }
 
+    function scoreBuyingPower() {
+
+        storeObject.setPlayer1Stats((prev) => {
+            const newVPCount = prev.score + Math.floor(storeObject.buyPowerP1 / 5)
+            return {
+                ...prev,
+                score: newVPCount,
+                };
+        })
+
+        // Do the same for player 2 if they didnt explode.
+        if(!storeObject.p2Exploded) {
+            storeObject.setPlayer2Stats((prev) => {
+                const newVPCount2 = prev.score + Math.floor(storeObject.buyPowerP2 / 5)
+                return {
+                    ...prev,
+                    score: newVPCount2,
+                    };
+            })
+        }
+        storeObject.setScoreboardStep(prev => prev + 1)
+    }
+
     function skip() {
         storeObject.setScoreboardStep(prev => prev + 1)
     }
@@ -177,8 +200,11 @@ export default function ScoreBoard(props) {
     
 
     if(storeObject.scoreboardStep === 4) {
-        storeObject.setPageActive(3)
-        storeObject.setScoreboardStep(5)
+        if(storeObject.currentRound < 9) {
+            // Moves focus to shop unless on last round.
+            storeObject.setPageActive(3)
+            storeObject.setScoreboardStep(5)
+        }
     }
 
     return(
@@ -187,7 +213,8 @@ export default function ScoreBoard(props) {
             <div className="boardBar">
                 <div className="buttonBox">
                     <div>
-                        {" "}
+                        <p>Current Round: {storeObject.currentRound}</p>
+                        {(storeObject.currentRound > 8) ? <p>FINAL ROUND!!!</p> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 0)) &&  (storeObject.p1ChipSpace === storeObject.p2ChipSpace) ? <p>Both get to  roll</p> : "" }
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 0)) ? <button onClick={() => {rollDie(1)}} disabled={
                             (!storeObject.p2Exploded && storeObject.p1ChipSpace < storeObject.p2ChipSpace) || storeObject.p1Exploded || storeObject.player1AlreadyRolled
@@ -198,10 +225,12 @@ export default function ScoreBoard(props) {
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 1)) ? <button onClick={checkSpider}>Check for Moth / Spider / Ghost</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 2)) ? <button onClick={checkRuby}>Check for Ruby</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 3)) ? <button onClick={scoreVP}>Score VP</button> : ""}
+                        {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 4)) ? <button onClick={scoreBuyingPower}>Score With Buying Power</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 5)) ? <button onClick={buyDroplet} disabled={storeObject.player1Stats.rubies < 2} >Buy Droplet</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 5)) ? <button onClick={skip} disabled >Refill Flask (Not working yet)</button> : ""}
 
-                        {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 6)) ? <button onClick={storeObject.startNewRound} >START NEW ROUND!</button> : ""}
+                        {((storeObject.currentRound < 9) && (storeObject.pageActive === 2) && (storeObject.scoreboardStep === 6)) ? <button onClick={storeObject.startNewRound} >START NEW ROUND!</button> : ""}
+                        {((storeObject.currentRound > 8) && (storeObject.pageActive === 2) && (storeObject.scoreboardStep === 6)) ? <button onClick={() => {console.log("THE END")}} >END GAME!</button> : ""}
 
                         {(storeObject.pageActive === 2) ? <button disabled={storeObject.scoreboardStep > 5} onClick={skip}>Skip / Next</button> : ""}
 
