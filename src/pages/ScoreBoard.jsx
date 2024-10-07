@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { StoreContextWrapper } from "../store/ContextProvider"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
@@ -57,10 +57,19 @@ export default function ScoreBoard(props) {
                 addRuby(player1)
                 break;
             case 4:
-                console.log("ADD A DROP HERE")
+                addDrop(player1)
                 break;
         }
-        storeObject.setScoreboardStep(prev => prev + 1)
+        if (storeObject.p1ChipSpace !== storeObject.p2ChipSpace) {
+            storeObject.setScoreboardStep(prev => prev + 1)
+
+        } else {
+            if(player1) {
+                storeObject.setPlayer1AlreadyRolled(true)
+            } else {
+                storeObject.setPlayer2AlreadyRolled(true)
+            }
+        }
     }
 
     function checkSpider() {
@@ -179,11 +188,12 @@ export default function ScoreBoard(props) {
                 <div className="buttonBox">
                     <div>
                         {" "}
+                        {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 0)) &&  (storeObject.p1ChipSpace === storeObject.p2ChipSpace) ? <p>Both get to  roll</p> : "" }
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 0)) ? <button onClick={() => {rollDie(1)}} disabled={
-                            (!storeObject.p2Exploded && storeObject.p1ChipSpace < storeObject.p2ChipSpace) || storeObject.p1Exploded 
+                            (!storeObject.p2Exploded && storeObject.p1ChipSpace < storeObject.p2ChipSpace) || storeObject.p1Exploded || storeObject.player1AlreadyRolled
                         }>Player 1 Roll the dice</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 0)) ? <button onClick={() => {rollDie(0)}} disabled={
-                            (!storeObject.p1Exploded && storeObject.p1ChipSpace > storeObject.p2ChipSpace) || storeObject.p2Exploded 
+                            (!storeObject.p1Exploded && storeObject.p1ChipSpace > storeObject.p2ChipSpace) || storeObject.p2Exploded || storeObject.player2AlreadyRolled
                         }>Player 2 Roll the dice</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 1)) ? <button onClick={checkSpider}>Check for Moth / Spider / Ghost</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 2)) ? <button onClick={checkRuby}>Check for Ruby</button> : ""}

@@ -541,6 +541,8 @@ export default function ContextProvider({children}){
     const [pageTarget, setPageTarget] = useState(1)
     const [pageActive, setPageActive] = useState(1)
     const [scoreboardStep, setScoreboardStep] = useState(0)
+    const [player1AlreadyRolled, setPlayer1AlreadyRolled] = useState(false)
+    const [player2AlreadyRolled, setPlayer2AlreadyRolled] = useState(false)
 
     const [buyPowerP1, setBuyPowerP1] = useState(scoreTrack[p1ChipSpace +1].buyingPower)
 
@@ -606,6 +608,7 @@ export default function ContextProvider({children}){
       setP1Stopped(false)
       setP2Stopped(false)
       setPageTarget(1)
+      setPageActive(1)
       setScoreboardStep(0)
       setP1BagCurrentRound(player1Stats.gameBag)
       setP2BagCurrentRound(player2Stats.gameBag)
@@ -616,6 +619,8 @@ export default function ContextProvider({children}){
       cherrybombValueP2.current = 0
       setP1ChipSpace(player1Stats.droplet)
       setP2ChipSpace(player2Stats.droplet) 
+      setPlayer1AlreadyRolled(false)
+      setPlayer2AlreadyRolled(false)
     }
 
     window.addEventListener('resize', handleResize);
@@ -673,6 +678,10 @@ return (
       buyPowerP1,
       setBuyPowerP1,
       startNewRound,
+      player1AlreadyRolled,
+      setPlayer1AlreadyRolled,
+      player2AlreadyRolled,
+      setPlayer2AlreadyRolled,
     }}>
         {children}
     </StoreContextWrapper.Provider>
