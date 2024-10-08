@@ -252,7 +252,8 @@ export default function ScoreBoard(props) {
                 style={{backgroundImage: 
                 "url(" + scoreBoard + ")", 
                 backgroundSize: 'contain', 
-                backgroundRepeat: 'no-repeat', 
+                backgroundRepeat: 'no-repeat',
+                border: 'dashed red 2px', 
                 width: 1000, maxWidth: maxValue, 
                 height: 914, maxHeight: maxValue}}
             ></div>

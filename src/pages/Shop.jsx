@@ -24,11 +24,7 @@ export default function Shop() {
     const storeObject = useContext(StoreContextWrapper)
     let maxValue = ((storeObject.width < storeObject.height ? storeObject.width : storeObject.height) - 4 )
     
-    console.log("PLAYER 1 GAME BAG!")
-    console.log(storeObject.player1Stats.gameBag)
-
     function finishShopping() {
-        console.log("FINISH")
         storeObject.setPageActive(2)
     } 
 
@@ -36,10 +32,6 @@ export default function Shop() {
 
         // Reduce buy power by cost
         storeObject.setBuyPowerP1((prev => prev - cost)) 
-
-        console.log("ADD A " + {type} + " WITH VALUE " + {value})
-        console.log(type)
-        console.log(value)
 
         const setStats = player1 ? storeObject.setPlayer1Stats : storeObject.setPlayer2Stats
         setStats((prev) => {

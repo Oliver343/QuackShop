@@ -546,6 +546,7 @@ export default function ContextProvider({children}){
     const [currentRound, setCurrentRound] = useState(1)
 
     const [buyPowerP1, setBuyPowerP1] = useState(scoreTrack[p1ChipSpace +1].buyingPower)
+    const [buyPowerP2, setBuyPowerP2] = useState(scoreTrack[p2ChipSpace +1].buyingPower)
 
     let cherrybombValueP2 = useRef(0);
 
@@ -555,6 +556,7 @@ export default function ContextProvider({children}){
         const randomNo = Math.floor(Math.random() * p2BagCurrentRound.length);
         let currentIngredient = p2BagCurrentRound[randomNo]
 
+        setBuyPowerP2(scoreTrack[p2ChipSpace +1].buyingPower)
         setP2BagCurrentRound(prev => prev.filter(item => item !== currentIngredient ))
 
         setP2ChipSpace(prev => {
@@ -565,7 +567,6 @@ export default function ContextProvider({children}){
         setP2PotCurrentRound(prev => {
           return (prev ? [...prev, currentIngredient] : currentIngredient)
         })
-
 
         if (currentIngredient.volatile) {
           cherrybombValueP2.current =
@@ -603,7 +604,6 @@ export default function ContextProvider({children}){
     }
 
     function startNewRound() {
-      console.log("RESET ALL ROUND BITS AND GO BACK")
       setP1Exploded(false)
       setP2Exploded(false)
       setP1Stopped(false)
@@ -679,6 +679,8 @@ return (
       setP1CherrybombValue,
       buyPowerP1,
       setBuyPowerP1,
+      buyPowerP2,
+      setBuyPowerP2,
       startNewRound,
       player1AlreadyRolled,
       setPlayer1AlreadyRolled,
