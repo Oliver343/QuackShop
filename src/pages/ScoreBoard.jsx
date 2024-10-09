@@ -209,7 +209,7 @@ export default function ScoreBoard(props) {
 
     return(
         <div>
-            {(storeObject.pageActive === 2 ? "" : <Modal />)}
+            {/* {(storeObject.pageActive === 2 ? "" : <Modal />)} */}
             <div className="boardBar">
                 <div className="buttonBox">
                     <div>
@@ -255,7 +255,7 @@ export default function ScoreBoard(props) {
                 backgroundRepeat: 'no-repeat',
                 border: 'dashed red 2px', 
                 width: 1000, maxWidth: maxValue, 
-                height: 914, maxHeight: maxValue}}
+                height: 702, maxHeight: maxValue}}
             ></div>
 
         </div>

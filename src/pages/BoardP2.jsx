@@ -13,7 +13,8 @@ const BoardP2 = (props) => {
   const exploaded = useRef(false);
   const storeObject = useContext(StoreContextWrapper)
   let boardImage = board
-  let maxValue = ((storeObject.width < storeObject.height ? storeObject.width : storeObject.height) - 4 )
+  let additionalHeight = storeObject.menuShow ? 130 : 54
+  let maxValue = ((storeObject.width < storeObject.height ? storeObject.width : (storeObject.height - additionalHeight)) - 4 )
 
   useEffect(() => {
     if (storeObject.p2Stopped) {
@@ -110,10 +111,10 @@ const BoardP2 = (props) => {
         width={storeObject.chipSize - (storeObject.chipSize / 3)}
         height={storeObject.chipSize - (storeObject.chipSize / 3)}
         style={{
-          maxWidth: "54px",
-          maxHeight: "54px",
-          top: (storeObject.centerHeight / storeObject.chipTopArr[storeObject.player2Stats.droplet]) + (storeObject.menuShow ? 130 : 54),
-          left: storeObject.centerWidth / storeObject.chipLeftArr[storeObject.player2Stats.droplet], 
+          maxWidth: (storeObject.menuShow ? "43px" : "54px"),
+          maxHeight: (storeObject.menuShow ? "43px" : "54px"),
+          top: (storeObject.centerHeight / storeObject.chipTopArr[storeObject.player2Stats.droplet]) + (storeObject.menuShow ? 90 : 40),
+          left: (storeObject.centerWidth / storeObject.chipLeftArr[storeObject.player2Stats.droplet]) + (storeObject.menuShow ? -55 : -20), 
         }}/>
 
       </div>
