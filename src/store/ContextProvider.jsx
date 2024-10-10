@@ -546,6 +546,7 @@ export default function ContextProvider({children}){
     const [currentRound, setCurrentRound] = useState(1)
     const [confirmVpModal, setConfirmVpModal] = useState(false)
     const [allowBuying, setAllowBuying] = useState(true)
+    const [allowBuyingP2, setAllowBuyingP2] = useState(true)
 
     const [buyPowerP1, setBuyPowerP1] = useState(scoreTrack[p1ChipSpace +1].buyingPower)
     const [buyPowerP2, setBuyPowerP2] = useState(scoreTrack[p2ChipSpace +1].buyingPower)
@@ -625,6 +626,7 @@ export default function ContextProvider({children}){
       setPlayer1AlreadyRolled(false)
       setPlayer2AlreadyRolled(false)
       setAllowBuying(true)
+      setAllowBuyingP2(true)
       setCurrentRound(prev => prev +1)
     }
 
@@ -695,6 +697,8 @@ return (
       setConfirmVpModal,
       allowBuying,
       setAllowBuying,
+      allowBuyingP2,
+      setAllowBuyingP2,
     }}>
         {children}
     </StoreContextWrapper.Provider>

@@ -126,16 +126,31 @@ export default function ScoreBoard(props) {
     }
 
     function scoreVP() {
-            // for player 1 
-            for(let i = 0; i < storeObject.scoreTrack[storeObject.p1ChipSpace +1].victoryPoints; i ++) {
-                addVP(1)
-            }
-            // for player 2
+        // for player 1 
+        for(let i = 0; i < storeObject.scoreTrack[storeObject.p1ChipSpace +1].victoryPoints; i ++) {
+            addVP(1)
+        }
+
+        p2DecideScoreVP()
+
+        storeObject.setScoreboardStep(prev => prev + 1)
+        storeObject.setPageActive(3)
+    }
+
+    function p2DecideScoreVP() {
+        let scoreDebate = true
+        if(storeObject.p2Exploded && currentRound < 8) {
+            scoreDebate = false
+            storeObject.setAllowBuyingP2(false)
+        }
+        if(scoreDebate) {
+            console.log("PLAYER 2 IS SCORING")
             for(let i = 0; i < storeObject.scoreTrack[storeObject.p2ChipSpace +1].victoryPoints; i ++) {
                 addVP(0)
             }
-            storeObject.setScoreboardStep(prev => prev + 1)
-            storeObject.setPageActive(3)
+        } else {
+            console.log("PLAYER 2 HAS CHOSEN NOT TO SCORE")
+        }
     }
 
     function scoreBuyingPower() {
@@ -211,6 +226,10 @@ export default function ScoreBoard(props) {
     
 
     if(storeObject.scoreboardStep === 4) {
+        if(!allowBuying){
+            // skips buying step
+            storeObject.setScoreboardStep(5)
+        }
         if(storeObject.currentRound < 9) {
             // Moves focus to shop unless on last round.
             storeObject.setPageActive(3)
