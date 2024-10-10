@@ -139,7 +139,7 @@ export default function ScoreBoard(props) {
 
     function p2DecideScoreVP() {
         let scoreDebate = true
-        if(storeObject.p2Exploded && currentRound < 8) {
+        if(storeObject.p2Exploded && storeObject.currentRound < 8) {
             scoreDebate = false
             storeObject.setAllowBuyingP2(false)
         }
@@ -226,11 +226,11 @@ export default function ScoreBoard(props) {
     
 
     if(storeObject.scoreboardStep === 4) {
-        if(!allowBuying){
+        if(!storeObject.allowBuying){
             // skips buying step
+            storeObject.setPageActive(2)
             storeObject.setScoreboardStep(5)
-        }
-        if(storeObject.currentRound < 9) {
+        } else if (storeObject.currentRound < 9) {
             // Moves focus to shop unless on last round.
             storeObject.setPageActive(3)
             storeObject.setScoreboardStep(5)
