@@ -114,17 +114,28 @@ export default function ScoreBoard(props) {
         storeObject.setScoreboardStep(prev => prev + 1)
     }
 
+    function confirmScoreVP() {
+        // question if exploaded first...
+        if(storeObject.p1Exploded) {
+            // ask if sure they want to get VP (rather than buy)
+            storeObject.setConfirmVpModal(true)
+        } else {
+            scoreVP()
+        }
+        
+    }
+
     function scoreVP() {
-        // for player 1 
-        for(let i = 0; i < storeObject.scoreTrack[storeObject.p1ChipSpace +1].victoryPoints; i ++) {
-            addVP(1)
-        }
-        // for player 2
-        for(let i = 0; i < storeObject.scoreTrack[storeObject.p2ChipSpace +1].victoryPoints; i ++) {
-            addVP(0)
-        }
-        storeObject.setScoreboardStep(prev => prev + 1)
-        storeObject.setPageActive(3)
+            // for player 1 
+            for(let i = 0; i < storeObject.scoreTrack[storeObject.p1ChipSpace +1].victoryPoints; i ++) {
+                addVP(1)
+            }
+            // for player 2
+            for(let i = 0; i < storeObject.scoreTrack[storeObject.p2ChipSpace +1].victoryPoints; i ++) {
+                addVP(0)
+            }
+            storeObject.setScoreboardStep(prev => prev + 1)
+            storeObject.setPageActive(3)
     }
 
     function scoreBuyingPower() {
@@ -209,7 +220,7 @@ export default function ScoreBoard(props) {
 
     return(
         <div>
-            {/* {(storeObject.pageActive === 2 ? "" : <Modal />)} */}
+            {(storeObject.confirmVpModal ? <Modal scoreVP={scoreVP} /> : "")}
             <div className="boardBar">
                 <div className="buttonBox">
                     <div>
@@ -224,7 +235,7 @@ export default function ScoreBoard(props) {
                         }>Player 2 Roll the dice</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 1)) ? <button onClick={checkSpider}>Check for Moth / Spider / Ghost</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 2)) ? <button onClick={checkRuby}>Check for Ruby</button> : ""}
-                        {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 3)) ? <button onClick={scoreVP}>Score VP</button> : ""}
+                        {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 3)) ? <button onClick={confirmScoreVP}>Score VP</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 4)) ? <button onClick={scoreBuyingPower}>Score With Buying Power</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 5)) ? <button onClick={buyDroplet} disabled={storeObject.player1Stats.rubies < 2} >Buy Droplet</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 5)) ? <button onClick={skip} disabled >Refill Flask (Not working yet)</button> : ""}
