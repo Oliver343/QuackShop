@@ -15,9 +15,6 @@ const BoardP1 = (props) => {
   let boardImage = board
   let maxValue = ((storeObject.width < storeObject.height ? storeObject.width : storeObject.height) - 4 )
 
-  console.log("MAX VALUE")
-  console.log(maxValue)
-
   useEffect(() => {
     if (storeObject.p1Stopped) {
       document.getElementById("pullButton").disabled = true;

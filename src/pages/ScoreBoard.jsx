@@ -5,6 +5,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons'
 
 import scoreBoard from "../img/scoreboard.png"
 import chipO1 from "../img/chipO1.png";
+import chipR1 from "../img/chipR1.png";
 import Modal from "../components/Modal";
 
 export default function ScoreBoard(props) {
@@ -226,6 +227,36 @@ export default function ScoreBoard(props) {
     
 
     if(storeObject.scoreboardStep === 4) {
+
+        // shopping step so P2 looks to buy...
+        if(storeObject.allowBuyingP2) {
+            const setStats = storeObject.setPlayer2Stats
+            setStats((prev) => {
+                const newItems = []
+                let image = chipR1
+                let color = "red"
+                let effect = true
+
+                newItems.push(
+                    {
+                        color: color,
+                        value: value,
+                        img: image,
+                        effect: effect,
+                        volatile: false,
+                    })
+
+                const updatedBag = prev.gameBag.concat(newItems)
+            
+                return {
+                    ...prev,
+                    gameBag: updatedBag,
+                };
+            })
+        }
+    }
+
+
         if(!storeObject.allowBuying){
             // skips buying step
             storeObject.setPageActive(2)
@@ -236,6 +267,9 @@ export default function ScoreBoard(props) {
             storeObject.setScoreboardStep(5)
         }
     }
+
+    console.log("storeObject.player2Stats.gameBag")
+    console.log(storeObject.player2Stats.gameBag)
 
     return(
         <div>
