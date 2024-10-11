@@ -547,6 +547,7 @@ export default function ContextProvider({children}){
     const [confirmVpModal, setConfirmVpModal] = useState(false)
     const [allowBuying, setAllowBuying] = useState(true)
     const [allowBuyingP2, setAllowBuyingP2] = useState(true)
+    const [modalEffect, setModalEffect] = useState(false)
 
     const [buyPowerP1, setBuyPowerP1] = useState(scoreTrack[p1ChipSpace +1].buyingPower)
     const [buyPowerP2, setBuyPowerP2] = useState(scoreTrack[p2ChipSpace +1].buyingPower)

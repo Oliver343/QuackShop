@@ -29,7 +29,7 @@ const BoardP1 = (props) => {
   },[storeObject.p1Stopped, storeObject.p1Exploded]);
 
 
-  function drawRandomIngredient() {
+  async function drawRandomIngredient() {
     storeObject.p2DrawDecide()
     const randomNo = Math.floor(Math.random() * storeObject.p1BagCurrentRound.length);
     let currentIngredient = storeObject.p1BagCurrentRound[randomNo]
@@ -37,6 +37,7 @@ const BoardP1 = (props) => {
     storeObject.setP1BagCurrentRound(prev => prev.filter(item => item !== currentIngredient ))
 
     storeObject.setP1ChipSpace(prev => {
+      console.log("SET CHIP SPACE")
       currentIngredient["chipSpace"] = prev + currentIngredient.value;
       return prev + currentIngredient.value
     })
@@ -49,6 +50,7 @@ const BoardP1 = (props) => {
     if (currentIngredient.volatile) {
       storeObject.setP1CherrybombValue((prev) => {
         if ((prev + currentIngredient.value) >= 8) {
+          console.log("BLOWED UP")
           storeObject.setP1Exploded(true);
           exploaded.current = true;
           storeObject.setP1Stopped(true);

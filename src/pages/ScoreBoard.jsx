@@ -297,9 +297,6 @@ export default function ScoreBoard(props) {
         }
     }
 
-    console.log("storeObject.player2Stats.gameBag")
-    console.log(storeObject.player2Stats.gameBag)
-
     return(
         <div>
             {(storeObject.confirmVpModal ? <Modal scoreVP={scoreVP} /> : "")}
@@ -345,8 +342,7 @@ export default function ScoreBoard(props) {
                 style={{backgroundImage: 
                 "url(" + scoreBoard + ")", 
                 backgroundSize: 'contain', 
-                backgroundRepeat: 'no-repeat',
-                border: 'dashed red 2px', 
+                backgroundRepeat: 'no-repeat', 
                 width: 1000, maxWidth: maxValue, 
                 height: 702, maxHeight: maxValue}}
             ></div>
