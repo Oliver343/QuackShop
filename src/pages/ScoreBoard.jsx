@@ -1,11 +1,11 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { StoreContextWrapper } from "../store/ContextProvider"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 
 import scoreBoard from "../img/scoreboard.png"
 import chipO1 from "../img/chipO1.png";
-import chipR1 from "../img/chipR1.png";
+import chipR2 from "../img/chipR2.png";
 import Modal from "../components/Modal";
 
 export default function ScoreBoard(props) {
@@ -73,6 +73,31 @@ export default function ScoreBoard(props) {
         }
     }
 
+    function checkMoth() {
+        let player1Count = 0 
+        let player2Count = 0 
+        storeObject.p1PotCurrentRound.forEach((chip) =>{
+            if(chip.color === "black") {
+                player1Count ++
+            }
+        })
+        storeObject.p2PotCurrentRound.forEach((chip) =>{
+            if(chip.color === "black") {
+                player2Count ++
+            }
+        })
+        if(player1Count > player2Count) {
+            addDrop(true)
+            addRuby(true)
+        } else if (player2Count > player1Count) {
+            addDrop(false)
+            addRuby(false)
+        } else if ((player1Count > 0) && player1Count === player2Count) {
+            addDrop(true)
+            addDrop(false)
+        }
+    }
+
     function checkSpider() {
         // for player 1 
         if (storeObject.p1PotCurrentRound.length > 0) {
@@ -133,6 +158,8 @@ export default function ScoreBoard(props) {
         }
 
         p2DecideScoreVP()
+        player2Buy()
+        
 
         storeObject.setScoreboardStep(prev => prev + 1)
         storeObject.setPageActive(3)
@@ -178,7 +205,13 @@ export default function ScoreBoard(props) {
     }
 
     function skip() {
-        storeObject.setScoreboardStep(prev => prev + 1)
+        storeObject.setScoreboardStep(prev => {
+            if ((prev + 1) === 4) {
+                p2DecideScoreVP()
+                player2Buy()
+            }
+            return prev + 1
+        })
     }
 
     function addRuby(player1) {
@@ -225,36 +258,32 @@ export default function ScoreBoard(props) {
         })
     }
     
-
-    if(storeObject.scoreboardStep === 4) {
-
+    function player2Buy() {
         // shopping step so P2 looks to buy...
         if(storeObject.allowBuyingP2) {
-            const setStats = storeObject.setPlayer2Stats
-            setStats((prev) => {
+            storeObject.setPlayer2Stats((prev) => {
                 const newItems = []
-                let image = chipR1
-                let color = "red"
-                let effect = true
-
                 newItems.push(
                     {
-                        color: color,
-                        value: value,
-                        img: image,
-                        effect: effect,
+                        color: "red",
+                        value: 2,
+                        img: chipR2,
+                        effect: true,
                         volatile: false,
                     })
-
                 const updatedBag = prev.gameBag.concat(newItems)
-            
                 return {
                     ...prev,
                     gameBag: updatedBag,
-                };
+                  };
             })
+
         }
+
     }
+
+
+    if(storeObject.scoreboardStep === 4) {
 
 
         if(!storeObject.allowBuying){
@@ -286,7 +315,7 @@ export default function ScoreBoard(props) {
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 0)) ? <button onClick={() => {rollDie(0)}} disabled={
                             (!storeObject.p1Exploded && storeObject.p1ChipSpace > storeObject.p2ChipSpace) || storeObject.p2Exploded || storeObject.player2AlreadyRolled
                         }>Player 2 Roll the dice</button> : ""}
-                        {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 1)) ? <button onClick={checkSpider}>Check for Moth / Spider / Ghost</button> : ""}
+                        {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 1)) ? <button onClick={()=>{checkMoth(); checkSpider()}}>Check for Moth / Spider / Ghost</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 2)) ? <button onClick={checkRuby}>Check for Ruby</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 3)) ? <button onClick={confirmScoreVP}>Score VP</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 4)) ? <button onClick={scoreBuyingPower}>Score With Buying Power</button> : ""}
