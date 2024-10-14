@@ -700,6 +700,8 @@ return (
       setAllowBuying,
       allowBuyingP2,
       setAllowBuyingP2,
+      modalEffect,
+      setModalEffect,
     }}>
         {children}
     </StoreContextWrapper.Provider>

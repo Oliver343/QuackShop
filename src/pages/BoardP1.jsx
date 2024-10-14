@@ -8,6 +8,7 @@ import scoreSpace from "../img/scoreSpace.png";
 import board from "../img/board.png";
 import boardBoom from "../img/boardboom.png";
 import dropG from "../img/dropG.png"
+import ModalEffect from "../components/ModalEffect";
 
 const BoardP1 = (props) => {
   const exploaded = useRef(false);
@@ -55,10 +56,13 @@ const BoardP1 = (props) => {
           exploaded.current = true;
           storeObject.setP1Stopped(true);
           storeObject.setPageActive(2)
-          storeObject.setBuyPowerP1(storeObject.scoreTrack[storeObject.p1ChipSpace +1].buyingPower)
         }
         return prev + currentIngredient.value
       })
+    }
+
+    if (currentIngredient.effect){
+      storeObject.setModalEffect(true)
     }
 
   
@@ -68,11 +72,15 @@ const BoardP1 = (props) => {
     return <ChipImages key={i} chipSpace={ingredient.chipSpace} img={ingredient.img} />;
   });
 
+  storeObject.setBuyPowerP1(storeObject.scoreTrack[storeObject.p1ChipSpace +1].buyingPower)
+
   return (
     <div>
+      {(storeObject.modalEffect ? <ModalEffect color={"BLUE"} /> : "")}
       <div className="boardBar">
         <div className="buttonBox">
             <div>
+              {storeObject.buyPowerP1}
               {" "}
               <div id="explodedText" hidden={true} style={{ color: "red" }}>
                 BOOM!
@@ -84,11 +92,10 @@ const BoardP1 = (props) => {
                 storeObject.setP1Stopped(true);
                 storeObject.setP2Stopped(true);
                 storeObject.setPageActive(2);
-                storeObject.setBuyPowerP1(storeObject.scoreTrack[storeObject.p1ChipSpace +1].buyingPower)
                 }}>
                 STOP!
               </button>{" "}
-              <div id="scoreBox" hidden={true}>
+              <div id="scoreBox" >
                 VP = {storeObject.scoreTrack[storeObject.p1ChipSpace +1].victoryPoints} BP = {storeObject.scoreTrack[storeObject.p1ChipSpace +1].buyingPower}
               </div>{" "}
             </div>
