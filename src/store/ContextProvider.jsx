@@ -631,6 +631,18 @@ export default function ContextProvider({children}){
       setCurrentRound(prev => prev +1)
     }
 
+    function redEffect() {
+      console.log("RED EFFECT USED HERE")
+    }
+
+    function blueEffect() {
+      console.log("BLUE EFFECT USED HERE")
+    }
+
+    function yellowEffect() {
+      console.log("YELLOW EFFECT USED HERE")
+    }
+
     window.addEventListener('resize', handleResize);
 
 
@@ -702,6 +714,9 @@ return (
       setAllowBuyingP2,
       modalEffect,
       setModalEffect,
+      redEffect,
+      blueEffect,
+      yellowEffect,
     }}>
         {children}
     </StoreContextWrapper.Provider>
