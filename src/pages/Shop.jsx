@@ -117,10 +117,6 @@ export default function Shop() {
         })
     }
 
-    console.log("storeObject.buyPowerP1")
-    console.log(storeObject.buyPowerP1)
-
-
     return (
         <div>
             <div>

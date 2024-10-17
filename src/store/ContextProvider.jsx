@@ -6,6 +6,7 @@ import chipW1 from "../img/chipW1.png";
 import chipW2 from "../img/chipW2.png";
 import chipW3 from "../img/chipW3.png";
 import chipR1 from "../img/chipR1.png";
+import chipY1 from "../img/chipY1.png";
 
 export const StoreContextWrapper = createContext({
     checkState: "",
@@ -470,19 +471,27 @@ export default function ContextProvider({children}){
         volatile: false,
       },
       {
-        color: "red",
+        color: "yellow",
         value: 1,
-        img: chipR1,
+        img: chipY1,
         effect: true,
         volatile: false,
       },
       {
-        color: "red",
+        color: "yellow",
         value: 1,
-        img: chipR1,
+        img: chipY1,
         effect: true,
         volatile: false,
       },
+      {
+        color: "yellow",
+        value: 1,
+        img: chipY1,
+        effect: true,
+        volatile: false,
+      },
+
     ])
 
     const [player1Stats, setPlayer1Stats]  = useState({
@@ -657,31 +666,49 @@ export default function ContextProvider({children}){
     function redEffect(player1) {
       console.log("RED EFFECT USED HERE")
       const currentPot = player1 ? p1PotCurrentRound : p2PotCurrentRound
-      const counter = 0
-      const bonus = 0
-
+      const setCurrentPot = player1 ? setP1PotCurrentRound : setP2PotCurrentRound
+      let counter = 0
+      let bonus = 0
       currentPot.forEach((item) => {
         if(item.color === "orange") {
           counter ++
         }
       })
-
       if(counter > 0) {
         bonus = 1
       }
       if(counter > 2) {
         bonus = 2
       }
-
-      
+      setCurrentPot((prev) => {
+        let newPot = [...prev]
+        newPot[newPot.length - 1].value = newPot[newPot.length - 1].value + bonus
+        newPot[newPot.length - 1].chipSpace = newPot[newPot.length - 1].chipSpace + bonus
+        return newPot
+      })
+      setP1ChipSpace((prev => {
+        return prev + bonus
+      }))
     }
 
     function blueEffect() {
       console.log("BLUE EFFECT USED HERE")
     }
 
-    function yellowEffect() {
+    function yellowEffect(player1) {
       console.log("YELLOW EFFECT USED HERE")
+      const currentPot = player1 ? p1PotCurrentRound : p2PotCurrentRound
+      const setCurrentPot = player1 ? setP1PotCurrentRound : setP2PotCurrentRound
+      // const bombValue = player1 ? setP1CherrybombValue : setP2CherrybombValue
+      if(currentPot[currentPot.length - 2] && (currentPot[currentPot.length - 2].color === "white")) {
+        setP1CherrybombValue((prev) => prev - currentPot[currentPot.length - 2].value)
+        setCurrentPot((prev) => {
+          let newArr = [...prev]
+          newArr.splice(prev.length - 2, 1)
+          console.log(newArr)
+          return newArr
+        })
+      }
     }
 
     window.addEventListener('resize', handleResize);

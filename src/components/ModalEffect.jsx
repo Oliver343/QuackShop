@@ -7,7 +7,7 @@ export default function ModalEffect() {
 
     const currentColor = storeObject.p1PotCurrentRound[storeObject.p1PotCurrentRound.length - 1].color
 
-    function useChipEffect() {
+    function chipEffect() {
         switch(currentColor) {
             case "red":
                 storeObject.redEffect(true)
@@ -16,7 +16,7 @@ export default function ModalEffect() {
                 storeObject.blueEffect()
                 break;
             case "yellow":
-                storeObject.yellowEffect()
+                storeObject.yellowEffect(true)
                 break;
         }
     }
@@ -25,7 +25,7 @@ export default function ModalEffect() {
         <div className="modal">
             <div>
             Would you like to use the bonus effect for the {currentColor} chip drawn?
-            <button onClick={() => {useChipEffect(); storeObject.setModalEffect(false)} }>YES</button>
+            <button onClick={() => {chipEffect(); storeObject.setModalEffect(false)} }>YES</button>
             <button onClick={() => storeObject.setModalEffect(false) }>NO</button>
             </div>
             
