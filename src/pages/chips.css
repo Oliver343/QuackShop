@@ -19,7 +19,6 @@
 .boardBoxx {
   width: 1575px;
   height: 1750px;
-  border: 1px red dashed;
   /* background-image: url("../src/img/board.png"); */
   background-position: bottom 47px right 7px;
   background-color: aquamarine;

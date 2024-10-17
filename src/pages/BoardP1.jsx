@@ -8,15 +8,13 @@ import scoreSpace from "../img/scoreSpace.png";
 import board from "../img/board.png";
 import boardBoom from "../img/boardboom.png";
 import dropG from "../img/dropG.png"
+import ModalEffect from "../components/ModalEffect";
 
 const BoardP1 = (props) => {
   const exploaded = useRef(false);
   const storeObject = useContext(StoreContextWrapper)
   let boardImage = board
   let maxValue = ((storeObject.width < storeObject.height ? storeObject.width : storeObject.height) - 4 )
-
-  console.log("MAX VALUE")
-  console.log(maxValue)
 
   useEffect(() => {
     if (storeObject.p1Stopped) {
@@ -32,7 +30,7 @@ const BoardP1 = (props) => {
   },[storeObject.p1Stopped, storeObject.p1Exploded]);
 
 
-  function drawRandomIngredient() {
+  async function drawRandomIngredient() {
     storeObject.p2DrawDecide()
     const randomNo = Math.floor(Math.random() * storeObject.p1BagCurrentRound.length);
     let currentIngredient = storeObject.p1BagCurrentRound[randomNo]
@@ -40,6 +38,7 @@ const BoardP1 = (props) => {
     storeObject.setP1BagCurrentRound(prev => prev.filter(item => item !== currentIngredient ))
 
     storeObject.setP1ChipSpace(prev => {
+      console.log("SET CHIP SPACE")
       currentIngredient["chipSpace"] = prev + currentIngredient.value;
       return prev + currentIngredient.value
     })
@@ -52,14 +51,18 @@ const BoardP1 = (props) => {
     if (currentIngredient.volatile) {
       storeObject.setP1CherrybombValue((prev) => {
         if ((prev + currentIngredient.value) >= 8) {
+          console.log("BLOWED UP")
           storeObject.setP1Exploded(true);
           exploaded.current = true;
           storeObject.setP1Stopped(true);
           storeObject.setPageActive(2)
-          storeObject.setBuyPowerP1(storeObject.scoreTrack[storeObject.p1ChipSpace +1].buyingPower)
         }
         return prev + currentIngredient.value
       })
+    }
+
+    if (currentIngredient.effect){
+      storeObject.setModalEffect(true)
     }
 
   
@@ -69,11 +72,15 @@ const BoardP1 = (props) => {
     return <ChipImages key={i} chipSpace={ingredient.chipSpace} img={ingredient.img} />;
   });
 
+  storeObject.setBuyPowerP1(storeObject.scoreTrack[storeObject.p1ChipSpace +1].buyingPower)
+
   return (
     <div>
+      {(storeObject.modalEffect ? <ModalEffect /> : "")}
       <div className="boardBar">
         <div className="buttonBox">
             <div>
+              {storeObject.p1CherrybombValue}
               {" "}
               <div id="explodedText" hidden={true} style={{ color: "red" }}>
                 BOOM!
@@ -85,11 +92,10 @@ const BoardP1 = (props) => {
                 storeObject.setP1Stopped(true);
                 storeObject.setP2Stopped(true);
                 storeObject.setPageActive(2);
-                storeObject.setBuyPowerP1(storeObject.scoreTrack[storeObject.p1ChipSpace +1].buyingPower)
                 }}>
                 STOP!
               </button>{" "}
-              <div id="scoreBox" hidden={true}>
+              <div id="scoreBox" >
                 VP = {storeObject.scoreTrack[storeObject.p1ChipSpace +1].victoryPoints} BP = {storeObject.scoreTrack[storeObject.p1ChipSpace +1].buyingPower}
               </div>{" "}
             </div>

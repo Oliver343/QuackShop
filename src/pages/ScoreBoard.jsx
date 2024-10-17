@@ -1,10 +1,11 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { StoreContextWrapper } from "../store/ContextProvider"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 
 import scoreBoard from "../img/scoreboard.png"
 import chipO1 from "../img/chipO1.png";
+import chipR2 from "../img/chipR2.png";
 import Modal from "../components/Modal";
 
 export default function ScoreBoard(props) {
@@ -72,6 +73,31 @@ export default function ScoreBoard(props) {
         }
     }
 
+    function checkMoth() {
+        let player1Count = 0 
+        let player2Count = 0 
+        storeObject.p1PotCurrentRound.forEach((chip) =>{
+            if(chip.color === "black") {
+                player1Count ++
+            }
+        })
+        storeObject.p2PotCurrentRound.forEach((chip) =>{
+            if(chip.color === "black") {
+                player2Count ++
+            }
+        })
+        if(player1Count > player2Count) {
+            addDrop(true)
+            addRuby(true)
+        } else if (player2Count > player1Count) {
+            addDrop(false)
+            addRuby(false)
+        } else if ((player1Count > 0) && player1Count === player2Count) {
+            addDrop(true)
+            addDrop(false)
+        }
+    }
+
     function checkSpider() {
         // for player 1 
         if (storeObject.p1PotCurrentRound.length > 0) {
@@ -114,17 +140,45 @@ export default function ScoreBoard(props) {
         storeObject.setScoreboardStep(prev => prev + 1)
     }
 
+    function confirmScoreVP() {
+        // question if exploaded first...
+        if(storeObject.p1Exploded) {
+            // ask if sure they want to get VP (rather than buy)
+            storeObject.setConfirmVpModal(true)
+        } else {
+            scoreVP()
+        }
+        
+    }
+
     function scoreVP() {
         // for player 1 
         for(let i = 0; i < storeObject.scoreTrack[storeObject.p1ChipSpace +1].victoryPoints; i ++) {
             addVP(1)
         }
-        // for player 2
-        for(let i = 0; i < storeObject.scoreTrack[storeObject.p2ChipSpace +1].victoryPoints; i ++) {
-            addVP(0)
-        }
+
+        p2DecideScoreVP()
+        player2Buy()
+        
+
         storeObject.setScoreboardStep(prev => prev + 1)
         storeObject.setPageActive(3)
+    }
+
+    function p2DecideScoreVP() {
+        let scoreDebate = true
+        if(storeObject.p2Exploded && storeObject.currentRound < 8) {
+            scoreDebate = false
+            storeObject.setAllowBuyingP2(false)
+        }
+        if(scoreDebate) {
+            console.log("PLAYER 2 IS SCORING")
+            for(let i = 0; i < storeObject.scoreTrack[storeObject.p2ChipSpace +1].victoryPoints; i ++) {
+                addVP(0)
+            }
+        } else {
+            console.log("PLAYER 2 HAS CHOSEN NOT TO SCORE")
+        }
     }
 
     function scoreBuyingPower() {
@@ -151,7 +205,13 @@ export default function ScoreBoard(props) {
     }
 
     function skip() {
-        storeObject.setScoreboardStep(prev => prev + 1)
+        storeObject.setScoreboardStep(prev => {
+            if ((prev + 1) === 4) {
+                p2DecideScoreVP()
+                player2Buy()
+            }
+            return prev + 1
+        })
     }
 
     function addRuby(player1) {
@@ -198,9 +258,39 @@ export default function ScoreBoard(props) {
         })
     }
     
+    function player2Buy() {
+        // shopping step so P2 looks to buy...
+        if(storeObject.allowBuyingP2) {
+            storeObject.setPlayer2Stats((prev) => {
+                const newItems = []
+                newItems.push(
+                    {
+                        color: "red",
+                        value: 2,
+                        img: chipR2,
+                        effect: true,
+                        volatile: false,
+                    })
+                const updatedBag = prev.gameBag.concat(newItems)
+                return {
+                    ...prev,
+                    gameBag: updatedBag,
+                  };
+            })
+
+        }
+
+    }
+
 
     if(storeObject.scoreboardStep === 4) {
-        if(storeObject.currentRound < 9) {
+
+
+        if(!storeObject.allowBuying){
+            // skips buying step
+            storeObject.setPageActive(2)
+            storeObject.setScoreboardStep(5)
+        } else if (storeObject.currentRound < 9) {
             // Moves focus to shop unless on last round.
             storeObject.setPageActive(3)
             storeObject.setScoreboardStep(5)
@@ -209,7 +299,7 @@ export default function ScoreBoard(props) {
 
     return(
         <div>
-            {/* {(storeObject.pageActive === 2 ? "" : <Modal />)} */}
+            {(storeObject.confirmVpModal ? <Modal scoreVP={scoreVP} /> : "")}
             <div className="boardBar">
                 <div className="buttonBox">
                     <div>
@@ -222,9 +312,9 @@ export default function ScoreBoard(props) {
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 0)) ? <button onClick={() => {rollDie(0)}} disabled={
                             (!storeObject.p1Exploded && storeObject.p1ChipSpace > storeObject.p2ChipSpace) || storeObject.p2Exploded || storeObject.player2AlreadyRolled
                         }>Player 2 Roll the dice</button> : ""}
-                        {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 1)) ? <button onClick={checkSpider}>Check for Moth / Spider / Ghost</button> : ""}
+                        {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 1)) ? <button onClick={()=>{checkMoth(); checkSpider()}}>Check for Moth / Spider / Ghost</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 2)) ? <button onClick={checkRuby}>Check for Ruby</button> : ""}
-                        {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 3)) ? <button onClick={scoreVP}>Score VP</button> : ""}
+                        {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 3)) ? <button onClick={confirmScoreVP}>Score VP</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 4)) ? <button onClick={scoreBuyingPower}>Score With Buying Power</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 5)) ? <button onClick={buyDroplet} disabled={storeObject.player1Stats.rubies < 2} >Buy Droplet</button> : ""}
                         {((storeObject.pageActive === 2) && (storeObject.scoreboardStep === 5)) ? <button onClick={skip} disabled >Refill Flask (Not working yet)</button> : ""}
@@ -252,8 +342,7 @@ export default function ScoreBoard(props) {
                 style={{backgroundImage: 
                 "url(" + scoreBoard + ")", 
                 backgroundSize: 'contain', 
-                backgroundRepeat: 'no-repeat',
-                border: 'dashed red 2px', 
+                backgroundRepeat: 'no-repeat', 
                 width: 1000, maxWidth: maxValue, 
                 height: 702, maxHeight: maxValue}}
             ></div>

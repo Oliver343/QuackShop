@@ -1,6 +1,5 @@
 
 .modal {
-    border: 1px solid red;
     z-index: 100;
     position:absolute;
     width: 99.5%;
