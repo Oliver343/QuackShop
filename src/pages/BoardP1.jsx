@@ -15,6 +15,7 @@ const BoardP1 = (props) => {
   const storeObject = useContext(StoreContextWrapper)
   let boardImage = board
   let maxValue = ((storeObject.width < storeObject.height ? storeObject.width : storeObject.height) - 4 )
+  let tempColor
 
   useEffect(() => {
     if (storeObject.p1Stopped) {
@@ -34,6 +35,12 @@ const BoardP1 = (props) => {
     storeObject.p2DrawDecide()
     const randomNo = Math.floor(Math.random() * storeObject.p1BagCurrentRound.length);
     let currentIngredient = storeObject.p1BagCurrentRound[randomNo]
+
+
+    console.log("CURR IN")
+    console.log(currentIngredient.color)
+    tempColor = currentIngredient.color
+    console.log(tempColor)
 
     storeObject.setP1BagCurrentRound(prev => prev.filter(item => item !== currentIngredient ))
 
@@ -72,11 +79,12 @@ const BoardP1 = (props) => {
     return <ChipImages key={i} chipSpace={ingredient.chipSpace} img={ingredient.img} />;
   });
 
+  console.log( "Temp col is ... " + tempColor)
   storeObject.setBuyPowerP1(storeObject.scoreTrack[storeObject.p1ChipSpace +1].buyingPower)
 
   return (
     <div>
-      {(storeObject.modalEffect ? <ModalEffect color={"BLUE"} /> : "")}
+      {(storeObject.modalEffect ? <ModalEffect /> : "")}
       <div className="boardBar">
         <div className="buttonBox">
             <div>
