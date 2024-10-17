@@ -5,6 +5,7 @@ import chipO1 from "../img/chipO1.png";
 import chipW1 from "../img/chipW1.png";
 import chipW2 from "../img/chipW2.png";
 import chipW3 from "../img/chipW3.png";
+import chipR1 from "../img/chipR1.png";
 
 export const StoreContextWrapper = createContext({
     checkState: "",
@@ -460,6 +461,28 @@ export default function ContextProvider({children}){
         effect: false,
         volatile: false,
       },
+      // red chips for testing! Delete later
+      {
+        color: "red",
+        value: 1,
+        img: chipR1,
+        effect: true,
+        volatile: false,
+      },
+      {
+        color: "red",
+        value: 1,
+        img: chipR1,
+        effect: true,
+        volatile: false,
+      },
+      {
+        color: "red",
+        value: 1,
+        img: chipR1,
+        effect: true,
+        volatile: false,
+      },
     ])
 
     const [player1Stats, setPlayer1Stats]  = useState({
@@ -631,8 +654,26 @@ export default function ContextProvider({children}){
       setCurrentRound(prev => prev +1)
     }
 
-    function redEffect() {
+    function redEffect(player1) {
       console.log("RED EFFECT USED HERE")
+      const currentPot = player1 ? p1PotCurrentRound : p2PotCurrentRound
+      const counter = 0
+      const bonus = 0
+
+      currentPot.forEach((item) => {
+        if(item.color === "orange") {
+          counter ++
+        }
+      })
+
+      if(counter > 0) {
+        bonus = 1
+      }
+      if(counter > 2) {
+        bonus = 2
+      }
+
+      
     }
 
     function blueEffect() {
