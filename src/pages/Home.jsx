@@ -20,6 +20,17 @@ export default function Home() {
         storeObject.setMenuShow((pre) =>  !pre) 
     }
 
+    let width = storeObject.width - 102
+    let hight = (storeObject.width - 102) / 2
+
+    if(storeObject.hight < hight) {
+        hight = storeObject.height - 32
+        width = hight * 2
+        if (storeObject.menuShow) {
+            hight = hight - 77
+        }
+    }
+
     return (
         <div className="homeMain">
             {storeObject.menuShow ? <Header toggleMenu={handleMenuToggle} /> : ""}
@@ -35,6 +46,20 @@ export default function Home() {
                                         {storeObject.menuShow ? "" : <button className="menuToggleBtn" onClick={handleMenuToggle}><FontAwesomeIcon icon={faBars} /></button>}
                                     </div>
                                 </div> 
+                                <div style={{
+                                     background: "red",
+                                     width: width,
+                                     height: hight,
+                                     }}
+                                > 
+                                <div style={{
+                                     background: "lime",
+                                     width: "30px",
+                                     height: "30px",
+                                     position: "absolute",
+                                     top: storeObject.menuShow ? "109px" : "32px",
+                                     }}> T </div>
+                                </div>
                                 <div className="homeSub">
                                     HOME - {storeObject.checkState}
                                     <br />
