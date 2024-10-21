@@ -565,6 +565,7 @@ export default function ContextProvider({children}){
     const [width, setWidth] = useState(window.innerWidth)
     const [height, setHeight] = useState(window.innerHeight)
     let smaller = (width < height) ? width : height
+    let smallerLabel = (width < height) ? "w" : "h"
     let chipSize = (smaller < 1000) ? smaller / 13 : 78
     const [menuShow, setMenuShow] = useState((height < 600) ? false : true)
     // Header only shown by default on screen with greater than 600px height
@@ -720,6 +721,7 @@ return (
       scoreTrack,
       width,
       height,
+      smallerLabel,
       chipSize,
       centerHeight,
       centerWidth,

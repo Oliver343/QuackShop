@@ -12,22 +12,29 @@ import BoardP2 from "./BoardP2"
 
 export default function Home() {
     const storeObject = useContext(StoreContextWrapper)
-    let menuHight = 81
+    let menuHeight = 81
 
-    if(!storeObject.menuShow) {menuHight = 4}
+    if(!storeObject.menuShow) {menuHeight = 4}
 
     function handleMenuToggle() {
         storeObject.setMenuShow((pre) =>  !pre) 
     }
 
     let width = storeObject.width - 102
-    let hight = (storeObject.width - 102) / 2
+    let height = (storeObject.width - 102) / 2
 
-    if(storeObject.hight < hight) {
-        hight = storeObject.height - 32
-        width = hight * 2
+    console.log("hight")
+    console.log(height + 200)
+    console.log("storeObject.height")
+    console.log(storeObject.height)
+
+    if(storeObject.height < (height + 200)) {
+        height = storeObject.height - 132
+        width = height * 2
+        // height = 100
+        // width = 100
         if (storeObject.menuShow) {
-            hight = hight - 77
+            height = height - 77
         }
     }
 
@@ -36,7 +43,7 @@ export default function Home() {
             {storeObject.menuShow ? <Header toggleMenu={handleMenuToggle} /> : ""}
             <div 
             className="homeBody" 
-            style={{minHeight: (storeObject.height - menuHight)}}
+            style={{minHeight: (storeObject.height - menuHeight)}}
             >
                 {storeObject.pageTarget === 1 ? 
                                 <>
@@ -49,7 +56,7 @@ export default function Home() {
                                 <div style={{
                                      background: "red",
                                      width: width,
-                                     height: hight,
+                                     height: height,
                                      }}
                                 > 
                                 <div style={{
@@ -58,6 +65,7 @@ export default function Home() {
                                      height: "30px",
                                      position: "absolute",
                                      top: storeObject.menuShow ? "109px" : "32px",
+                                     left: width / 2,
                                      }}> T </div>
                                 </div>
                                 <div className="homeSub">
