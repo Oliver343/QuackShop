@@ -61,11 +61,12 @@ export default function Home() {
                                 > 
                                 <div style={{
                                      background: "lime",
-                                     width: "30px",
-                                     height: "30px",
+                                     width: "100px",
+                                     height: "100px",
                                      position: "absolute",
-                                     top: storeObject.menuShow ? "109px" : "32px",
-                                     left: width / 2,
+                                     //  top: storeObject.menuShow ? "109px" : "32px",
+                                     top: storeObject.menuShow ? (height / 2) + (109 - 50) : (height / 2) + (32 - 50),
+                                     left: (width / 2) - 50,
                                      }}> T </div>
                                 </div>
                                 <div className="homeSub">
